@@ -7,7 +7,7 @@ import appeng.api.networking.energy.IEnergyGrid
 import appeng.api.networking.security.IActionHost
 import appeng.api.util.{AECableType, DimensionalCoord}
 import extracells.api.IECTileEntity
-import extracells.gridblock.ECGridBlockVibrantChamberScala
+import extracells.gridblock.ECGridBlockVibrantChamber
 import extracells.util.FuelBurnTime
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
@@ -17,7 +17,7 @@ import net.minecraftforge.fluids._
 
 class TileEntityVibrationChamberFluidScala extends TileBaseScala with IECTileEntity with IFluidHandler with IActionHost with TPowerStorage {
   private[tileentity] var isFirstGridNode: Boolean = true
-  private final val gridBlock = new ECGridBlockVibrantChamberScala(this)
+  private final val gridBlock = new ECGridBlockVibrantChamber(this)
   private[tileentity] var node: IGridNode = null
   private var burnTime: Int = 0
   private var burnTimeTotal: Int = 0
