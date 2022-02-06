@@ -15,7 +15,7 @@ public enum BlockEnum {
 	WALRUS("walrus", new BlockWalrus()),
 	FLUIDCRAFTER("fluidcrafter", new BlockFluidCrafter()),
 	ECBASEBLOCK("ecbaseblock", new ECBaseBlock(), ItemBlockECBase.class),
-	BLASTRESISTANTMEDRIVE("hardmedrive", BlockHardMEDrive.instance()),
+	BLASTRESISTANTMEDRIVE("hardmedrive", BlockHardMEDrive.getInstance()),
 	VIBRANTCHAMBERFLUID("vibrantchamberfluid", new BlockVibrationChamberFluid()),
 	CRAFTINGSTORAGE("craftingstorage", new BlockCraftingStorage(), ItemCraftingStorage.class);
 
