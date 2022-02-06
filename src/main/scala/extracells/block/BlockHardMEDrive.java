@@ -7,7 +7,7 @@ import appeng.api.networking.IGridNode;
 import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import extracells.container.ContainerHardMEDriveScala;
+import extracells.container.ContainerHardMEDrive;
 import extracells.gui.GuiHardMEDriveScala;
 import extracells.network.GuiHandler;
 import extracells.render.block.RendererHardMEDrive;
@@ -64,7 +64,7 @@ public class BlockHardMEDrive extends BlockEC implements TGuiBlock {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile == null || player == null) return null;
         if (tile instanceof TileEntityHardMeDrive) {
-            return new ContainerHardMEDriveScala(player.inventory, (TileEntityHardMeDrive) tile);
+            return new ContainerHardMEDrive(player.inventory, (TileEntityHardMeDrive) tile);
         } else {
             return null;
         }
