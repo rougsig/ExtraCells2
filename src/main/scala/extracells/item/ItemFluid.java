@@ -6,7 +6,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-public class ItemFluid extends ItemECBase {
+public class ItemFluid extends ItemECBaseScala {
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {

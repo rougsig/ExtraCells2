@@ -1,6 +1,6 @@
 package extracells.gui
 
-import extracells.container.ContainerHardMEDrive
+import extracells.container.ContainerHardMEDriveScala
 import extracells.registries.BlockEnum
 import extracells.tileentity.TileEntityHardMeDrive
 import net.minecraft.client.Minecraft
@@ -10,8 +10,8 @@ import net.minecraft.inventory.Slot
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
 
-class GuiHardMEDrive(inventory: InventoryPlayer, tile: TileEntityHardMeDrive)
-  extends GuiContainer(new ContainerHardMEDrive(inventory, tile)){
+class GuiHardMEDriveScala(inventory: InventoryPlayer, tile: TileEntityHardMeDrive)
+  extends GuiContainer(new ContainerHardMEDriveScala(inventory, tile)){
 
 
   xSize = 176

@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidStack
 import org.apache.commons.lang3.tuple.MutablePair
 
 
-class PartGasConversionMonitor extends PartFluidConversionMonitor{
+class PartGasConversionMonitorScala extends PartFluidConversionMonitor{
 
   val isMekEnabled = Integration.Mods.MEKANISMGAS.isEnabled
 

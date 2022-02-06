@@ -9,8 +9,8 @@ import extracells.integration.Integration;
 import extracells.network.packet.other.IFluidSlotGui;
 import extracells.network.packet.part.PacketBusFluidIO;
 import extracells.part.PartFluidIO;
-import extracells.part.PartGasExport;
-import extracells.part.PartGasImport;
+import extracells.part.PartGasExportScala;
+import extracells.part.PartGasImportScala;
 import extracells.util.FluidUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -138,7 +138,7 @@ public class GuiBusFluidIO extends ECGuiContainer implements
 		super.mouseClicked(mouseX, mouseY, mouseBtn);
 		for (WidgetFluidSlot fluidSlot : this.fluidSlotList) {
 			if (isPointInRegion(fluidSlot.getPosX(), fluidSlot.getPosY(), 18, 18, mouseX, mouseY)) {
-				if((part instanceof PartGasImport || part instanceof PartGasExport) && Integration.Mods.MEKANISMGAS.isEnabled())
+				if((part instanceof PartGasImportScala || part instanceof PartGasExportScala) && Integration.Mods.MEKANISMGAS.isEnabled())
 					fluidSlot.mouseClickedGas(this.player.inventory.getItemStack());
 				else
 					fluidSlot.mouseClicked(this.player.inventory.getItemStack());
@@ -185,7 +185,7 @@ public class GuiBusFluidIO extends ECGuiContainer implements
 		Fluid fluid = containerFluid == null ? null : containerFluid.getFluid();
 		for (WidgetFluidSlot fluidSlot : this.fluidSlotList) {
 			if (fluidSlot.canRender() && fluid != null && (fluidSlot.getFluid() == null || fluidSlot.getFluid() == fluid)) {
-				if((part instanceof PartGasImport || part instanceof PartGasExport) && Integration.Mods.MEKANISMGAS.isEnabled())
+				if((part instanceof PartGasImportScala || part instanceof PartGasExportScala) && Integration.Mods.MEKANISMGAS.isEnabled())
 					fluidSlot.mouseClickedGas(itemStack);
 				else
 					fluidSlot.mouseClicked(itemStack);

@@ -25,13 +25,13 @@ public enum PartEnum {
 	FLUIDMONITOR("fluid.monitor", PartFluidStorageMonitor.class),
 	FLUIDCONVERSIONMONITOR("fluid.conversion.monitor", PartFluidConversionMonitor.class),
 	OREDICTEXPORTBUS("oredict.export", PartOreDictExporter.class),
-	GASIMPORT("gas.import", PartGasImport.class, "gas.IO", Integration.Mods.MEKANISMGAS, generatePair(Upgrades.CAPACITY, 2), generatePair(Upgrades.REDSTONE, 1), generatePair(Upgrades.SPEED, 2)),
-	GASEXPORT("gas.export", PartGasExport.class, "gas.IO", Integration.Mods.MEKANISMGAS, generatePair(Upgrades.CAPACITY, 2), generatePair(Upgrades.REDSTONE, 1), generatePair(Upgrades.SPEED, 2)),
-	GASTERMINAL("gas.terminal", PartGasTerminal.class, Integration.Mods.MEKANISMGAS),
-	GASSTORAGE("gas.storage", PartGasStorage.class, null, Integration.Mods.MEKANISMGAS, generatePair(Upgrades.INVERTER, 1)),
-	GASLEVELEMITTER("gas.levelemitter", PartGasLevelEmitter.class, Integration.Mods.MEKANISMGAS),
-	GASMONITOR("gas.monitor", PartGasStorageMonitor.class, Integration.Mods.MEKANISMGAS),
-	GASCONVERSIONMONITOR("gas.conversion.monitor", PartGasConversionMonitor.class, Integration.Mods.MEKANISMGAS);
+	GASIMPORT("gas.import", PartGasImportScala.class, "gas.IO", Integration.Mods.MEKANISMGAS, generatePair(Upgrades.CAPACITY, 2), generatePair(Upgrades.REDSTONE, 1), generatePair(Upgrades.SPEED, 2)),
+	GASEXPORT("gas.export", PartGasExportScala.class, "gas.IO", Integration.Mods.MEKANISMGAS, generatePair(Upgrades.CAPACITY, 2), generatePair(Upgrades.REDSTONE, 1), generatePair(Upgrades.SPEED, 2)),
+	GASTERMINAL("gas.terminal", PartGasTerminalScala.class, Integration.Mods.MEKANISMGAS),
+	GASSTORAGE("gas.storage", PartGasStorageScala.class, null, Integration.Mods.MEKANISMGAS, generatePair(Upgrades.INVERTER, 1)),
+	GASLEVELEMITTER("gas.levelemitter", PartGasLevelEmitterScala.class, Integration.Mods.MEKANISMGAS),
+	GASMONITOR("gas.monitor", PartGasStorageMonitorScala.class, Integration.Mods.MEKANISMGAS),
+	GASCONVERSIONMONITOR("gas.conversion.monitor", PartGasConversionMonitorScala.class, Integration.Mods.MEKANISMGAS);
 
 	private Integration.Mods mod;
 

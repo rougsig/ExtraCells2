@@ -11,7 +11,7 @@ import extracells.gui.widget.fluid.IFluidSelectorGui;
 import extracells.gui.widget.fluid.WidgetFluidSelector;
 import extracells.network.packet.part.PacketFluidTerminal;
 import extracells.part.PartFluidTerminal;
-import extracells.part.PartGasTerminal;
+import extracells.part.PartGasTerminalScala;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -37,7 +37,7 @@ public class GuiGasTerminal extends GuiContainer implements IFluidSelectorGui {
 	public IAEFluidStack currentFluid;
 	private ContainerGasTerminal containerTerminalFluid;
 
-	public GuiGasTerminal(PartGasTerminal _terminal, EntityPlayer _player) {
+	public GuiGasTerminal(PartGasTerminalScala _terminal, EntityPlayer _player) {
 		super(new ContainerGasTerminal(_terminal, _player));
 		this.containerTerminalFluid = (ContainerGasTerminal) this.inventorySlots;
 		this.containerTerminalFluid.setGui(this);

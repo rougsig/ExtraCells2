@@ -2,7 +2,7 @@ package extracells.gui;
 
 import extracells.container.ContainerVibrationChamberFluid;
 import extracells.gui.widget.WidgetFluidTank;
-import extracells.tileentity.TileEntityVibrationChamberFluid;
+import extracells.tileentity.TileEntityVibrationChamberFluidScala;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,9 +16,9 @@ public class GuiVibrationChamberFluid extends GuiContainer {
             "textures/gui/vibrationchamberfluid.png");
     private EntityPlayer player;
     public WidgetFluidTank widgetFluidTank;
-    private TileEntityVibrationChamberFluid tileEntity;
+    private TileEntityVibrationChamberFluidScala tileEntity;
 
-    public GuiVibrationChamberFluid(EntityPlayer player, TileEntityVibrationChamberFluid tileentity) {
+    public GuiVibrationChamberFluid(EntityPlayer player, TileEntityVibrationChamberFluidScala tileentity) {
         super(new ContainerVibrationChamberFluid(player.inventory, tileentity));
         this.player = player;
         this.tileEntity = tileentity;

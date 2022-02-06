@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import extracells.container.ContainerVibrationChamberFluid;
 import extracells.gui.GuiVibrationChamberFluid;
 import extracells.network.GuiHandler;
-import extracells.tileentity.TileEntityVibrationChamberFluid;
+import extracells.tileentity.TileEntityVibrationChamberFluidScala;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -38,7 +38,7 @@ public class BlockVibrationChamberFluid extends BlockEC implements TGuiBlock {
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileEntityVibrationChamberFluid();
+        return new TileEntityVibrationChamberFluidScala();
     }
 
     @SideOnly(Side.CLIENT)
@@ -54,9 +54,9 @@ public class BlockVibrationChamberFluid extends BlockEC implements TGuiBlock {
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
         if(side == world.getBlockMetadata(x, y, z)){
             TileEntity tile = world.getTileEntity(x,y, z);
-            if(!(tile instanceof  TileEntityVibrationChamberFluid))
+            if(!(tile instanceof TileEntityVibrationChamberFluidScala))
                 return icons[0];
-            TileEntityVibrationChamberFluid chamberFluid = (TileEntityVibrationChamberFluid) tile;
+            TileEntityVibrationChamberFluidScala chamberFluid = (TileEntityVibrationChamberFluidScala) tile;
             if (chamberFluid.getBurnTime() > 0 && chamberFluid.getBurnTime() < (chamberFluid.getBurnTimeTotal()))
                 return icons[2];
             else
@@ -81,16 +81,16 @@ public class BlockVibrationChamberFluid extends BlockEC implements TGuiBlock {
     @Override
     public Object getClientGuiElement(EntityPlayer player, World world, int x, int y, int z){
         TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if(tileEntity != null && tileEntity instanceof  TileEntityVibrationChamberFluid)
-        return new GuiVibrationChamberFluid(player, (TileEntityVibrationChamberFluid)tileEntity);
+        if(tileEntity != null && tileEntity instanceof TileEntityVibrationChamberFluidScala)
+        return new GuiVibrationChamberFluid(player, (TileEntityVibrationChamberFluidScala)tileEntity);
         return null;
     }
 
     @Override
     public Object getServerGuiElement(EntityPlayer player, World world, int x, int y, int z){
         TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if(tileEntity != null && tileEntity instanceof  TileEntityVibrationChamberFluid)
-            return new ContainerVibrationChamberFluid(player.inventory, (TileEntityVibrationChamberFluid)tileEntity);
+        if(tileEntity != null && tileEntity instanceof TileEntityVibrationChamberFluidScala)
+            return new ContainerVibrationChamberFluid(player.inventory, (TileEntityVibrationChamberFluidScala)tileEntity);
         return null;
     }
 
@@ -152,8 +152,8 @@ public class BlockVibrationChamberFluid extends BlockEC implements TGuiBlock {
             return;
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile != null) {
-            if (tile instanceof TileEntityVibrationChamberFluid) {
-                IGridNode node = ((TileEntityVibrationChamberFluid) tile).getGridNodeWithoutUpdate();
+            if (tile instanceof TileEntityVibrationChamberFluidScala) {
+                IGridNode node = ((TileEntityVibrationChamberFluidScala) tile).getGridNodeWithoutUpdate();
                 if (entity != null && entity instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) entity;
                     node.setPlayerID(AEApi.instance().registries().players()
@@ -170,8 +170,8 @@ public class BlockVibrationChamberFluid extends BlockEC implements TGuiBlock {
             return;
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile != null) {
-            if (tile instanceof TileEntityVibrationChamberFluid) {
-                IGridNode node = ((TileEntityVibrationChamberFluid) tile).getGridNode(ForgeDirection.UNKNOWN);
+            if (tile instanceof TileEntityVibrationChamberFluidScala) {
+                IGridNode node = ((TileEntityVibrationChamberFluidScala) tile).getGridNode(ForgeDirection.UNKNOWN);
                 if (node != null) {
                     node.destroy();
                 }

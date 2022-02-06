@@ -7,7 +7,7 @@ import extracells.crafting.CraftingPattern2;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemInternalCraftingPattern extends ItemECBase implements ICraftingPatternItem {
+public class ItemInternalCraftingPattern extends ItemECBaseScala implements ICraftingPatternItem {
 
 	@Override
 	public ICraftingPatternDetails getPatternForItem(ItemStack is, World w) {

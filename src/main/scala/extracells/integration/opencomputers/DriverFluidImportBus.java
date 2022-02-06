@@ -3,7 +3,7 @@ package extracells.integration.opencomputers;
 import appeng.api.parts.IPart;
 import appeng.api.parts.IPartHost;
 import extracells.part.PartFluidImport;
-import extracells.part.PartGasImport;
+import extracells.part.PartGasImportScala;
 import extracells.registries.ItemEnum;
 import extracells.registries.PartEnum;
 import extracells.util.FluidUtil;
@@ -50,13 +50,13 @@ public class DriverFluidImportBus implements SidedBlock {
 		if(dir == null || dir == ForgeDirection.UNKNOWN){
 			for (ForgeDirection side: ForgeDirection.VALID_DIRECTIONS){
 				IPart part = host.getPart(side);
-				if (part != null && part instanceof PartFluidImport &&!(part instanceof PartGasImport))
+				if (part != null && part instanceof PartFluidImport &&!(part instanceof PartGasImportScala))
 					return (PartFluidImport) part;
 			}
 			return null;
 		}else{
 			IPart part = host.getPart(dir);
-			if (part != null && part instanceof PartFluidImport &&!(part instanceof PartGasImport))
+			if (part != null && part instanceof PartFluidImport &&!(part instanceof PartGasImportScala))
 				return (PartFluidImport) part;
 			return null;
 		}

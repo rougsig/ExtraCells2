@@ -9,7 +9,7 @@ import extracells.registries.{ItemEnum, PartEnum}
 import net.minecraft.item.ItemStack
 
 
-object UniversalTerminal {
+object UniversalTerminalScala {
   val isMekLoaded = Mods.MEKANISMGAS.isEnabled
   val isThaLoaded = Mods.THAUMATICENERGISTICS.isEnabled
   val isWcLLoaded = Mods.WIRELESSCRAFTING.isEnabled

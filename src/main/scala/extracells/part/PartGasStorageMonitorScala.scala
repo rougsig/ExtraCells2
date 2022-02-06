@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.{ChatComponentTranslation, Vec3}
 
 
-class PartGasStorageMonitor extends PartFluidStorageMonitor{
+class PartGasStorageMonitorScala extends PartFluidStorageMonitor{
   val isMekEnabled = Integration.Mods.MEKANISMGAS.isEnabled
 
   override def onActivate(player: EntityPlayer, pos: Vec3): Boolean = {

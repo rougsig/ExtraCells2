@@ -12,7 +12,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-public class ItemFluidPattern extends ItemECBase {
+public class ItemFluidPattern extends ItemECBaseScala {
 
 	public static Fluid getFluid(ItemStack itemStack) {
 		if (!itemStack.hasTagCompound())

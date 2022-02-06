@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.FluidStack
 import org.apache.commons.lang3.tuple.MutablePair
 
 
-class PartGasTerminal extends PartFluidTerminal{
+class PartGasTerminalScala extends PartFluidTerminal{
 
   val mekLoaded = Mods.MEKANISMGAS.isEnabled
   var doNextFill = false

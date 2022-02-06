@@ -4,7 +4,7 @@ import appeng.api.features.INetworkEncodable
 import appeng.api.implementations.items.IAEItemPowerStorage
 import extracells.item.{ItemWirelessTerminalUniversal, TerminalType}
 import extracells.registries.ItemEnum
-import extracells.util.UniversalTerminal
+import extracells.util.UniversalTerminalScala
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.IRecipe
@@ -38,14 +38,14 @@ object RecipeUniversalTerminal extends IRecipe{
             isUniversal = true
             terminal = stack
           }
-        }else if(UniversalTerminal.isWirelessTerminal(stack)){
+        }else if(UniversalTerminalScala.isWirelessTerminal(stack)){
           if(hasWireless)
             return false
           hasWireless = true
           terminal = stack
-        }else if(UniversalTerminal.isTerminal(stack)){
+        }else if(UniversalTerminalScala.isTerminal(stack)){
           hasTerminal = true
-          val typeTerminal = UniversalTerminal.getTerminalType(stack)
+          val typeTerminal = UniversalTerminalScala.getTerminalType(stack)
           if(terminals.contains(typeTerminal)){
             return false
           }else{
@@ -63,7 +63,7 @@ object RecipeUniversalTerminal extends IRecipe{
       }
       true
     }else{
-      val terminalType = UniversalTerminal.getTerminalType(terminal)
+      val terminalType = UniversalTerminalScala.getTerminalType(terminal)
       for(x <- terminals){
         if(x == terminalType)
           return false
@@ -89,10 +89,10 @@ object RecipeUniversalTerminal extends IRecipe{
         if(item == itemUniversal){
             isUniversal = true
             terminal = stack.copy
-        }else if(UniversalTerminal.isWirelessTerminal(stack)){
+        }else if(UniversalTerminalScala.isWirelessTerminal(stack)){
           terminal = stack.copy
-        }else if(UniversalTerminal.isTerminal(stack)){
-          val typeTerminal = UniversalTerminal.getTerminalType(stack)
+        }else if(UniversalTerminalScala.isTerminal(stack)){
+          val typeTerminal = UniversalTerminalScala.getTerminalType(stack)
         terminals ++= List(typeTerminal)
 
         }
@@ -102,7 +102,7 @@ object RecipeUniversalTerminal extends IRecipe{
       for(x <- terminals)
         itemUniversal.installModule(terminal, x)
     }else{
-      val terminalType = UniversalTerminal.getTerminalType(terminal)
+      val terminalType = UniversalTerminalScala.getTerminalType(terminal)
       val itemTerminal = terminal.getItem
       val t = new ItemStack(itemUniversal)
       if(itemTerminal.isInstanceOf[INetworkEncodable]){

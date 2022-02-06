@@ -26,7 +26,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry
 import scala.collection.JavaConversions._
 
 
-class UpgradeAE(host: EnvironmentHost) extends ManagedEnvironment with appeng.NetworkControl[TileSecurity] with ec.NetworkControl[TileSecurity]{
+class UpgradeAEScala(host: EnvironmentHost) extends ManagedEnvironment with appeng.NetworkControl[TileSecurity] with ec.NetworkControl[TileSecurity]{
   val robot: Robot = host match {
     case r : Robot => r
     case _ => null

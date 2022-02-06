@@ -4,12 +4,12 @@ import java.util.EnumSet
 
 import appeng.api.networking._
 import appeng.api.util.{AEColor, DimensionalCoord}
-import extracells.tileentity.TileEntityHardMeDrive
+import extracells.tileentity.TileEntityVibrationChamberFluidScala
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.ForgeDirection
 
 
-class ECGridBlockHardMEDrive(host: TileEntityHardMeDrive) extends IGridBlock{
+class ECGridBlockVibrantChamberScala(host: TileEntityVibrationChamberFluidScala) extends IGridBlock{
   protected var grid: IGrid = null
   protected var usedChannels: Int = 0
 
@@ -17,7 +17,7 @@ class ECGridBlockHardMEDrive(host: TileEntityHardMeDrive) extends IGridBlock{
     EnumSet.of(ForgeDirection.DOWN, ForgeDirection.UP, ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH,
       ForgeDirection.WEST)
 
-  override def getFlags: EnumSet[GridFlags] = EnumSet.of(GridFlags.REQUIRE_CHANNEL, GridFlags.DENSE_CAPACITY)
+  override def getFlags: EnumSet[GridFlags] = EnumSet.noneOf(classOf[GridFlags])
 
   override def getGridColor = AEColor.Transparent
 

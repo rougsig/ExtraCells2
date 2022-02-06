@@ -3,7 +3,7 @@ package extracells.integration.opencomputers;
 import appeng.api.parts.IPart;
 import appeng.api.parts.IPartHost;
 import extracells.part.PartFluidImport;
-import extracells.part.PartGasImport;
+import extracells.part.PartGasImportScala;
 import extracells.registries.ItemEnum;
 import extracells.registries.PartEnum;
 import extracells.util.GasUtil;
@@ -42,7 +42,7 @@ public class DriverGasImportBus implements SidedBlock{
         return new Environment((IPartHost) tile);
     }
 
-    private static PartGasImport getImportBus(World world, int x, int y, int z, ForgeDirection dir){
+    private static PartGasImportScala getImportBus(World world, int x, int y, int z, ForgeDirection dir){
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile == null || (!(tile instanceof IPartHost)))
             return null;
@@ -50,13 +50,13 @@ public class DriverGasImportBus implements SidedBlock{
         if(dir == null || dir == ForgeDirection.UNKNOWN){
             for (ForgeDirection side: ForgeDirection.VALID_DIRECTIONS){
                 IPart part = host.getPart(side);
-                if (part != null && part instanceof PartGasImport)
-                    return (PartGasImport) part;
+                if (part != null && part instanceof PartGasImportScala)
+                    return (PartGasImportScala) part;
             }
             return null;
         }else{
             IPart part = host.getPart(dir);
-            return part instanceof PartGasImport ? (PartGasImport) part : null;
+            return part instanceof PartGasImportScala ? (PartGasImportScala) part : null;
         }
     }
 
@@ -98,7 +98,7 @@ public class DriverGasImportBus implements SidedBlock{
             ForgeDirection dir = ForgeDirection.getOrientation(args.checkInteger(0));
             if (dir == null || dir == ForgeDirection.UNKNOWN)
                 return new Object[]{null, "unknown side"};
-            PartGasImport part = getImportBus(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, dir);
+            PartGasImportScala part = getImportBus(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, dir);
             if (part == null)
                 return new Object[]{null, "no export bus"};
             int slot;

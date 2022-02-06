@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.{Fluid, FluidStack}
 
 
 @Interface(iface = "mekanism.api.gas.IGasHandler", modid = "MekanismAPI|gas", striprefs = true)
-class PartGasImport extends PartFluidImport with IGasHandler{
+class PartGasImportScala extends PartFluidImport with IGasHandler{
 
   private val isMekanismEnabled = Integration.Mods.MEKANISMGAS.isEnabled
 

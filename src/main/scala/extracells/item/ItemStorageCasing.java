@@ -11,7 +11,7 @@ import net.minecraft.util.MathHelper;
 
 import java.util.List;
 
-public class ItemStorageCasing extends ItemECBase {
+public class ItemStorageCasing extends ItemECBaseScala {
 
 	private IIcon[] icons;
 	public final String[] suffixes = { "physical", "fluid", "gas" };

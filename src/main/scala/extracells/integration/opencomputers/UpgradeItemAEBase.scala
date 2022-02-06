@@ -38,7 +38,7 @@ trait UpgradeItemAEBase extends Item with HostAware{
   @Method(modid = "OpenComputers")
   override def createEnvironment(stack: ItemStack, host: EnvironmentHost): ManagedEnvironment = {
     if (stack != null && stack.getItem == this && worksWith(stack, host.getClass))
-      new UpgradeAE(host)
+      new UpgradeAEScala(host)
     else
       null
   }
@@ -73,7 +73,7 @@ trait UpgradeItemAEBase extends Item with HostAware{
     @Method(modid = "OpenComputers")
     override def getEnvironment(stack: ItemStack): Class[_] =
       if (worksWith(stack))
-        classOf[UpgradeAE]
+        classOf[UpgradeAEScala]
       else null
   }
 }

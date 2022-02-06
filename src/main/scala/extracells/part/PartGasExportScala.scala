@@ -11,7 +11,7 @@ import extracells.util.GasUtil
 import mekanism.api.gas.IGasHandler
 import net.minecraftforge.fluids.{Fluid, FluidStack}
 
-class PartGasExport extends PartFluidExport{
+class PartGasExportScala extends PartFluidExport{
 
   private val isMekanismEnabled = Integration.Mods.MEKANISMGAS.isEnabled
 

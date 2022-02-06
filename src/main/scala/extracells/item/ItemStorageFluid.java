@@ -27,7 +27,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemStorageFluid extends ItemECBase implements IFluidStorageCell {
+public class ItemStorageFluid extends ItemECBaseScala implements IFluidStorageCell {
 
 	public static final String[] suffixes = { "1k", "4k", "16k", "64k", "256k", "1024k", "4096k" };
 

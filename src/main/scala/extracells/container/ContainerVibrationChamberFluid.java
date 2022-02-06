@@ -1,6 +1,6 @@
 package extracells.container;
 
-import extracells.tileentity.TileEntityVibrationChamberFluid;
+import extracells.tileentity.TileEntityVibrationChamberFluidScala;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -8,10 +8,10 @@ import net.minecraft.inventory.Slot;
 
 public class ContainerVibrationChamberFluid extends Container {
 
-    public TileEntityVibrationChamberFluid tileentity;
+    public TileEntityVibrationChamberFluidScala tileentity;
 
     public ContainerVibrationChamberFluid(InventoryPlayer player,
-                                TileEntityVibrationChamberFluid tileentity) {
+                                          TileEntityVibrationChamberFluidScala tileentity) {
         this.tileentity = tileentity;
 
         bindPlayerInventory(player);

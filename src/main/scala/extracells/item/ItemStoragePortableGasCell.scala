@@ -19,7 +19,7 @@ import net.minecraft.util.{IIcon, StatCollector}
 import net.minecraft.world.World
 import net.minecraftforge.fluids.{Fluid, FluidRegistry}
 
-object ItemStoragePortableGasCell extends ItemECBase with IPortableGasStorageCell with PowerItem {
+object ItemStoragePortableGasCell extends ItemECBaseScala with IPortableGasStorageCell with PowerItem {
 
   override val MAX_POWER: Double = 20000
   private[item] var icon: IIcon = null

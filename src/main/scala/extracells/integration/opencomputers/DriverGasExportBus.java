@@ -2,7 +2,7 @@ package extracells.integration.opencomputers;
 
 import appeng.api.parts.IPart;
 import appeng.api.parts.IPartHost;
-import extracells.part.PartGasExport;
+import extracells.part.PartGasExportScala;
 import extracells.registries.ItemEnum;
 import extracells.registries.PartEnum;
 import extracells.util.GasUtil;
@@ -41,7 +41,7 @@ public class DriverGasExportBus implements SidedBlock{
         return new Environment((IPartHost) tile);
     }
 
-    private static PartGasExport getExportBus(World world, int x, int y, int z, ForgeDirection dir){
+    private static PartGasExportScala getExportBus(World world, int x, int y, int z, ForgeDirection dir){
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile == null || (!(tile instanceof IPartHost)))
             return null;
@@ -49,13 +49,13 @@ public class DriverGasExportBus implements SidedBlock{
         if(dir == null || dir == ForgeDirection.UNKNOWN){
             for (ForgeDirection side: ForgeDirection.VALID_DIRECTIONS){
                 IPart part = host.getPart(side);
-                if (part != null && part instanceof PartGasExport)
-                    return (PartGasExport) part;
+                if (part != null && part instanceof PartGasExportScala)
+                    return (PartGasExportScala) part;
             }
             return null;
         }else{
             IPart part = host.getPart(dir);
-            return part == null ? null : part instanceof PartGasExport ? (PartGasExport) part : null;
+            return part == null ? null : part instanceof PartGasExportScala ? (PartGasExportScala) part : null;
         }
     }
 
@@ -77,7 +77,7 @@ public class DriverGasExportBus implements SidedBlock{
             ForgeDirection dir = ForgeDirection.getOrientation(args.checkInteger(0));
             if (dir == null || dir == ForgeDirection.UNKNOWN)
                 return new Object[]{null, "unknown side"};
-            PartGasExport part = getExportBus(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, dir);
+            PartGasExportScala part = getExportBus(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, dir);
             if (part == null)
                 return new Object[]{null, "no export bus"};
             int slot = args.optInteger(1, 4);
@@ -97,7 +97,7 @@ public class DriverGasExportBus implements SidedBlock{
             ForgeDirection dir = ForgeDirection.getOrientation(args.checkInteger(0));
             if (dir == null || dir == ForgeDirection.UNKNOWN)
                 return new Object[]{null, "unknown side"};
-            PartGasExport part = getExportBus(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, dir);
+            PartGasExportScala part = getExportBus(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, dir);
             if (part == null)
                 return new Object[]{null, "no export bus"};
             int slot;
@@ -154,7 +154,7 @@ public class DriverGasExportBus implements SidedBlock{
             ForgeDirection dir = ForgeDirection.getOrientation(args.checkInteger(0));
             if (dir == null || dir == ForgeDirection.UNKNOWN)
                 return new Object[]{false, "unknown side"};
-            PartGasExport part = getExportBus(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, dir);
+            PartGasExportScala part = getExportBus(tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, dir);
             if (part == null)
                 return new Object[]{false, "no export bus"};
             if (part.getFacingGasTank() == null)

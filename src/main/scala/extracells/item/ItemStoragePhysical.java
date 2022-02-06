@@ -38,7 +38,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.List;
 
 @Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHAPI|energy")
-public class ItemStoragePhysical extends ItemECBase implements IStorageCell,
+public class ItemStoragePhysical extends ItemECBaseScala implements IStorageCell,
 		IAEItemPowerStorage, IEnergyContainerItem {
 
 	public static final String[] suffixes = { "256k", "1024k", "4096k", "16384k", "container" };

@@ -8,7 +8,7 @@ import net.minecraft.inventory.{Container, Slot}
 import net.minecraft.item.ItemStack
 
 
-class ContainerHardMEDrive(inventory: InventoryPlayer, tile: TileEntityHardMeDrive) extends Container{
+class ContainerHardMEDriveScala(inventory: InventoryPlayer, tile: TileEntityHardMeDrive) extends Container{
 
 
   for (i <- 0 to 2)

@@ -8,8 +8,8 @@ import appeng.api.implementations.items.IAEWrench
 import appeng.api.networking.IGridNode
 import buildcraft.api.tools.IToolWrench
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import extracells.container.ContainerHardMEDrive
-import extracells.gui.GuiHardMEDrive
+import extracells.container.ContainerHardMEDriveScala
+import extracells.gui.GuiHardMEDriveScala
 import extracells.network.GuiHandler
 import extracells.render.block.RendererHardMEDrive
 import extracells.tileentity.TileEntityHardMeDrive
@@ -42,7 +42,7 @@ object BlockHardMEDrive extends BlockEC(net.minecraft.block.material.Material.ro
     if (tile == null || player == null) return null
     tile match {
       case tileMe: TileEntityHardMeDrive => {
-        return new GuiHardMEDrive(player.inventory, tileMe)
+        return new GuiHardMEDriveScala(player.inventory, tileMe)
       }
       case _ => return null
     }
@@ -53,7 +53,7 @@ object BlockHardMEDrive extends BlockEC(net.minecraft.block.material.Material.ro
     if (tile == null || player == null) return null
     tile match {
       case tileMe: TileEntityHardMeDrive => {
-        return new ContainerHardMEDrive(player.inventory, tileMe)
+        return new ContainerHardMEDriveScala(player.inventory, tileMe)
       }
       case _ => return null
     }

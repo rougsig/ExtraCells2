@@ -14,7 +14,7 @@ import extracells.gui.GuiGasTerminal;
 import extracells.gui.widget.fluid.IFluidSelectorContainer;
 import extracells.network.packet.part.PacketFluidTerminal;
 import extracells.part.PartFluidTerminal;
-import extracells.part.PartGasTerminal;
+import extracells.part.PartGasTerminalScala;
 import extracells.util.GasUtil;
 import extracells.util.PermissionUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,7 +29,7 @@ import net.minecraftforge.fluids.Fluid;
 public class ContainerGasTerminal extends Container implements
 		IMEMonitorHandlerReceiver<IAEFluidStack>, IFluidSelectorContainer {
 
-	private PartGasTerminal terminal;
+	private PartGasTerminalScala terminal;
 	private IMEMonitor<IAEFluidStack> monitor;
 	private IItemList<IAEFluidStack> fluidStackList = AEApi.instance()
 			.storage().createFluidList();
@@ -37,7 +37,7 @@ public class ContainerGasTerminal extends Container implements
 	private EntityPlayer player;
 	private GuiGasTerminal guiGasTerminal;
 
-	public ContainerGasTerminal(PartGasTerminal _terminal, EntityPlayer _player) {
+	public ContainerGasTerminal(PartGasTerminalScala _terminal, EntityPlayer _player) {
 		this.terminal = _terminal;
 		this.player = _player;
 		if (!this.player.worldObj.isRemote) {

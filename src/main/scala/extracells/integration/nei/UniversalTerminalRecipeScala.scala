@@ -7,12 +7,12 @@ import codechicken.nei.api.{DefaultOverlayRenderer, IOverlayHandler, IRecipeOver
 import codechicken.nei.recipe.{RecipeInfo, TemplateRecipeHandler}
 import codechicken.nei.{NEIClientUtils, PositionedStack}
 import extracells.registries.ItemEnum
-import extracells.util.UniversalTerminal
+import extracells.util.UniversalTerminalScala
 import net.minecraft.client.gui.inventory.{GuiContainer, GuiCrafting}
 import net.minecraft.inventory.Container
 import net.minecraft.item.ItemStack
 
-class UniversalTerminalRecipe extends TemplateRecipeHandler {
+class UniversalTerminalRecipeScala extends TemplateRecipeHandler {
   override def loadTransferRects {
     this.transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(84, 23, 24, 18), "crafting"))
   }
@@ -44,14 +44,14 @@ class UniversalTerminalRecipe extends TemplateRecipeHandler {
   override def loadUsageRecipes(ingredient: ItemStack) {
     if(ingredient == null || ingredient.getItem == null)
       return
-    if(UniversalTerminal.isTerminal(ingredient)){
+    if(UniversalTerminalScala.isTerminal(ingredient)){
       val cachedRecipe = new CachedShapelessRecipe(true)
       cachedRecipe.computeVisuals
       arecipes.add(cachedRecipe)
       val cachedRecipe2 = new CachedShapelessRecipe(false)
       cachedRecipe2.computeVisuals
       arecipes.add(cachedRecipe2)
-    }else if(UniversalTerminal.isWirelessTerminal(ingredient)){
+    }else if(UniversalTerminalScala.isWirelessTerminal(ingredient)){
       val cachedRecipe = new CachedShapelessRecipe(false)
       cachedRecipe.computeVisuals
       arecipes.add(cachedRecipe)
@@ -119,7 +119,7 @@ class UniversalTerminalRecipe extends TemplateRecipeHandler {
     def getResult: PositionedStack = this.result
 
     override def getIngredients: util.List[PositionedStack] = {
-      this.getCycledIngredients(UniversalTerminalRecipe.this.cycleticks / 20, this.ingredients)
+      this.getCycledIngredients(UniversalTerminalRecipeScala.this.cycleticks / 20, this.ingredients)
     }
 
     def setIngredients() {
@@ -128,12 +128,12 @@ class UniversalTerminalRecipe extends TemplateRecipeHandler {
         if(isUniversal)
           new PositionedStack(ItemEnum.UNIVERSALTERMINAL.getDamagedStack(0), 25, 6, false)
         else
-          new PositionedStack(UniversalTerminal.wirelessTerminals, 25, 6, false)
+          new PositionedStack(UniversalTerminalScala.wirelessTerminals, 25, 6, false)
       }
       stack.setMaxSize(1)
       this.ingredients.add(stack)
 
-      val stack2: PositionedStack = new PositionedStack(UniversalTerminal.terminals, 43, 6, false)
+      val stack2: PositionedStack = new PositionedStack(UniversalTerminalScala.terminals, 43, 6, false)
       stack2.setMaxSize(1)
       this.ingredients.add(stack2)
 
