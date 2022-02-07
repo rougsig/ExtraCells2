@@ -2,10 +2,10 @@ package extracells.item
 
 
 import java.util
-
 import appeng.api.AEApi
 import appeng.api.features.IWirelessTermHandler
 import appeng.api.util.IConfigManager
+import cpw.mods.fml.common.Optional
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import extracells.api.{ECApi, IWirelessFluidTermHandler, IWirelessGasTermHandler}
 import extracells.integration.Integration
@@ -21,7 +21,7 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.{IIcon, StatCollector}
 import net.minecraft.world.World
 
-object ItemWirelessTerminalUniversal extends ItemECBaseScala with WirelessTermBase with IWirelessFluidTermHandler with IWirelessGasTermHandler with IWirelessTermHandler with EssensiaTerminal with CraftingTerminal{
+object ItemWirelessTerminalUniversalScala extends CraftingTerminal with WirelessTermBase with IWirelessFluidTermHandler with IWirelessGasTermHandler with IWirelessTermHandler with EssensiaTerminal {
   val isTeEnabled = Integration.Mods.THAUMATICENERGISTICS.isEnabled
   val isMekEnabled = Integration.Mods.MEKANISMGAS.isEnabled
   val isWcEnabled = Integration.Mods.WIRELESSCRAFTING.isEnabled
@@ -225,4 +225,11 @@ object ItemWirelessTerminalUniversal extends ItemECBaseScala with WirelessTermBa
     itemList2.add(itemStack)
   }
 
+  @Optional.Method(modid = "ae2wct")
+  override def isWirelessCraftingEnabled(itemStack: ItemStack): Boolean = {
+    if (this == ItemWirelessTerminalUniversalScala)
+      ItemWirelessTerminalUniversalScala.isInstalled(itemStack, TerminalType.CRAFTING)
+    else
+      true
+  }
 }

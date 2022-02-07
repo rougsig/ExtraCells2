@@ -2,7 +2,7 @@ package extracells.util.recipe
 
 import appeng.api.features.INetworkEncodable
 import appeng.api.implementations.items.IAEItemPowerStorage
-import extracells.item.{ItemWirelessTerminalUniversal, TerminalType}
+import extracells.item.{ItemWirelessTerminalUniversalScala, TerminalType}
 import extracells.registries.ItemEnum
 import extracells.util.UniversalTerminalScala
 import net.minecraft.inventory.InventoryCrafting
@@ -16,7 +16,7 @@ object RecipeUniversalTerminal extends IRecipe{
 
   val THIS = this
 
-  val itemUniversal = ItemWirelessTerminalUniversal
+  val itemUniversal = ItemWirelessTerminalUniversalScala
 
   override def matches(inventory : InventoryCrafting, world : World): Boolean = {
     var hasWireless = false
