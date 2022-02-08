@@ -1,0 +1,4 @@
+rootProject.name = "ExtraCells2"
+
+include ":mod"
+include ":legacy"
