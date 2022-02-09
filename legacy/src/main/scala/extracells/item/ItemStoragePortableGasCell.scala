@@ -1,13 +1,13 @@
 package extracells.item
 
 import java.util
-
 import appeng.api.AEApi
 import appeng.api.config.{AccessRestriction, FuzzyMode}
 import appeng.api.storage.data.IAEFluidStack
 import appeng.api.storage.{IMEInventoryHandler, StorageChannel}
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import extracells.api.{ECApi, IHandlerFluidStorage, IPortableGasStorageCell}
+import extracells.item.ItemStoragePortableFluidCell.MAX_POWER
 import extracells.util.inventory.{ECFluidFilterInventory, ECPrivateInventory}
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
@@ -21,12 +21,13 @@ import net.minecraftforge.fluids.{Fluid, FluidRegistry}
 
 object ItemStoragePortableGasCell extends PowerItem with IPortableGasStorageCell {
 
-  override val MAX_POWER: Double = 20000
+  val MAX_POWER: Double = 20000
   private[item] var icon: IIcon = null
   def THIS = this
   setMaxStackSize(1)
   setMaxDamage(0)
 
+  override def getMaxPower: Double = MAX_POWER
 
   @SuppressWarnings(Array("rawtypes", "unchecked"))
   override def addInformation(itemStack: ItemStack, player: EntityPlayer, list: util.List[_], par4: Boolean) {

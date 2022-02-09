@@ -221,7 +221,7 @@ object ItemWirelessTerminalUniversal extends WirelessTermBase with IWirelessFlui
     itemStack.setTagCompound(tag)
     itemStack.setTagCompound(tag)
     itemList2.add(itemStack.copy)
-    injectAEPower(itemStack, this.MAX_POWER)
+    injectAEPower(itemStack, WirelessTermBase.MAX_POWER)
     itemList2.add(itemStack)
   }
 

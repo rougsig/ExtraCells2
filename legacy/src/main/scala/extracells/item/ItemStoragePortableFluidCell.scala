@@ -21,25 +21,26 @@ import net.minecraftforge.fluids.{Fluid, FluidRegistry}
 
 object ItemStoragePortableFluidCell extends PowerItem with IPortableFluidStorageCell {
 
-  override val MAX_POWER: Double = 20000
+  var MAX_POWER: Double = 20000
   private[item] var icon: IIcon = null
   def THIS = this
   setMaxStackSize(1)
   setMaxDamage(0)
 
+  override def getMaxPower: Double = MAX_POWER;
 
   @SuppressWarnings(Array("rawtypes", "unchecked"))
   override def addInformation(itemStack: ItemStack, player: EntityPlayer, list: util.List[_], par4: Boolean) {
     val list2 = list.asInstanceOf[util.List[String]]
-    val handler: IMEInventoryHandler[IAEFluidStack] = AEApi.instance.registries.cell.getCellInventory(itemStack, null, StorageChannel.FLUIDS).asInstanceOf[IMEInventoryHandler[IAEFluidStack]]
+    val handler = AEApi.instance.registries.cell.getCellInventory(itemStack, null, StorageChannel.FLUIDS).asInstanceOf[IMEInventoryHandler[IAEFluidStack]]
 
     if (!(handler.isInstanceOf[IHandlerFluidStorage])) {
       return
     }
-    val cellHandler: IHandlerFluidStorage = handler.asInstanceOf[IHandlerFluidStorage]
-    val partitioned: Boolean = cellHandler.isFormatted
-    val usedBytes: Long = cellHandler.usedBytes
-    val aeCurrentPower: Double = getAECurrentPower(itemStack)
+    val cellHandler = handler.asInstanceOf[IHandlerFluidStorage]
+    val partitioned = cellHandler.isFormatted
+    val usedBytes = cellHandler.usedBytes
+    val aeCurrentPower = getAECurrentPower(itemStack)
     list2.add(String.format(StatCollector.translateToLocal("extracells.tooltip.storage.fluid.bytes"), (usedBytes / 250).asInstanceOf[AnyRef], (cellHandler.totalBytes / 250).asInstanceOf[AnyRef]))
     list2.add(String.format(StatCollector.translateToLocal("extracells.tooltip.storage.fluid.types"), cellHandler.usedTypes.asInstanceOf[AnyRef], cellHandler.totalTypes.asInstanceOf[AnyRef]))
     if (usedBytes != 0) {
