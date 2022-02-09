@@ -4,22 +4,22 @@ dependencies {
     compile("com.github.GTNewHorizons:Applied-Energistics-2-Unofficial:rv3-beta-75-GTNH:dev")
     compile("com.github.GTNewHorizons:Forgelin:1.9.2-GTNH-1.7.10-Edition")
 
-    compileOnly("com.github.GTNewHorizons:NotEnoughItems:2.2.5-GTNH:dev") {
-        transitive = false
+    compile("com.github.GTNewHorizons:NotEnoughItems:2.2.5-GTNH:dev") {
+        transitive = true
     }
     compileOnly("com.github.GTNewHorizons:ThaumicEnergistics:1.3.16-GTNH:dev") {
         transitive = false
     }
-    compileOnly("com.github.GTNewHorizons:CodeChickenLib:1.1.5.3:dev") {
+    compile("com.github.GTNewHorizons:CodeChickenLib:1.1.5.3:dev") {
         transitive = false
     }
-    compileOnly("com.github.GTNewHorizons:waila:1.5.18:dev") {
+    compile("com.github.GTNewHorizons:waila:1.5.18:dev") {
         transitive = false
     }
     compileOnly("com.github.GTNewHorizons:WirelessCraftingTerminal:1.8.8.3:dev") {
         transitive = false
     }
-    compileOnly("com.github.GTNewHorizons:OpenComputers:1.7.5.21-GTNH:dev") {
+    compile("com.github.GTNewHorizons:OpenComputers:1.7.5.21-GTNH:dev") {
         transitive = false
     }
 

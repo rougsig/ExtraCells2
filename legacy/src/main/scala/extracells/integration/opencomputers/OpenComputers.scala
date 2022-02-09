@@ -21,8 +21,8 @@ object OpenComputers {
 			Driver.add(new DriverGasImportBus)
 			Driver.add(new DriverGasImportBus.Provider)
 		}
-		Driver.add(ItemOCUpgrade)
-		Driver.add(ItemOCUpgrade.Provider)
+		Driver.add(ItemOCUpgrade.getInstance())
+		Driver.add(ItemOCUpgrade.getInstance().Provider)
 		AEApi.instance.registries.wireless.registerWirelessHandler(WirelessHandlerUpgradeAE)
 		OCRecipes.loadRecipes()
 		ExtraCellsPathProvider

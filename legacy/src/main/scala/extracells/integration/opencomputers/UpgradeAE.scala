@@ -49,7 +49,7 @@ class UpgradeAE(host: EnvironmentHost) extends ManagedEnvironment with appeng.Ne
       val i = drone.internalComponents.iterator
       while (i.hasNext){
         val item = i.next
-        if(item != null && item.getItem == ItemOCUpgrade)
+        if(item != null && item.getItem == ItemOCUpgrade.getInstance())
           return item
       }
     }

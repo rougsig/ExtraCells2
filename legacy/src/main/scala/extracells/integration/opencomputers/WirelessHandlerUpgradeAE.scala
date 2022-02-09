@@ -14,9 +14,9 @@ object WirelessHandlerUpgradeAE extends IWirelessTermHandler{
   override def canHandle(itemStack: ItemStack): Boolean = {
     if (itemStack == null) return false
     val item = itemStack.getItem
-    if (item == ItemOCUpgrade) return true
-    (OCUtils.isRobot(itemStack) && OCUtils.getComponent(new RobotData(itemStack), ItemOCUpgrade) != null)||
-      (OCUtils.isDrone(itemStack) && OCUtils.getComponent(new DroneData(itemStack), ItemOCUpgrade) != null)
+    if (item == ItemOCUpgrade.getInstance()) return true
+    (OCUtils.isRobot(itemStack) && OCUtils.getComponent(new RobotData(itemStack), ItemOCUpgrade.getInstance()) != null)||
+      (OCUtils.isDrone(itemStack) && OCUtils.getComponent(new DroneData(itemStack), ItemOCUpgrade.getInstance()) != null)
   }
 
   override def usePower(entityPlayer: EntityPlayer, v: Double, itemStack: ItemStack): Boolean = false
@@ -50,28 +50,28 @@ object WirelessHandlerUpgradeAE extends IWirelessTermHandler{
 
   def setEncryptionKeyRobot(itemStack: ItemStack, encKey: String, name: String){
     val robot = new RobotData(itemStack)
-    val component = OCUtils.getComponent(robot, ItemOCUpgrade)
+    val component = OCUtils.getComponent(robot, ItemOCUpgrade.getInstance())
     if (component != null) setEncryptionKey(component, encKey, name);
     robot.save(itemStack)
   }
 
   def getEncryptionKeyRobot(stack: ItemStack): String = {
     val robot = new RobotData(stack)
-    val component = OCUtils.getComponent(robot, ItemOCUpgrade)
+    val component = OCUtils.getComponent(robot, ItemOCUpgrade.getInstance())
     if (component == null) return ""
     getEncryptionKey(component)
   }
 
   def setEncryptionKeyDrone(itemStack: ItemStack, encKey: String, name: String){
     val robot = new RobotData(itemStack)
-    val component = OCUtils.getComponent(robot, ItemOCUpgrade)
+    val component = OCUtils.getComponent(robot, ItemOCUpgrade.getInstance())
     if (component != null) setEncryptionKey(component, encKey, name);
     robot.save(itemStack)
   }
 
   def getEncryptionKeyDrone(stack: ItemStack): String = {
     val drone = new DroneData(stack)
-    val component = OCUtils.getComponent(drone, ItemOCUpgrade)
+    val component = OCUtils.getComponent(drone, ItemOCUpgrade.getInstance())
     if (component == null) return ""
     getEncryptionKey(component)
   }
