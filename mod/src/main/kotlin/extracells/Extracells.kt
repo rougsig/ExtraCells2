@@ -11,8 +11,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent
 import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import cpw.mods.fml.common.network.NetworkRegistry
+import extracells.debug.ShowNBTCommand
 import extracells.integration.Integration
-import extracells.ExtracellsLegacy
 import extracells.network.ChannelHandler
 import extracells.network.GuiHandler
 import extracells.proxy.CommonProxy
@@ -21,6 +21,7 @@ import extracells.util.ExtraCellsEventHandler
 import extracells.util.FluidCellHandler
 import extracells.util.NameHandler
 import extracells.wireless.AEWirelessTermHandler
+import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Configuration
 import java.io.File
@@ -69,6 +70,9 @@ object Extracells {
     ChannelHandler.registerMessages()
     RenderingRegistry.registerBlockHandler(RenderHandler(RenderingRegistry.getNextAvailableRenderId()))
     integration.init()
+
+    // New
+    ClientCommandHandler.instance.registerCommand(ShowNBTCommand())
   }
 
   @EventHandler
