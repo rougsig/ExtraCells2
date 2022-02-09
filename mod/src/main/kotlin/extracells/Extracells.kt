@@ -11,8 +11,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent
 import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import cpw.mods.fml.common.network.NetworkRegistry
+import cpw.mods.fml.common.registry.GameRegistry
 import extracells.debug.ShowNBTCommand
 import extracells.integration.Integration
+import extracells.item.EC2Item
 import extracells.network.ChannelHandler
 import extracells.network.GuiHandler
 import extracells.proxy.CommonProxy
@@ -107,5 +109,10 @@ object Extracells {
     proxy.registerItems()
     proxy.registerBlocks()
     integration.preInit()
+
+    // New
+    EC2Item.values().forEach { ec2item ->
+      GameRegistry.registerItem(ec2item.item, ec2item.internalName)
+    }
   }
 }

@@ -2,64 +2,27 @@ package extracells.item.storage
 
 import appeng.api.config.FuzzyMode
 import extracells.api.storage.IFluidStorageCell
+import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-class FluidStorageCell(variant: Variant) : Item(), IFluidStorageCell {
-  enum class Variant {
-    FluidCell1k,
-    FluidCell4k,
-    FluidCell16k,
-    FluidCell64k,
-    FluidCell256k,
-    FluidCell1024k,
-    FluidCell4096k,
-  }
-
-  override val idleDrain: Double
-  override val bytesPerType: Int
-  override val totalBytes: Int
-  override val totalTypes = 5
+class FluidStorageCell : Item(), IFluidStorageCell {
 
   init {
-    when (variant) {
-      Variant.FluidCell1k -> {
-        this.idleDrain = 0.5
-        this.bytesPerType = 8
-        this.totalBytes = 1024
-      }
-      Variant.FluidCell4k -> {
-        this.idleDrain = 1.0
-        this.bytesPerType = 32
-        this.totalBytes = 1024 * 4
-      }
-      Variant.FluidCell16k -> {
-        this.idleDrain = 1.5
-        this.bytesPerType = 128
-        this.totalBytes = 1024 * 16
-      }
-      Variant.FluidCell64k -> {
-        this.idleDrain = 2.0
-        this.bytesPerType = 512
-        this.totalBytes = 1024 * 64
-      }
-      Variant.FluidCell256k -> {
-        this.idleDrain = 2.5
-        this.bytesPerType = 1024
-        this.totalBytes = 1024 * 256
-      }
-      Variant.FluidCell1024k -> {
-        this.idleDrain = 3.0
-        this.bytesPerType = 4096
-        this.totalBytes = 1024 * 1024
-      }
-      Variant.FluidCell4096k -> {
-        this.idleDrain = 3.5
-        this.bytesPerType = 16392
-        this.totalBytes = 1024 * 4096
-      }
+    maxDamage = 0
+    maxStackSize = 0
+    hasSubtypes = true
+  }
+
+  override fun getSubItems(item: Item, creativeTab: CreativeTabs?, listSubItems: MutableList<Any?>) {
+    FluidStorageCellVariant.values().forEach { variant ->
+      listSubItems.add(variant.itemStack)
     }
+  }
+
+  override fun getUnlocalizedName(itemStack: ItemStack): String {
+    return "extracells.item.storage.fluid.${FluidStorageCellVariant.values()[itemStack.itemDamage].name.lowercase()}"
   }
 
   // TODO:
