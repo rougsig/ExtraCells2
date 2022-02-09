@@ -5,7 +5,7 @@ import extracells.integration.opencomputers.UpgradeItemAEBase
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.{Item, ItemStack}
 
-object ItemOCUpgrade extends ItemECBase with UpgradeItemAEBase{
+object ItemOCUpgrade extends UpgradeItemAEBase{
 
   setTextureName("extracells:upgrade.oc")
 

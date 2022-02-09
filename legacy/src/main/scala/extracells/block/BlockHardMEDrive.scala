@@ -37,7 +37,7 @@ object BlockHardMEDrive extends BlockEC(net.minecraft.block.material.Material.ro
   var topIcon: IIcon = null
 
   @SideOnly(Side.CLIENT)
-  override def getClientGuiElement(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Any = {
+  override def getClientGuiElement(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Object = {
     val tile = world.getTileEntity(x, y, z)
     if (tile == null || player == null) return null
     tile match {
@@ -48,7 +48,7 @@ object BlockHardMEDrive extends BlockEC(net.minecraft.block.material.Material.ro
     }
   }
 
-  override def getServerGuiElement(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Any = {
+  override def getServerGuiElement(player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Object = {
     val tile = world.getTileEntity(x, y, z)
     if (tile == null || player == null) return null
     tile match {

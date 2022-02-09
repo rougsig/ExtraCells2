@@ -1,6 +1,7 @@
 package extracells.integration.opencomputers
 
 import cpw.mods.fml.common.Optional.{Interface, InterfaceList, Method}
+import extracells.item.ItemECBase
 import li.cil.oc.api.CreativeTab
 import li.cil.oc.api.driver.item.{HostAware, Slot}
 import li.cil.oc.api.driver.EnvironmentProvider
@@ -14,7 +15,7 @@ import net.minecraft.nbt.NBTTagCompound
 @InterfaceList(Array(
   new Interface(iface = "li.cil.oc.api.driver.item.HostAware", modid = "OpenComputers", striprefs = true)
 ))
-trait UpgradeItemAEBase extends Item with HostAware{
+abstract class UpgradeItemAEBase extends ItemECBase with HostAware {
 
   @Method(modid = "OpenComputers")
   override def setCreativeTab(creativeTabs: CreativeTabs): Item ={
