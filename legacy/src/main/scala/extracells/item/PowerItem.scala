@@ -8,7 +8,7 @@ import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
 
 @Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHAPI|energy", striprefs = true)
-trait PowerItem extends Item with IAEItemPowerStorage with IEnergyContainerItem{
+abstract class PowerItem extends ItemECBase with IAEItemPowerStorage with IEnergyContainerItem{
 
   val MAX_POWER :Double
 

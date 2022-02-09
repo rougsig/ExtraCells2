@@ -5,7 +5,7 @@ import appeng.api.networking.energy.IAEPowerStorage
 import net.minecraft.nbt.NBTTagCompound
 
 
-trait TPowerStorage extends IAEPowerStorage{
+abstract class TPowerStorage extends TileBase with IAEPowerStorage {
 
   val powerInformation = new PowerInformation
 

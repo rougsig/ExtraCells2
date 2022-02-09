@@ -8,7 +8,7 @@ import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
 
-object ItemWirelessTerminalFluid extends Item with IWirelessFluidTermHandler with WirelessTermBase {
+object ItemWirelessTerminalFluid extends WirelessTermBase with IWirelessFluidTermHandler {
   private[item] var icon: IIcon = null
   def THIS = this
   ECApi.instance.registerWirelessTermHandler(this)

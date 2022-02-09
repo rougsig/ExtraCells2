@@ -15,7 +15,7 @@ import net.minecraft.network.{NetworkManager, Packet}
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids._
 
-class TileEntityVibrationChamberFluid extends TileBase with IECTileEntity with IFluidHandler with IActionHost with TPowerStorage {
+class TileEntityVibrationChamberFluid extends TPowerStorage with IECTileEntity with IFluidHandler with IActionHost {
   private[tileentity] var isFirstGridNode: Boolean = true
   private final val gridBlock = new ECGridBlockVibrantChamber(this)
   private[tileentity] var node: IGridNode = null

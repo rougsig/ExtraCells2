@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.Fluid
   new Interface(iface = "mekanism.api.gas.IGasHandler", modid = "MekanismAPI|gas", striprefs = true),
   new Interface(iface = "mekanism.api.gas.ITubeConnection", modid = "MekanismAPI|gas", striprefs = true)
 ))
-trait GasInterfaceBase extends IGasHandler with ITubeConnection with IPowerChannelState with IActionHost with IFluidSlotPartOrBlock{
+trait GasInterfaceBase extends IGasHandler with ITubeConnection with IPowerChannelState with IActionHost with IFluidSlotPartOrBlock {
 
   val isMekanismLoaded = MEKANISM.isEnabled
 

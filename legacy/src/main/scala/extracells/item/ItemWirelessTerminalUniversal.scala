@@ -21,7 +21,7 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.{IIcon, StatCollector}
 import net.minecraft.world.World
 
-object ItemWirelessTerminalUniversal extends ItemECBase with WirelessTermBase with IWirelessFluidTermHandler with IWirelessGasTermHandler with IWirelessTermHandler with EssensiaTerminal with CraftingTerminal{
+object ItemWirelessTerminalUniversal extends WirelessTermBase with IWirelessFluidTermHandler with IWirelessGasTermHandler with IWirelessTermHandler with EssentiaTerminal with CraftingTerminal{
   val isTeEnabled = Integration.Mods.THAUMATICENERGISTICS.isEnabled
   val isMekEnabled = Integration.Mods.MEKANISMGAS.isEnabled
   val isWcEnabled = Integration.Mods.WIRELESSCRAFTING.isEnabled
@@ -48,7 +48,7 @@ object ItemWirelessTerminalUniversal extends ItemECBase with WirelessTermBase wi
     new ConfigManager(tag)
   }
 
-  private def ensureTagCompound(itemStack: ItemStack): NBTTagCompound = {
+  override def ensureTagCompound(itemStack: ItemStack): NBTTagCompound = {
     if (!itemStack.hasTagCompound) itemStack.setTagCompound(new NBTTagCompound)
     itemStack.getTagCompound
   }
