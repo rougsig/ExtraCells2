@@ -20,7 +20,7 @@ public class ExtraCellsPathProvider implements PathProvider {
 
     @Override
     public String pathFor(ItemStack stack) {
-        if (stack != null && stack.getItem() == ItemOCUpgrade.getInstance()) {
+        if (stack != null && stack.getItem() instanceof ItemOCUpgrade) {
             return "extracells/%LANGUAGE%/me_upgrade.md";
         }
         return null;

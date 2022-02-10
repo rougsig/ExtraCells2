@@ -11,12 +11,6 @@ import java.util.List;
 
 public class ItemOCUpgrade extends UpgradeItemAEBase {
 
-    private static final ItemOCUpgrade INSTANCE = new ItemOCUpgrade();
-
-    public static ItemOCUpgrade getInstance() {
-        return INSTANCE;
-    }
-
     @Override
     public String getUnlocalizedName() {
         return super.getUnlocalizedName().replace("item.extracells", "extracells.item");

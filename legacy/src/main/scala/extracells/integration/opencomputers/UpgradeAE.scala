@@ -49,7 +49,7 @@ class UpgradeAE(host: EnvironmentHost) extends ManagedEnvironment with appeng.Ne
       val i = drone.internalComponents.iterator
       while (i.hasNext){
         val item = i.next
-        if(item != null && item.getItem == ItemOCUpgrade.getInstance())
+        if(item != null && item.getItem.isInstanceOf[ItemOCUpgrade])
           return item
       }
     }
@@ -114,7 +114,7 @@ class UpgradeAE(host: EnvironmentHost) extends ManagedEnvironment with appeng.Ne
 
   def getAEKey(stack: ItemStack): Long = {
     try {
-      return WirelessHandlerUpgradeAE.getEncryptionKey(stack).toLong
+      return new WirelessHandlerUpgradeAE().getEncryptionKey(stack).toLong
     }
     catch {
       case _: Throwable =>
