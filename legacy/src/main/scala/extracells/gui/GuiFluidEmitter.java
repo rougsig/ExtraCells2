@@ -5,11 +5,9 @@ import extracells.container.ContainerFluidEmitter;
 import extracells.gui.widget.DigitTextField;
 import extracells.gui.widget.WidgetRedstoneModes;
 import extracells.gui.widget.fluid.WidgetFluidSlot;
-import extracells.integration.Integration;
 import extracells.network.packet.other.IFluidSlotGui;
 import extracells.network.packet.part.PacketFluidEmitter;
 import extracells.part.PartFluidLevelEmitter;
-import extracells.part.PartGasLevelEmitter;
 import extracells.registries.PartEnum;
 import extracells.util.GuiUtil;
 import net.minecraft.client.Minecraft;
@@ -149,13 +147,8 @@ public class GuiFluidEmitter extends ECGuiContainer implements IFluidSlotGui {
 	protected void mouseClicked(int mouseX, int mouseY, int mouseBtn) {
 		super.mouseClicked(mouseX, mouseY, mouseBtn);
 		if (GuiUtil.isPointInRegion(this.guiLeft, this.guiTop, this.fluidSlot.getPosX(), this.fluidSlot.getPosY(), 18, 18, mouseX, mouseY)){
-			if(part instanceof PartGasLevelEmitter && Integration.Mods.MEKANISMGAS.isEnabled())
-				this.fluidSlot.mouseClickedGas(this.player.inventory.getItemStack());
-			else
 				this.fluidSlot.mouseClicked(this.player.inventory.getItemStack());
 		}
-
-
 	}
 
 	public void setAmountField(long amount) {

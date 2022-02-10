@@ -5,8 +5,6 @@ import cpw.mods.fml.common.ModAPIManager;
 import cpw.mods.fml.relauncher.Side;
 import extracells.ExtracellsLegacy;
 import extracells.integration.igw.IGW;
-import extracells.integration.mekanism.Mekanism;
-import extracells.integration.mekanism.gas.MekanismGas;
 import extracells.integration.nei.Nei;
 import extracells.integration.opencomputers.OpenComputers;
 import extracells.integration.waila.Waila;
@@ -19,10 +17,8 @@ public class Integration {
 		OPENCOMPUTERS("OpenComputers"),
 		BCFUEL("BuildCraftAPI|fuels", "BuildCraftFuel"),
 		NEI("NotEnoughItems", Side.CLIENT),
-		MEKANISMGAS("MekanismAPI|gas", "MekanismGas"),
 		IGW("IGWMod", "IngameWikiMod", Side.CLIENT),
 		THAUMATICENERGISTICS("thaumicenergistics", "Thaumatic Energistics"),
-		MEKANISM("Mekanism"),
 		WIRELESSCRAFTING("ae2wct", "AE2 Wireless Crafting Terminal");
 		
 		private final String modID;
@@ -91,28 +87,17 @@ public class Integration {
 	
 	
 	public void preInit(){
-		if (Mods.IGW.correctSide() && Mods.IGW.shouldLoad)
-			IGW.initNotifier();
+		if (Mods.IGW.correctSide() && Mods.IGW.shouldLoad) IGW.initNotifier();
 	}
 	
 	public void init(){
-		if (Mods.WAILA.isEnabled())
-			Waila.init();
-		if (Mods.OPENCOMPUTERS.isEnabled())
-			OpenComputers.init();
-		if (Mods.NEI.isEnabled())
-			Nei.init();
-		if (Mods.MEKANISMGAS.isEnabled())
-			MekanismGas.init();
-		if (Mods.IGW.isEnabled())
-			IGW.init();
-		if(Mods.MEKANISM.isEnabled())
-			Mekanism.init();
+		if (Mods.WAILA.isEnabled()) Waila.init();
+		if (Mods.OPENCOMPUTERS.isEnabled()) OpenComputers.init();
+		if (Mods.NEI.isEnabled()) Nei.init();
+		if (Mods.IGW.isEnabled()) IGW.init();
 	}
 	
 	public void postInit(){
-		if (Mods.MEKANISMGAS.isEnabled())
-			MekanismGas.postInit();
 	}
 
 }

@@ -15,12 +15,6 @@ object OpenComputers {
 		Driver.add(new DriverOreDictExportBus.Provider)
 		Driver.add(new DriverFluidInterface)
 		Driver.add(new DriverFluidInterface.Provider)
-		if(Integration.Mods.MEKANISMGAS.isEnabled){
-			Driver.add(new DriverGasExportBus)
-			Driver.add(new DriverGasExportBus.Provider)
-			Driver.add(new DriverGasImportBus)
-			Driver.add(new DriverGasImportBus.Provider)
-		}
 		Driver.add(ItemOCUpgrade.getInstance())
 		Driver.add(ItemOCUpgrade.getInstance().Provider)
 		AEApi.instance.registries.wireless.registerWirelessHandler(WirelessHandlerUpgradeAE)

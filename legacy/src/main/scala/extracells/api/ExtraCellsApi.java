@@ -40,16 +40,12 @@ public interface ExtraCellsApi {
 	@Deprecated
 	public IWirelessFluidTermHandler getWirelessFluidTermHandler(ItemStack is);
 
-	public IWirelessGasFluidTermHandler getWirelessTermHandler(ItemStack is);
-
 	public boolean isWirelessFluidTerminal(ItemStack is);
 
 	public IItemDefinition items();
 
 	@Deprecated
 	public ItemStack openPortableCellGui(EntityPlayer player, ItemStack stack, World world);
-
-	public ItemStack openPortableGasCellGui(EntityPlayer player, ItemStack stack, World world);
 
 	public ItemStack openPortableFluidCellGui(EntityPlayer player, ItemStack stack, World world);
 
@@ -58,16 +54,11 @@ public interface ExtraCellsApi {
 
 	public ItemStack openWirelessFluidTerminal(EntityPlayer player, ItemStack stack, World world);
 
-	public ItemStack openWirelessGasTerminal(EntityPlayer player, ItemStack stack, World world);
-
 	@Deprecated
 	public ItemStack openWirelessTerminal(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, Long key);
 
 	public IPartDefinition parts();
 
-	public void registerWirelessTermHandler(IWirelessGasFluidTermHandler handler);
-
-	@Deprecated
 	public void registerWirelessFluidTermHandler(IWirelessFluidTermHandler handler);
 
 	/**
@@ -77,50 +68,4 @@ public interface ExtraCellsApi {
 	public void registryWirelessFluidTermHandler(IWirelessFluidTermHandler handler);
 
 	public void registerFuelBurnTime(Fluid fuel, int burnTime);
-
-	public boolean isGasStack(IAEFluidStack stack);
-
-	public boolean isGasStack(FluidStack stack);
-
-	public boolean isGas(Fluid fluid);
-
-	/**
-	 * Converts an IAEFluid stack to a GasStack
-	 *
-	 * @param fluidStack
-	 * @return GasStack
-     */
-	public Object createGasStack(IAEFluidStack fluidStack);
-
-	/**
-	 * Create the fluidstack from the specific gas
-	 *
-	 * @param gasStack
-	 * @return FluidStack
-     */
-	public IAEFluidStack createFluidStackFromGas(Object gasStack);
-
-	/**
-	 * Create the ec fluid from the specific gas
-	 *
-	 * @param gas
-	 * @return Fluid
-     */
-	public Fluid getGasFluid(Object gas);
-
-	/**
-	 * A registry for StorageBus interactions
-	 *
-	 * @param esh storage handler
-	 */
-	void addExternalStorageInterface( IExternalGasStorageHandler esh );
-
-	/**
-	 * @param te       tile entity
-	 * @param opposite direction
-	 * @param mySrc    source
-	 *
-	 * @return the handler for a given tile / forge direction
-	 */
-	IExternalGasStorageHandler getHandler(TileEntity te, ForgeDirection opposite, BaseActionSource mySrc );
 }

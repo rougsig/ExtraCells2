@@ -11,7 +11,7 @@ import net.minecraft.world.World
 object ItemWirelessTerminalFluid extends WirelessTermBase with IWirelessFluidTermHandler {
   private[item] var icon: IIcon = null
   def THIS = this
-  ECApi.instance.registerWirelessTermHandler(this)
+  ECApi.instance.registerWirelessFluidTermHandler(this)
 
   override def getIconFromDamage(dmg: Int): IIcon = this.icon
 

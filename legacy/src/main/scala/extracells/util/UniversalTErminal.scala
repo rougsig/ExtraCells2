@@ -10,13 +10,10 @@ import net.minecraft.item.ItemStack
 
 
 object UniversalTerminal {
-  val isMekLoaded = Mods.MEKANISMGAS.isEnabled
   val isThaLoaded = Mods.THAUMATICENERGISTICS.isEnabled
   val isWcLLoaded = Mods.WIRELESSCRAFTING.isEnabled
   val arrayLength = {
     var length = 2
-    if(isMekLoaded)
-      length += 1
     if(isThaLoaded)
       length += 1
     if(isWcLLoaded)
@@ -29,10 +26,6 @@ object UniversalTerminal {
     terminals.update(0, AEApi.instance.definitions.items.wirelessTerminal.maybeStack(1).get())
     terminals.update(1, ItemEnum.FLUIDWIRELESSTERMINAL.getSizedStack(1))
     var next = 2
-    if(isMekLoaded) {
-      terminals.update(next, ItemEnum.GASWIRELESSTERMINAL.getSizedStack(1))
-      next += 1
-    }
     if(isThaLoaded) {
       terminals.update(next, ThaumaticEnergistics.getWirelessTerminal)
       next += 1
@@ -46,11 +39,7 @@ object UniversalTerminal {
     val terminals = new Array[ItemStack](if (isWcLLoaded) arrayLength - 1 else arrayLength)
     terminals.update(0, AEApi.instance.definitions.parts.terminal.maybeStack(1).get())
     terminals.update(1, ItemEnum.PARTITEM.getDamagedStack(PartEnum.FLUIDTERMINAL.ordinal))
-    if(isMekLoaded) {
-      terminals.update(2, ItemEnum.PARTITEM.getDamagedStack(PartEnum.GASTERMINAL.ordinal))
-      if(isThaLoaded)
-        terminals.update(3, ThaumaticEnergistics.getTerminal)
-    }else if(isThaLoaded)
+    if(isThaLoaded)
       terminals.update(2, ThaumaticEnergistics.getTerminal)
     terminals
   }
@@ -67,9 +56,6 @@ object UniversalTerminal {
       return true
     val ecterm = ItemEnum.PARTITEM.getDamagedStack(PartEnum.FLUIDTERMINAL.ordinal)
     if(item == ecterm.getItem && meta == ecterm.getItemDamage)
-      return true
-    val ectermgas = ItemEnum.PARTITEM.getDamagedStack(PartEnum.GASTERMINAL.ordinal)
-    if(item == ectermgas.getItem && meta == ectermgas.getItemDamage)
       return true
     if(Mods.THAUMATICENERGISTICS.isEnabled){
       val thterm = ThaumaticEnergistics.getTerminal
@@ -91,9 +77,6 @@ object UniversalTerminal {
       return true
     val ecterm = ItemEnum.FLUIDWIRELESSTERMINAL.getDamagedStack(0)
     if(item == ecterm.getItem && meta == ecterm.getItemDamage)
-      return true
-    val ectermgas = ItemEnum.GASWIRELESSTERMINAL.getDamagedStack(0)
-    if(item == ectermgas.getItem && meta == ectermgas.getItemDamage)
       return true
     if(Mods.THAUMATICENERGISTICS.isEnabled){
       val thterm = ThaumaticEnergistics.getWirelessTerminal
@@ -121,9 +104,6 @@ object UniversalTerminal {
     val ecterm = ItemEnum.PARTITEM.getDamagedStack(PartEnum.FLUIDTERMINAL.ordinal)
     if(item == ecterm.getItem && meta == ecterm.getItemDamage)
       return TerminalType.FLUID
-    val ectermgas = ItemEnum.PARTITEM.getDamagedStack(PartEnum.GASTERMINAL.ordinal)
-    if(item == ectermgas.getItem && meta == ectermgas.getItemDamage)
-      return TerminalType.GAS
     if(Mods.THAUMATICENERGISTICS.isEnabled){
       val thterm = ThaumaticEnergistics.getTerminal
       if(item == thterm.getItem && meta == thterm.getItemDamage)
@@ -135,9 +115,6 @@ object UniversalTerminal {
     val ecterm2 = ItemEnum.FLUIDWIRELESSTERMINAL.getDamagedStack(0)
     if(item == ecterm2.getItem && meta == ecterm2.getItemDamage)
       return TerminalType.FLUID
-    val ectermgas2 = ItemEnum.GASWIRELESSTERMINAL.getDamagedStack(0)
-    if(item == ectermgas2.getItem && meta == ectermgas2.getItemDamage)
-      return TerminalType.GAS
     if(Mods.THAUMATICENERGISTICS.isEnabled){
       val thterm = ThaumaticEnergistics.getWirelessTerminal
       if(item == thterm.getItem && meta == thterm.getItemDamage)

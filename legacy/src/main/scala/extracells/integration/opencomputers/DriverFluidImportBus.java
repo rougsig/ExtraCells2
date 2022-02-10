@@ -3,7 +3,6 @@ package extracells.integration.opencomputers;
 import appeng.api.parts.IPart;
 import appeng.api.parts.IPartHost;
 import extracells.part.PartFluidImport;
-import extracells.part.PartGasImport;
 import extracells.registries.ItemEnum;
 import extracells.registries.PartEnum;
 import extracells.util.FluidUtil;
@@ -37,27 +36,28 @@ public class DriverFluidImportBus implements SidedBlock {
 	@Override
 	public ManagedEnvironment createEnvironment(World world, int x, int y, int z, ForgeDirection side) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile == null || (!(tile instanceof IPartHost)))
-			return null;
+		if ((!(tile instanceof IPartHost))) return null;
 		return new Enviroment((IPartHost) tile);
 	}
 	
 	private static PartFluidImport getImportBus(World world, int x, int y, int z, ForgeDirection dir){
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if (tile == null || (!(tile instanceof IPartHost)))
+		if ((!(tile instanceof IPartHost)))
 			return null;
 		IPartHost host = (IPartHost) tile;
 		if(dir == null || dir == ForgeDirection.UNKNOWN){
 			for (ForgeDirection side: ForgeDirection.VALID_DIRECTIONS){
 				IPart part = host.getPart(side);
-				if (part != null && part instanceof PartFluidImport &&!(part instanceof PartGasImport))
+				if (part instanceof PartFluidImport) {
 					return (PartFluidImport) part;
+				}
 			}
 			return null;
 		}else{
 			IPart part = host.getPart(dir);
-			if (part != null && part instanceof PartFluidImport &&!(part instanceof PartGasImport))
+			if (part instanceof PartFluidImport) {
 				return (PartFluidImport) part;
+			}
 			return null;
 		}
 	}
