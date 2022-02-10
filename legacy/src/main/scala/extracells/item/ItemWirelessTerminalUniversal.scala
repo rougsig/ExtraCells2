@@ -30,8 +30,8 @@ object ItemWirelessTerminalUniversal extends WirelessTermBase with IWirelessFlui
     ECApi.instance.registerWirelessFluidTermHandler(this)
     AEApi.instance.registries.wireless.registerWirelessHandler(this)
   }else{
-    ECApi.instance.registerWirelessFluidTermHandler(HandlerUniversalWirelessTerminal)
-    AEApi.instance.registries.wireless.registerWirelessHandler(HandlerUniversalWirelessTerminal)
+    ECApi.instance.registerWirelessFluidTermHandler(new HandlerUniversalWirelessTerminal())
+    AEApi.instance.registries.wireless.registerWirelessHandler(new HandlerUniversalWirelessTerminal())
   }
 
   override def isItemNormalWirelessTermToo(is: ItemStack): Boolean = true
