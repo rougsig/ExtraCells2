@@ -31,7 +31,7 @@ public enum ItemEnum {
 	}
 
 	ItemEnum(String _internalName, Item _item, Integration.Mods _mod){
-		this(_internalName, _item, _mod, ExtracellsLegacy.ModTab());
+		this(_internalName, _item, _mod, ExtracellsLegacy.ModTab);
 	}
 
 	ItemEnum(String _internalName, Item _item, Integration.Mods _mod, CreativeTabs creativeTab) {
@@ -40,7 +40,7 @@ public enum ItemEnum {
 		this.item.setUnlocalizedName("extracells." + this.internalName);
 		this.mod = _mod;
 		if ((creativeTab != null) && (_mod == null || _mod.isEnabled()))
-			this.item.setCreativeTab(ExtracellsLegacy.ModTab());
+			this.item.setCreativeTab(ExtracellsLegacy.ModTab);
 	}
 
 	public ItemStack getDamagedStack(int damage) {

@@ -28,13 +28,13 @@ public class IGW {
                             item.getSizedStack(1).getUnlocalizedName().replace(".", "/"));
                 } else if (item == ItemEnum.STORAGECOMPONENT || item == ItemEnum.STORAGECASING) {
                     List<ItemStack> list = new ArrayList<>();
-                    item.getItem().getSubItems(item.getItem(), ExtracellsLegacy.ModTab(), list);
+                    item.getItem().getSubItems(item.getItem(), ExtracellsLegacy.ModTab, list);
                     for (ItemStack stack : list) {
                         WikiRegistry.registerBlockAndItemPageEntry(stack, "extracells/item/crafting");
                     }
                 } else {
                     List<ItemStack> list = new ArrayList<>();
-                    item.getItem().getSubItems(item.getItem(), ExtracellsLegacy.ModTab(), list);
+                    item.getItem().getSubItems(item.getItem(), ExtracellsLegacy.ModTab, list);
                     for (ItemStack stack : list) {
                         WikiRegistry.registerBlockAndItemPageEntry(stack, stack.getUnlocalizedName().replace(".", "/"));
                     }
@@ -47,7 +47,7 @@ public class IGW {
         }
         for (BlockEnum block : BlockEnum.values()) {
             List<ItemStack> list = new ArrayList<>();
-            Item.getItemFromBlock(block.getBlock()).getSubItems(Item.getItemFromBlock(block.getBlock()), ExtracellsLegacy.ModTab(), list);
+            Item.getItemFromBlock(block.getBlock()).getSubItems(Item.getItemFromBlock(block.getBlock()), ExtracellsLegacy.ModTab, list);
             for (ItemStack stack : list) {
                 WikiRegistry.registerBlockAndItemPageEntry(stack, stack.getUnlocalizedName().replace(".", "/").replace("tile/", ""));
             }

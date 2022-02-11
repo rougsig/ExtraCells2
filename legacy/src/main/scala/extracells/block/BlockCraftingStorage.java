@@ -12,7 +12,7 @@ public class BlockCraftingStorage extends appeng.block.crafting.BlockCraftingSto
 
 	public BlockCraftingStorage() {
 		this.setTileEntity(TileEntityCraftingStorage.class);
-		this.setCreativeTab(ExtracellsLegacy.ModTab());
+		this.setCreativeTab(ExtracellsLegacy.ModTab);
 		this.hasSubtypes = true;
 		this.setBlockName("blockCraftingStorage");
 	}

@@ -19,7 +19,7 @@ public class ItemStorageCasing extends ItemECBase {
 	public ItemStorageCasing() {
 		setMaxDamage(0);
 		setHasSubtypes(true);
-		setCreativeTab(ExtracellsLegacy.ModTab());
+		setCreativeTab(ExtracellsLegacy.ModTab);
 	}
 
 	@Override

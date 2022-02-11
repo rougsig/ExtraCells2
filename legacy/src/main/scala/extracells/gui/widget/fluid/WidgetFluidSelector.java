@@ -52,7 +52,7 @@ public class WidgetFluidSelector extends AbstractFluidWidget {
 			return false;
 
 		String amountToText = Long.toString(this.amount) + "mB";
-		if (ExtracellsLegacy.shortenedBuckets()) {
+		if (ExtracellsLegacy.shortenedBuckets) {
 			if (this.amount > 1000000000L)
 				amountToText = Long.toString(this.amount / 1000000000L)
 						+ "MegaB";

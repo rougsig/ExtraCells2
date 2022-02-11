@@ -72,7 +72,7 @@ public class Integration {
 		}
 
 		private boolean correctSide(){
-			return ExtracellsLegacy.proxy().isClient() ? isOnClient() : isOnServer();
+			return ExtracellsLegacy.proxy.isClient() ? isOnClient() : isOnServer();
 		}
 		
 		

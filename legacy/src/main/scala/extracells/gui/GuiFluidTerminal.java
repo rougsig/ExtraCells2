@@ -63,7 +63,7 @@ public class GuiFluidTerminal extends GuiContainer implements IFluidSelectorGui 
 		if (this.currentFluid != null) {
 			long currentFluidAmount = this.currentFluid.getStackSize();
 			String amountToText = Long.toString(currentFluidAmount) + "mB";
-			if (ExtracellsLegacy.shortenedBuckets()) {
+			if (ExtracellsLegacy.shortenedBuckets) {
 				if (currentFluidAmount > 1000000000L)
 					amountToText = Long
 							.toString(currentFluidAmount / 1000000000L) + "MegaB";

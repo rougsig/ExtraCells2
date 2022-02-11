@@ -43,7 +43,7 @@ public enum BlockEnum {
 		this.itemBlockClass = _itemBlockClass;
 		this.mod = _mod;
 		if(_mod == null || _mod.isEnabled())
-			this.block.setCreativeTab(ExtracellsLegacy.ModTab());
+			this.block.setCreativeTab(ExtracellsLegacy.ModTab);
 	}
 
 	public Block getBlock() {

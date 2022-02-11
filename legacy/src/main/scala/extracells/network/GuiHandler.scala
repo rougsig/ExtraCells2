@@ -64,11 +64,11 @@ object GuiHandler extends IGuiHandler {
 
 	def launchGui(ID: Int, player: EntityPlayer, args: Array[Any]) {
 		temp = args
-		player.openGui(ExtracellsLegacy, ID, null, 0, 0, 0);
+		player.openGui(ExtracellsLegacy.instance, ID, null, 0, 0, 0);
 	}
 
 	def launchGui(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): Any =
-		player.openGui(ExtracellsLegacy, ID, world, x, y, z);
+		player.openGui(ExtracellsLegacy.instance, ID, world, x, y, z);
 
 	override def getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = {
 		val gui: Any = getGuiBlockElement(player, world, x, y, z)

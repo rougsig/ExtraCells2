@@ -20,7 +20,7 @@ public class Nei {
             if (item.getMod() != null && (!item.getMod().isEnabled())) {
                 Item i = item.getItem();
                 List<ItemStack> list = new ArrayList<>();
-                i.getSubItems(i, ExtracellsLegacy.ModTab(), list);
+                i.getSubItems(i, ExtracellsLegacy.ModTab, list);
                 for (ItemStack itemStack : list) {
                     API.hideItem(itemStack);
                 }
@@ -31,7 +31,7 @@ public class Nei {
             if (block.getMod() != null && (!block.getMod().isEnabled())) {
                 Block b = block.getBlock();
                 List<ItemStack> list = new ArrayList<>();
-                b.getSubBlocks(Item.getItemFromBlock(b), ExtracellsLegacy.ModTab(), list);
+                b.getSubBlocks(Item.getItemFromBlock(b), ExtracellsLegacy.ModTab, list);
                 for (ItemStack itemStack : list) {
                     API.hideItem(itemStack);
                 }
@@ -41,7 +41,7 @@ public class Nei {
 
     public static void init() {
         Nei.hideItems();
-        if (ExtracellsLegacy.proxy().isClient()) {
+        if (ExtracellsLegacy.proxy.isClient()) {
             UniversalTerminalRecipe handler = new UniversalTerminalRecipe();
             API.registerUsageHandler(handler);
             API.registerRecipeHandler(handler);
