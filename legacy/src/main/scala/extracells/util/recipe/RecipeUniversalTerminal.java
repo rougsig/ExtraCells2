@@ -3,7 +3,6 @@ package extracells.util.recipe;
 import appeng.api.features.INetworkEncodable;
 import appeng.api.implementations.items.IAEItemPowerStorage;
 import extracells.item.ItemWirelessTerminalUniversal;
-import extracells.item.ItemWirelessTerminalUniversal$;
 import extracells.item.TerminalType;
 import extracells.registries.ItemEnum;
 import extracells.util.UniversalTerminal;
@@ -23,6 +22,7 @@ public class RecipeUniversalTerminal implements IRecipe {
         boolean hasWireless = false;
         boolean isUniversal = false;
         boolean hasTerminal = false;
+        ItemWirelessTerminalUniversal itemUniversal = new ItemWirelessTerminalUniversal();
         List<TerminalType> terminals = new ArrayList<>();
         ItemStack terminal = null;
         int size = inventory.getSizeInventory();
@@ -30,7 +30,7 @@ public class RecipeUniversalTerminal implements IRecipe {
             ItemStack stack = inventory.getStackInSlot(i);
             if (stack != null) {
                 Item item = stack.getItem();
-                if (item == ItemWirelessTerminalUniversal.THIS()) {
+                if (item == itemUniversal) {
                     if (hasWireless) {
                         return false;
                     } else {
@@ -56,7 +56,7 @@ public class RecipeUniversalTerminal implements IRecipe {
         if (!(hasTerminal && hasWireless)) return false;
         if (isUniversal) {
             for (TerminalType terminalType : terminals) {
-                if (ItemWirelessTerminalUniversal.THIS().isInstalled(terminal, terminalType)) return false;
+                if (itemUniversal.isInstalled(terminal, terminalType)) return false;
             }
             return true;
         } else {
@@ -70,7 +70,7 @@ public class RecipeUniversalTerminal implements IRecipe {
 
     @Override
     public ItemStack getCraftingResult(InventoryCrafting inventory) {
-        ItemWirelessTerminalUniversal$ itemUniversal = ItemWirelessTerminalUniversal.THIS();
+        ItemWirelessTerminalUniversal itemUniversal = new ItemWirelessTerminalUniversal();
         boolean isUniversal = false;
         List<TerminalType> terminals = new ArrayList<>();
         ItemStack terminal = null;

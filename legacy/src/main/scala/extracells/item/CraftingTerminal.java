@@ -42,8 +42,8 @@ public interface CraftingTerminal extends IWirelessCraftingTerminalItem {
     @Optional.Method(modid = "ae2wct")
     @Override
     default boolean isWirelessCraftingEnabled(ItemStack itemStack) {
-        if (this == ItemWirelessTerminalUniversal.THIS()) {
-            return ItemWirelessTerminalUniversal.isInstalled(itemStack, TerminalType.CRAFTING);
+        if (this instanceof ItemWirelessTerminalUniversal) {
+            return ((ItemWirelessTerminalUniversal) this).isInstalled(itemStack, TerminalType.CRAFTING);
         } else {
             return true;
         }
