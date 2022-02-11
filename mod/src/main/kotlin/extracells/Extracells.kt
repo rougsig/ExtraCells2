@@ -85,7 +85,7 @@ object Extracells {
     VERSION = Loader.instance().activeModContainer().version
     configFolder = event.getModConfigurationDirectory()
 
-    NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler.THIS())
+    NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler())
 
     // Config
     val config =
