@@ -17,7 +17,7 @@ public enum ItemEnum {
 	STORAGECOMPONENT("storage.component", new ItemStorageComponent()),
 	STORAGECASING("storage.casing", new ItemStorageCasing()),
 	FLUIDITEM("fluid.item", new ItemFluid(), null, null), // Internal EC Item
-	FLUIDSTORAGEPORTABLE("storage.fluid.portable", ItemStoragePortableFluidCell.THIS()),
+	FLUIDSTORAGEPORTABLE("storage.fluid.portable", new ItemStoragePortableFluidCell()),
 	CRAFTINGPATTERN("pattern.crafting", new ItemInternalCraftingPattern(), null, null),// Internal EC Item
 	UNIVERSALTERMINAL("terminal.universal.wireless", ItemWirelessTerminalUniversal.THIS()),
 	OCUPGRADE("oc.upgrade", new ItemOCUpgrade().setTextureName("extracells:upgrade.oc"), Integration.Mods.OPENCOMPUTERS);
