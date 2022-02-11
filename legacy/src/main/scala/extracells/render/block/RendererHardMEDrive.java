@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL11;
 
 public class RendererHardMEDrive implements ISimpleBlockRenderingHandler {
 
-    static int renderID = 0;
+    public static int renderID = 0;
     static ResourceLocation tex = new ResourceLocation("extracells", "textures/blocks/hardmedrive.png");
 
     Icon i = new Icon(5, 11, 5, 7);

@@ -32,8 +32,7 @@ import net.minecraftforge.fluids.IFluidTank;
 
 import java.util.Objects;
 
-public class UpgradeAE extends ManagedEnvironment
-        implements li.cil.oc.integration.appeng.NetworkControl<TileSecurity>, li.cil.oc.integration.ec.NetworkControl<TileSecurity> {
+public class UpgradeAE extends ManagedEnvironment {
 
     public final Robot robot;
     public final Drone drone;

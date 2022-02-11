@@ -202,7 +202,7 @@ public class BlockHardMEDrive extends BlockEC implements TGuiBlock {
 
     @Override
     public int getRenderType() {
-        return RendererHardMEDrive.getRenderId();
+        return RendererHardMEDrive.renderID;
     }
 
     @SideOnly(Side.CLIENT)
