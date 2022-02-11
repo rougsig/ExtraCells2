@@ -12,7 +12,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import cpw.mods.fml.common.network.NetworkRegistry
 import extracells.integration.Integration
-import extracells.ExtracellsLegacy
 import extracells.network.ChannelHandler
 import extracells.network.GuiHandler
 import extracells.proxy.CommonProxy
@@ -41,6 +40,10 @@ object Extracells {
   )
   lateinit var proxy: CommonProxy
 
+  init {
+    ExtracellsLegacy.instance = this
+  }
+
   @JvmStatic
   @Mod.InstanceFactory
   fun instance() = Extracells
@@ -49,8 +52,8 @@ object Extracells {
   var VERSION = ""
 
   lateinit var configFolder: File
-  var shortenedBuckets = ExtracellsLegacy.THIS().shortenedBuckets()
-  var dynamicTypes = ExtracellsLegacy.THIS().dynamicTypes()
+  var shortenedBuckets = ExtracellsLegacy.shortenedBuckets
+  var dynamicTypes = ExtracellsLegacy.dynamicTypes
   val integration = Integration()
 
   @EventHandler
@@ -78,11 +81,11 @@ object Extracells {
 
   @EventHandler
   fun preInit(event: FMLPreInitializationEvent) {
-    ExtracellsLegacy.THIS().setProxy(this.proxy)
+    ExtracellsLegacy.proxy = this.proxy
     VERSION = Loader.instance().activeModContainer().version
     configFolder = event.getModConfigurationDirectory()
 
-    NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler.THIS())
+    NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler())
 
     // Config
     val config =
