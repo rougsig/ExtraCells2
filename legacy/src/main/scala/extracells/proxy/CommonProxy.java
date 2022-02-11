@@ -43,7 +43,7 @@ public class CommonProxy {
 			recipeHandler.parseRecipes(new InternalRecipeLoader(), "main.recipe");
 		}
 		recipeHandler.injectRecipes();
-		GameRegistry.addRecipe(RecipeUniversalTerminal.THIS());
+		GameRegistry.addRecipe(new RecipeUniversalTerminal());
 	}
 
 	public void registerBlocks() {
