@@ -54,6 +54,14 @@ sourceSets {
 }
 configurations.getByName("runtime").canBeResolved true
 
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
 apply plugin: 'forge'
 
 def projectJavaVersion = JavaLanguageVersion.of(8)
@@ -717,7 +725,18 @@ def getFile(String relativePath) {
     return new File(projectDir, relativePath)
 }
 
+test {
+    useJUnitPlatform()
+}
+
 // Extra code for multi module configuration
 dependencies {
     implementation project(":legacy")
+
+    // Do not update to 5.x version
+    // That issue https://github.com/kotest/kotest/issues/2785
+    // We have kotlin < 1.6 on the classpath, thx to forgelin
+    testImplementation 'io.kotest:kotest-runner-junit5:4.6.4'
+    testImplementation 'io.kotest:kotest-assertions-core:4.6.4'
+    testImplementation 'io.kotest:kotest-property:4.6.4'
 }
