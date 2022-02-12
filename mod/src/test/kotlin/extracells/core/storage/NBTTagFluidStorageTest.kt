@@ -41,7 +41,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
       val extractedAmount = storage.extract("lava", 1000)
 
       // Assert
-      extractedAmount shouldBeExactly 1000
+      extractedAmount shouldBeExactly 0
       storage.nbtTag.toString() shouldBe "{fluids:{},}"
     }
   }
