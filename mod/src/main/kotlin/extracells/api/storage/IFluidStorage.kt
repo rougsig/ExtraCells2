@@ -1,4 +1,4 @@
-package extracells.core.storage
+package extracells.api.storage
 
 interface IFluidStorage {
   /**
@@ -24,4 +24,8 @@ interface IFluidStorage {
    * without extraction from storage
    */
   fun simulateExtract(fluidName: String, amount: Int): Int
+
+  // TODO:
+  //  maybe create data class for fluid
+  val storedFluids: List<Pair<String, Int>>
 }

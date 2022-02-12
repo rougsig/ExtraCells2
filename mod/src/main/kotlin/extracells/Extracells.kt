@@ -11,6 +11,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent
 import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import cpw.mods.fml.common.network.NetworkRegistry
+import extracells.core.storage.FluidCellHandler
 import extracells.debug.ShowNBTCommand
 import extracells.integration.Integration
 import extracells.network.ChannelHandler
@@ -18,13 +19,13 @@ import extracells.network.GuiHandler
 import extracells.proxy.CommonProxy
 import extracells.render.RenderHandler
 import extracells.util.ExtraCellsEventHandler
-import extracells.util.FluidCellHandler
 import extracells.util.NameHandler
 import extracells.wireless.AEWirelessTermHandler
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Configuration
 import java.io.File
+import extracells.util.FluidCellHandler as LegacyFluidCellHandler
 
 @Mod(
   modid = "extracells",
@@ -35,6 +36,8 @@ import java.io.File
   modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter",
 )
 object Extracells {
+  private const val IS_LEGACY_FLUID_CELL_HANDLER_ENABLED = false
+
   @JvmStatic
   @SidedProxy(
     clientSide = "extracells.proxy.ClientProxy",
@@ -62,7 +65,8 @@ object Extracells {
   fun init(event: FMLInitializationEvent) {
     AEApi.instance().registries().recipes().addNewSubItemResolver(NameHandler())
     AEApi.instance().registries().wireless().registerWirelessHandler(AEWirelessTermHandler())
-    AEApi.instance().registries().cell().addCellHandler(FluidCellHandler())
+    AEApi.instance().registries().cell()
+      .addCellHandler(if (IS_LEGACY_FLUID_CELL_HANDLER_ENABLED) LegacyFluidCellHandler() else FluidCellHandler())
     val handler = ExtraCellsEventHandler()
     FMLCommonHandler.instance().bus().register(handler)
     MinecraftForge.EVENT_BUS.register(handler)
