@@ -5,6 +5,7 @@ import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEFluidStack;
 import cpw.mods.fml.common.network.IGuiHandler;
 import extracells.ExtracellsLegacy;
+import extracells.MyKotlinCode;
 import extracells.api.IFluidInterface;
 import extracells.api.IPortableFluidStorageCell;
 import extracells.api.IWirelessFluidTermHandler;
@@ -29,6 +30,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class GuiHandler implements IGuiHandler {
+
+    // Just check for cross compilation
+    // Be clear to delete that constructor
+    public GuiHandler() {
+        if (System.currentTimeMillis() == 1) {
+            MyKotlinCode.INSTANCE.doMagic();
+        }
+    }
 
     public static Object[] temp = new Object[]{};
 
