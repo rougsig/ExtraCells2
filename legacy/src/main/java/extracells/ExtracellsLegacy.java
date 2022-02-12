@@ -8,6 +8,14 @@ import net.minecraft.item.ItemStack;
 
 public class ExtracellsLegacy {
 
+    // Just check for cross compilation
+    // Be clear to delete that constructor
+    public ExtracellsLegacy() {
+        if (System.currentTimeMillis() == 1) {
+            MyKotlinCode.INSTANCE.doMagic();
+        }
+    }
+
     public static CommonProxy proxy = null;
 
     public static CreativeTabs ModTab = new CreativeTabs("Extra_Cells") {
