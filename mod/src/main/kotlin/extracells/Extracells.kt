@@ -11,9 +11,11 @@ import cpw.mods.fml.common.event.FMLInitializationEvent
 import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import cpw.mods.fml.common.network.NetworkRegistry
+import cpw.mods.fml.common.registry.GameRegistry
 import extracells.core.storage.FluidCellHandler
 import extracells.debug.ShowNBTCommand
 import extracells.integration.Integration
+import extracells.item.EC2Item
 import extracells.network.ChannelHandler
 import extracells.network.GuiHandler
 import extracells.proxy.CommonProxy
@@ -21,6 +23,9 @@ import extracells.render.RenderHandler
 import extracells.util.ExtraCellsEventHandler
 import extracells.util.NameHandler
 import extracells.wireless.AEWirelessTermHandler
+import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Configuration
@@ -61,12 +66,22 @@ object Extracells {
   var dynamicTypes = ExtracellsLegacy.dynamicTypes
   val integration = Integration()
 
+  val creativeTab = object : CreativeTabs("ExtraCellsV2") {
+    override fun getIconItemStack(): ItemStack {
+      return ItemStack(EC2Item.FluidCell.item)
+    }
+
+    override fun getTabIconItem(): Item {
+      return EC2Item.FluidCell.item
+    }
+  }
+
   @EventHandler
   fun init(event: FMLInitializationEvent) {
     AEApi.instance().registries().recipes().addNewSubItemResolver(NameHandler())
     AEApi.instance().registries().wireless().registerWirelessHandler(AEWirelessTermHandler())
-    AEApi.instance().registries().cell()
-      .addCellHandler(if (IS_LEGACY_FLUID_CELL_HANDLER_ENABLED) LegacyFluidCellHandler() else FluidCellHandler())
+    if (IS_LEGACY_FLUID_CELL_HANDLER_ENABLED)
+      AEApi.instance().registries().cell().addCellHandler(LegacyFluidCellHandler())
     val handler = ExtraCellsEventHandler()
     FMLCommonHandler.instance().bus().register(handler)
     MinecraftForge.EVENT_BUS.register(handler)
@@ -81,6 +96,8 @@ object Extracells {
 
     // New
     ClientCommandHandler.instance.registerCommand(ShowNBTCommand())
+    if (!IS_LEGACY_FLUID_CELL_HANDLER_ENABLED)
+      AEApi.instance().registries().cell().addCellHandler(FluidCellHandler())
   }
 
   @EventHandler
@@ -115,5 +132,11 @@ object Extracells {
     proxy.registerItems()
     proxy.registerBlocks()
     integration.preInit()
+
+    // New
+    // TODO:
+    //  Move to CommonProxy
+    EC2Item.values()
+      .forEach { GameRegistry.registerItem(it.item, it.itemName) }
   }
 }

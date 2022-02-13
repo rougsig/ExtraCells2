@@ -1,6 +1,6 @@
 package extracells.api.storage
 
-interface IFluidStorage {
+internal interface IFluidStorage {
   /**
    * @return not injected amount
    * Example: [amount] = 1000, in storage 600, returns will be 400

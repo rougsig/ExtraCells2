@@ -5,7 +5,7 @@ import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.ChatComponentTranslation
 
-class ShowNBTCommand : CommandBase() {
+internal class ShowNBTCommand : CommandBase() {
   override fun getCommandName(): String {
     return "nbt"
   }
