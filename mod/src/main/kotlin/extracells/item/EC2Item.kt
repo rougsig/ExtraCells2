@@ -1,0 +1,19 @@
+package extracells.item
+
+import extracells.Extracells
+import net.minecraft.item.Item
+
+internal enum class EC2Item(
+  val itemName: String,
+  val item: Item,
+) {
+  FluidCell(
+    itemName = "extracells.v2.storage.fluid",
+    item = FluidCellItem(),
+  );
+
+  init {
+    item.unlocalizedName = this.itemName
+    item.creativeTab = Extracells.creativeTab
+  }
+}

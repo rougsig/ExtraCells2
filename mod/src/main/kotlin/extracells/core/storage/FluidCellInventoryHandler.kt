@@ -9,7 +9,7 @@ import appeng.api.storage.ISaveProvider
 import appeng.api.storage.StorageChannel
 import appeng.api.storage.data.IAEFluidStack
 import appeng.api.storage.data.IItemList
-import extracells.api.IFluidStorageCell
+import extracells.api.storage.IFluidCell
 import extracells.api.storage.IFluidStorage
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
@@ -26,17 +26,21 @@ internal class FluidCellInventoryHandler(
 
   init {
     if (!itemStack.hasTagCompound()) itemStack.tagCompound = NBTTagCompound()
-
-    val totalTypes = (itemStack.item as IFluidStorageCell).getMaxTypes(itemStack)
-    val totalBytes = (itemStack.item as IFluidStorageCell).getMaxBytes(itemStack)
+    val cell = itemStack.item as IFluidCell
 
     this.storage = NBTTagFluidStorage(
       itemStack.tagCompound,
-      maxTypes = totalTypes,
-      typeSize = 0, // TODO: pass type size to cell
-      size = totalBytes,
+      maxTypes = cell.getMaxTypes(itemStack),
+      typeSize = cell.getTypeSize(itemStack),
+      size = cell.getSize(itemStack),
     )
   }
+
+  // TODO:
+  //  implement real statusForCell logic
+  //  also create enum class instead Int
+  val statusForCell: Int
+    get() = 1
 
   override fun injectItems(input: IAEFluidStack, mode: Actionable, src: BaseActionSource?): IAEFluidStack {
     val fluidName = FluidRegistry.getFluidName(input.fluid)
