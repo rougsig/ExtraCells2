@@ -16,7 +16,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
 
       // Assert
       notInjectedAmount shouldBeExactly 0
-      storage.nbtTag.toString() shouldBe "{fluids:{lava:1000,},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{lava:1000,},}"
     }
 
     expect("inject different types of fluid separately") {
@@ -30,7 +30,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
       // Assert
       notInjectedLavaAmount shouldBeExactly 0
       notInjectedWaterAmount shouldBeExactly 0
-      storage.nbtTag.toString() shouldBe "{fluids:{lava:1000,water:1000,},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{lava:1000,water:1000,},}"
     }
 
     expect("extract fluid") {
@@ -42,7 +42,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
 
       // Assert
       extractedAmount shouldBeExactly 0
-      storage.nbtTag.toString() shouldBe "{fluids:{},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{},}"
     }
   }
 
@@ -57,7 +57,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
 
       // Assert
       notInjectedAmount shouldBeExactly 0
-      storage.nbtTag.toString() shouldBe "{fluids:{lava:2000,},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{lava:2000,},}"
     }
 
     expect("extract fluid should remove amount from stored fluid") {
@@ -70,7 +70,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
 
       // Assert
       extractedAmount shouldBeExactly 1000
-      storage.nbtTag.toString() shouldBe "{fluids:{lava:1000,},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{lava:1000,},}"
     }
 
     expect("not inject fluid if max types exceeded") {
@@ -84,7 +84,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
 
       // Assert
       notInjectedAmount shouldBeExactly 1000
-      storage.nbtTag.toString() shouldBe "{fluids:{fluid1:1000,fluid2:1000,},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{fluid1:1000,fluid2:1000,},}"
     }
 
     expect("extract fluid should remove empty fluid type") {
@@ -97,7 +97,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
 
       // Assert
       extractedAmount shouldBeExactly 2000
-      storage.nbtTag.toString() shouldBe "{fluids:{},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{},}"
     }
 
     expect("inject according size limit") {
@@ -111,7 +111,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
       // Assert
       notInjectedAmount shouldBeExactly 400
       storage.freeSpace shouldBeExactly 0
-      storage.nbtTag.toString() shouldBe "{fluids:{lava:1600,},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{lava:1600,},}"
     }
 
     expect("extract according stored limit") {
@@ -124,7 +124,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
 
       // Assert
       extractedAmount shouldBeExactly 1600
-      storage.nbtTag.toString() shouldBe "{fluids:{},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{},}"
     }
   }
 
@@ -140,7 +140,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
       // Assert
       notInjectedAmount shouldBeExactly 1000
       storage.freeSpace shouldBeExactly 0
-      storage.nbtTag.toString() shouldBe "{fluids:{lava:1000,},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{lava:1000,},}"
     }
 
     expect("calculate extracted amount") {
@@ -154,7 +154,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
       // Assert
       extractedAmount shouldBeExactly 1000
       storage.freeSpace shouldBeExactly 1000
-      storage.nbtTag.toString() shouldBe "{fluids:{},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{},}"
     }
 
     expect("calculate injected types") {
@@ -168,7 +168,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
       // Assert
       notInjectedAmount shouldBeExactly 1000
       storage.freeSpace shouldBeExactly 0
-      storage.nbtTag.toString() shouldBe "{fluids:{lava:1000,},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{lava:1000,},}"
     }
 
     expect("calculate extracted types") {
@@ -182,7 +182,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
       // Assert
       extractedAmount shouldBeExactly 1000
       storage.freeSpace shouldBeExactly 2000
-      storage.nbtTag.toString() shouldBe "{fluids:{},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{},}"
     }
 
     expect("not calculate already injected types") {
@@ -197,7 +197,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
       // Assert
       notInjectedAmount shouldBeExactly 1000
       storage.freeSpace shouldBeExactly 0
-      storage.nbtTag.toString() shouldBe "{fluids:{lava:2000,},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{lava:2000,},}"
     }
 
     expect("not calculate already extracted types") {
@@ -211,7 +211,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
 
       // Assert
       storage.freeSpace shouldBeExactly 2000
-      storage.nbtTag.toString() shouldBe "{fluids:{},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{},}"
     }
   }
 
@@ -224,7 +224,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
       storage.simulateInject("lava", 1000)
 
       // Assert
-      storage.nbtTag.toString() shouldBe "{fluids:{},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{},}"
     }
 
     expect("extract not save in nbt") {
@@ -236,7 +236,7 @@ class NBTTagFluidStorageTest : ExpectSpec({
       storage.simulateExtract("lava", 1000)
 
       // Assert
-      storage.nbtTag.toString() shouldBe "{fluids:{lava:1000,},}"
+      storage.nbtTag.toString() shouldBe "{storageVersion:1,fluids:{lava:1000,},}"
     }
 
     expect("inject not change freeSpace") {

@@ -1,6 +1,6 @@
 package extracells.item
 
-import extracells.Extracells
+import extracells.ExtraCells
 import net.minecraft.item.Item
 
 internal enum class EC2Item(
@@ -14,6 +14,6 @@ internal enum class EC2Item(
 
   init {
     item.unlocalizedName = this.itemName
-    item.creativeTab = Extracells.creativeTab
+    item.creativeTab = ExtraCells.creativeTab
   }
 }

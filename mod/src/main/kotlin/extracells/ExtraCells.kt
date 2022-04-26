@@ -14,6 +14,7 @@ import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.registry.GameRegistry
 import extracells.core.storage.FluidCellHandler
 import extracells.debug.ShowNBTCommand
+import extracells.feature.ECBlock
 import extracells.integration.Integration
 import extracells.item.EC2Item
 import extracells.network.ChannelHandler
@@ -40,8 +41,9 @@ import extracells.util.FluidCellHandler as LegacyFluidCellHandler
   dependencies = "required-after:forgelin;after:LogisticsPipes|Main;after:Waila;required-after:appliedenergistics2",
   modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter",
 )
-object Extracells {
+object ExtraCells {
   private const val IS_LEGACY_FLUID_CELL_HANDLER_ENABLED = false
+  private const val IS_LEGACY_BLOCKS_ENABLED = false
 
   @JvmStatic
   @SidedProxy(
@@ -56,7 +58,7 @@ object Extracells {
 
   @JvmStatic
   @Mod.InstanceFactory
-  fun instance() = Extracells
+  fun instance() = ExtraCells
 
   @JvmStatic
   var VERSION = ""
@@ -66,7 +68,7 @@ object Extracells {
   var dynamicTypes = ExtracellsLegacy.dynamicTypes
   val integration = Integration()
 
-  val creativeTab = object : CreativeTabs("ExtraCellsV2") {
+  val creativeTab = object : CreativeTabs("ExtraCells") {
     override fun getIconItemStack(): ItemStack {
       return ItemStack(EC2Item.FluidCell.item)
     }
@@ -130,7 +132,6 @@ object Extracells {
     config.save()
 
     proxy.registerItems()
-    proxy.registerBlocks()
     integration.preInit()
 
     // New
@@ -138,5 +139,12 @@ object Extracells {
     //  Move to CommonProxy
     EC2Item.values()
       .forEach { GameRegistry.registerItem(it.item, it.itemName) }
+
+    if (IS_LEGACY_BLOCKS_ENABLED) {
+      proxy.registerBlocks()
+    } else {
+      ECBlock.values()
+        .forEach { GameRegistry.registerBlock(it.block, it.itemClass, it.block.internalName) }
+    }
   }
 }
