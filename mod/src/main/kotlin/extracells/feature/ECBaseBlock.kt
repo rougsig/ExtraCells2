@@ -9,7 +9,8 @@ internal abstract class ECBaseBlock(
   val internalName: String,
   hardness: Float = 2f,
   resistance: Float = 10f,
-): BlockContainer(Material.iron) {
+  material: Material = Material.iron,
+): BlockContainer(material) {
   private val fullName = "extracells.block.$internalName"
 
   init {
