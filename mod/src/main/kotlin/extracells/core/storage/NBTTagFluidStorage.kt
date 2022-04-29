@@ -61,6 +61,8 @@ internal class NBTTagFluidStorage(
    * without injection to storage
    */
   override fun simulateInject(fluidName: String, amount: Int): Int {
+    // TODO: optimize work without copy
+    //  to prevent extra gc overhead
     return this.copy().inject(fluidName, amount)
   }
 
@@ -85,6 +87,8 @@ internal class NBTTagFluidStorage(
    * without extraction from storage
    */
   override fun simulateExtract(fluidName: String, amount: Int): Int {
+    // TODO: optimize work without copy
+    //  to prevent extra gc overhead
     return this.copy().extract(fluidName, amount)
   }
 

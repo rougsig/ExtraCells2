@@ -25,7 +25,21 @@ internal class CertusTankTileEntity : TileEntity(), IFluidHandler {
     doFill: Boolean,
     isRootFill: Boolean,
   ): Int {
-    return this.storage.fill(resource, doFill)
+    if (!isRootFill) return this.storage.fill(resource, doFill)
+
+    val tower = this.getTankTower()
+
+    var needToFillAmount = resource.amount
+    val iterator = tower.iterator()
+    while (needToFillAmount > 0 && iterator.hasNext()) {
+      val tank = iterator.next()
+      // TODO: optimize work with Int and Fluid, not with FluidStack
+      //  to prevent extra gc overhead
+      val filled = tank.fillInternal(FluidStack(resource, needToFillAmount), doFill, isRootFill = false)
+      needToFillAmount -= filled
+    }
+
+    return resource.amount - needToFillAmount
   }
 
   override fun drain(from: ForgeDirection?, resource: FluidStack?, doDrain: Boolean): FluidStack? {
@@ -46,7 +60,9 @@ internal class CertusTankTileEntity : TileEntity(), IFluidHandler {
   }
 
   override fun canFill(from: ForgeDirection?, fluid: Fluid?): Boolean {
-    return true
+    return fluid != null
+      && this.storage.fluidAmount < CERTUS_TANK_CAPACITY
+      && (this.storage.fluid == null || this.storage.fluid.getFluid() == fluid)
   }
 
   override fun canDrain(from: ForgeDirection?, fluid: Fluid?): Boolean {
@@ -55,10 +71,6 @@ internal class CertusTankTileEntity : TileEntity(), IFluidHandler {
   }
 
   override fun getTankInfo(from: ForgeDirection?): Array<FluidTankInfo> {
-    return arrayOf(getTankInfoInternal(isRootTank = true))
-  }
-
-  private fun getTankInfoInternal(isRootTank: Boolean): FluidTankInfo {
     val tower = this.getTankTower()
 
     val amount = tower.sumOf { it.storage.fluidAmount }
@@ -66,7 +78,7 @@ internal class CertusTankTileEntity : TileEntity(), IFluidHandler {
       ?.let { FluidStack(it, amount) }
 
     val capacity = tower.size * CERTUS_TANK_CAPACITY
-    return FluidTankInfo(fluid, capacity)
+    return arrayOf(FluidTankInfo(fluid, capacity))
   }
 
   private fun getTankTower(): List<CertusTankTileEntity> {
