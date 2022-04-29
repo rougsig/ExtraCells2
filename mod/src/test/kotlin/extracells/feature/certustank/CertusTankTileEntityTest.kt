@@ -1,6 +1,7 @@
 package extracells.feature.certustank
 
 import cpw.mods.fml.common.Loader
+import extracells.core.entity.FluidStack
 import extracells.extension.toMap
 import extracells.feature.ECBlock
 import io.kotest.core.spec.style.ExpectSpec
@@ -17,9 +18,8 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids.FluidRegistry
-import net.minecraftforge.fluids.FluidStack
 
-class CertusTankTileEntityTest : ExpectSpec({
+internal class CertusTankTileEntityTest : ExpectSpec({
   context("single tank") {
     lateinit var entity: CertusTankTileEntity
     lateinit var world: World
@@ -45,8 +45,8 @@ class CertusTankTileEntityTest : ExpectSpec({
 
         // Act
         val filled = entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doFill = true,
         )
 
@@ -64,8 +64,8 @@ class CertusTankTileEntityTest : ExpectSpec({
 
         // Act
         val filled = entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, CERTUS_TANK_CAPACITY + 4000),
+          fluidName = "lava",
+          amount = CERTUS_TANK_CAPACITY + 4000,
           doFill = true,
         )
 
@@ -83,15 +83,34 @@ class CertusTankTileEntityTest : ExpectSpec({
 
         // Act
         val drained = entity.drain(
-          from = ForgeDirection.UNKNOWN,
-          maxDrain = 1000,
+          fluidName = null,
+          amount = 1000,
           doDrain = true,
         )
 
         // Assert
-        drained shouldBe null
+        drained shouldBe extracells.core.entity.FluidStack.Empty
         entity.nbt shouldContainAll mapOf(
           "Empty" to NBTTagString("")
+        )
+      }
+
+      expect("drain fluid coalesce with limit") {
+        // Arrange
+        // no-op
+
+        // Act
+        val filled = entity.fill(
+          fluidName = "lava",
+          amount = CERTUS_TANK_CAPACITY + 4000,
+          doFill = true,
+        )
+
+        // Assert
+        filled shouldBe CERTUS_TANK_CAPACITY
+        entity.nbt shouldContainAll mapOf(
+          "FluidName" to NBTTagString("lava"),
+          "Amount" to NBTTagInt(CERTUS_TANK_CAPACITY),
         )
       }
     }
@@ -100,15 +119,15 @@ class CertusTankTileEntityTest : ExpectSpec({
       expect("fill fluid if stored the same type") {
         // Arrange
         entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doFill = true,
         )
 
         // Act
         val filled = entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doFill = true,
         )
 
@@ -123,15 +142,15 @@ class CertusTankTileEntityTest : ExpectSpec({
       expect("not fill fluid if stored not the same type") {
         // Arrange
         entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doFill = true,
         )
 
         // Act
         val filled = entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.WATER, 1000),
+          fluidName = "water",
+          amount = 1000,
           doFill = true,
         )
 
@@ -146,15 +165,15 @@ class CertusTankTileEntityTest : ExpectSpec({
       expect("fill fluid coalesce with limit") {
         // Arrange
         entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doFill = true,
         )
 
         // Act
         val filled = entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, CERTUS_TANK_CAPACITY),
+          fluidName = "lava",
+          amount = CERTUS_TANK_CAPACITY,
           doFill = true,
         )
 
@@ -169,20 +188,20 @@ class CertusTankTileEntityTest : ExpectSpec({
       expect("drain fluid the same type") {
         // Arrange
         entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doFill = true,
         )
 
         // Act
         val drained = entity.drain(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doDrain = true,
         )
 
         // Assert
-        drained shouldBe FluidStack(FluidRegistry.LAVA, 1000)
+        drained shouldBe FluidStack("lava", 1000)
         entity.nbt shouldContainAll mapOf(
           "Empty" to NBTTagString(""),
         )
@@ -191,20 +210,20 @@ class CertusTankTileEntityTest : ExpectSpec({
       expect("drain fluid not the same type") {
         // Arrange
         entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doFill = true,
         )
 
         // Act
         val drained = entity.drain(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.WATER, 1000),
+          fluidName = "water",
+          amount = 1000,
           doDrain = true,
         )
 
         // Assert
-        drained shouldBe null
+        drained shouldBe FluidStack.Empty
         entity.nbt shouldContainAll mapOf(
           "FluidName" to NBTTagString("lava"),
           "Amount" to NBTTagInt(1000),
@@ -214,20 +233,20 @@ class CertusTankTileEntityTest : ExpectSpec({
       expect("drain fluid coalesce with limit") {
         // Arrange
         entity.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doFill = true,
         )
 
         // Act
         val drained = entity.drain(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 2000),
+          fluidName = "lava",
+          amount = 2000,
           doDrain = true,
         )
 
         // Assert
-        drained shouldBe FluidStack(FluidRegistry.LAVA, 1000)
+        drained shouldBe extracells.core.entity.FluidStack("lava", 1000)
         entity.nbt shouldContainAll mapOf(
           "Empty" to NBTTagString(""),
         )
@@ -297,8 +316,8 @@ class CertusTankTileEntityTest : ExpectSpec({
 
         // Act
         val filled = entity3.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doFill = true,
         )
 
@@ -325,13 +344,13 @@ class CertusTankTileEntityTest : ExpectSpec({
 
         // Act
         val filledLava = entity3.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, 1000),
+          fluidName = "lava",
+          amount = 1000,
           doFill = true,
         )
         val filledWater = entity3.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.WATER, 1000),
+          fluidName = "water",
+          amount = 1000,
           doFill = true,
         )
 
@@ -360,8 +379,8 @@ class CertusTankTileEntityTest : ExpectSpec({
 
         // Act
         val filled = entity3.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, CERTUS_TANK_CAPACITY * 4),
+          fluidName = "lava",
+          amount = CERTUS_TANK_CAPACITY * 4,
           doFill = true,
         )
 
@@ -391,8 +410,8 @@ class CertusTankTileEntityTest : ExpectSpec({
 
         // Act
         val filled = entity3.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, CERTUS_TANK_CAPACITY * 5),
+          fluidName = "lava",
+          amount = CERTUS_TANK_CAPACITY * 5,
           doFill = true,
         )
 
@@ -421,13 +440,13 @@ class CertusTankTileEntityTest : ExpectSpec({
       expect("valid tank info") {
         // Arrange
         entity4.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, CERTUS_TANK_CAPACITY + CERTUS_TANK_CAPACITY / 2),
+          fluidName = "lava",
+          amount = CERTUS_TANK_CAPACITY + CERTUS_TANK_CAPACITY / 2,
           doFill = true,
         )
         entity4.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.WATER, CERTUS_TANK_CAPACITY + CERTUS_TANK_CAPACITY / 2),
+          fluidName = "water",
+          amount = CERTUS_TANK_CAPACITY + CERTUS_TANK_CAPACITY / 2,
           doFill = true,
         )
 
@@ -448,32 +467,32 @@ class CertusTankTileEntityTest : ExpectSpec({
       expect("drain fluid coalesce with limit") {
         // Arrange
         entity3.fill(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, CERTUS_TANK_CAPACITY * 3),
+          fluidName = "lava",
+          amount = CERTUS_TANK_CAPACITY * 3,
           doFill = true,
         )
 
         // Act
         val drained = entity1.drain(
-          from = ForgeDirection.UNKNOWN,
-          resource = FluidStack(FluidRegistry.LAVA, CERTUS_TANK_CAPACITY * 4),
+          fluidName = "lava",
+          amount = CERTUS_TANK_CAPACITY * 4,
           doDrain = true,
         )
 
         // Assert
-        drained shouldBe FluidStack(FluidRegistry.LAVA, CERTUS_TANK_CAPACITY * 3)
-//        entity1.nbt shouldContainAll mapOf(
-//          "Empty" to NBTTagString(""),
-//        )
-//        entity2.nbt shouldContainAll mapOf(
-//          "Empty" to NBTTagString(""),
-//        )
-//        entity3.nbt shouldContainAll mapOf(
-//          "Empty" to NBTTagString(""),
-//        )
-//        entity4.nbt shouldContainAll mapOf(
-//          "Empty" to NBTTagString(""),
-//        )
+        drained shouldBe FluidStack("lava", CERTUS_TANK_CAPACITY * 3)
+        entity1.nbt shouldContainAll mapOf(
+          "Empty" to NBTTagString(""),
+        )
+        entity2.nbt shouldContainAll mapOf(
+          "Empty" to NBTTagString(""),
+        )
+        entity3.nbt shouldContainAll mapOf(
+          "Empty" to NBTTagString(""),
+        )
+        entity4.nbt shouldContainAll mapOf(
+          "Empty" to NBTTagString(""),
+        )
       }
     }
   }
