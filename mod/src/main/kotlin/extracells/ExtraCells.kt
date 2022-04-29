@@ -15,12 +15,14 @@ import cpw.mods.fml.common.registry.GameRegistry
 import extracells.core.storage.FluidCellHandler
 import extracells.debug.ShowNBTCommand
 import extracells.feature.ECBlock
+import extracells.feature.certustank.CertusTankTileEntity
 import extracells.integration.Integration
 import extracells.item.EC2Item
 import extracells.network.ChannelHandler
 import extracells.network.GuiHandler
 import extracells.proxy.CommonProxy
 import extracells.render.RenderHandler
+import extracells.tileentity.TileEntityCertusTank
 import extracells.util.ExtraCellsEventHandler
 import extracells.util.NameHandler
 import extracells.wireless.AEWirelessTermHandler
@@ -98,6 +100,7 @@ object ExtraCells {
 
     // New
     ClientCommandHandler.instance.registerCommand(ShowNBTCommand())
+    GameRegistry.registerTileEntity(CertusTankTileEntity::class.java, "tileEntityCertusTank")
     if (!IS_LEGACY_FLUID_CELL_HANDLER_ENABLED)
       AEApi.instance().registries().cell().addCellHandler(FluidCellHandler())
   }

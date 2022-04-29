@@ -75,7 +75,6 @@ public class CommonProxy {
 	}
 
 	public void registerTileEntities() {
-		GameRegistry.registerTileEntity(TileEntityCertusTank.class, "tileEntityCertusTank");
 		GameRegistry.registerTileEntity(TileEntityWalrus.class, "tileEntityWalrus");
 		GameRegistry.registerTileEntity(TileEntityFluidCrafter.class, "tileEntityFluidCrafter");
 		GameRegistry.registerTileEntity(TileEntityFluidInterface.class, "tileEntityFluidInterface");
