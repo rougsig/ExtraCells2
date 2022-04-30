@@ -30,14 +30,14 @@ internal class CertusTankTileEntity : TileEntity(), IFluidHandler {
     while (needToFillAmount > 0 && iterator.hasNext()) {
       val tank = iterator.next()
       val filled = tank.storage.fill(fluidName, needToFillAmount, doFill)
-      if (filled > 0) tank.sendUpdatePackage()
+      if (filled > 0 && doFill) tank.sendUpdatePackage()
       needToFillAmount -= filled
     }
 
     return amount - needToFillAmount
   }
 
-  private fun drainTower(fluidName: String?, amount: Int, doFill: Boolean): FluidStack {
+  private fun drainTower(fluidName: String?, amount: Int, doDrain: Boolean): FluidStack {
     val tower = this.getTankTower()
     if (!tower.first().storage.canDrain(fluidName)) return FluidStack.Empty
 
@@ -46,8 +46,8 @@ internal class CertusTankTileEntity : TileEntity(), IFluidHandler {
     val iterator = tower.iterator()
     while (needToDrainAmount > 0 && iterator.hasNext()) {
       val tank = iterator.next()
-      val drained = tank.storage.drain(fluidName, needToDrainAmount, doFill).amount
-      if (drained > 0) tank.sendUpdatePackage()
+      val drained = tank.storage.drain(fluidName, needToDrainAmount, doDrain).amount
+      if (drained > 0 && doDrain) tank.sendUpdatePackage()
       needToDrainAmount -= drained
     }
 
@@ -102,6 +102,7 @@ internal class CertusTankTileEntity : TileEntity(), IFluidHandler {
   }
 
   override fun canFill(from: ForgeDirection?, fluid: Fluid?): Boolean {
+    TODO("do not use storage for public checks. Should use tower")
     return storage.canFill(fluidName = fluid?.name)
   }
 
@@ -111,10 +112,11 @@ internal class CertusTankTileEntity : TileEntity(), IFluidHandler {
   }
 
   override fun drain(from: ForgeDirection?, maxDrain: Int, doDrain: Boolean): ForgeFluidStack? {
-    return storage.drain(fluidName = null, maxDrain, doDrain).toForgeFluidStack()
+    return drainTower(fluidName = null, maxDrain, doDrain).toForgeFluidStack()
   }
 
   override fun canDrain(from: ForgeDirection?, fluid: Fluid?): Boolean {
+    TODO("do not use storage for public checks. Should use tower")
     return storage.canDrain(fluidName = fluid?.name)
   }
 
