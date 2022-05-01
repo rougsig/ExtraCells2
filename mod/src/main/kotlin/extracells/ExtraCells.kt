@@ -11,6 +11,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.registry.GameRegistry
+import extracells.client.ECTextureRegister
 import extracells.core.storage.FluidCellHandler
 import extracells.debug.ShowNBTCommand
 import extracells.feature.ECBlock
@@ -138,6 +139,8 @@ object ExtraCells {
     // New
     // TODO:
     //  Move to CommonProxy
+    MinecraftForge.EVENT_BUS.register(ECTextureRegister())
+
     EC2Item.values()
       .forEach { GameRegistry.registerItem(it.item, it.itemName) }
 
@@ -145,7 +148,7 @@ object ExtraCells {
       proxy.registerBlocks()
     } else {
       ECBlock.values()
-        .forEach { GameRegistry.registerBlock(it.block, it.itemClass, it.block.internalName) }
+        .forEach { GameRegistry.registerBlock(it.block, it.itemClass, it.internalName) }
     }
   }
 }
