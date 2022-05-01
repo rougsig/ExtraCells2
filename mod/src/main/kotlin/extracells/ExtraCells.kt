@@ -1,7 +1,6 @@
 package extracells
 
 import appeng.api.AEApi
-import cpw.mods.fml.client.registry.RenderingRegistry
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.Loader
 import cpw.mods.fml.common.Mod
@@ -15,12 +14,13 @@ import cpw.mods.fml.common.registry.GameRegistry
 import extracells.core.storage.FluidCellHandler
 import extracells.debug.ShowNBTCommand
 import extracells.feature.ECBlock
+import extracells.feature.certustank.CertusTankRenderHandler
+import extracells.feature.certustank.CertusTankTileEntity
 import extracells.integration.Integration
 import extracells.item.EC2Item
 import extracells.network.ChannelHandler
 import extracells.network.GuiHandler
 import extracells.proxy.CommonProxy
-import extracells.render.RenderHandler
 import extracells.util.ExtraCellsEventHandler
 import extracells.util.NameHandler
 import extracells.wireless.AEWirelessTermHandler
@@ -93,11 +93,12 @@ object ExtraCells {
     proxy.registerFluidBurnTimes()
     proxy.addRecipes(configFolder)
     ChannelHandler.registerMessages()
-    RenderingRegistry.registerBlockHandler(RenderHandler(RenderingRegistry.getNextAvailableRenderId()))
     integration.init()
 
     // New
     ClientCommandHandler.instance.registerCommand(ShowNBTCommand())
+    GameRegistry.registerTileEntity(CertusTankTileEntity::class.java, "tileEntityCertusTank")
+    CertusTankRenderHandler.register()
     if (!IS_LEGACY_FLUID_CELL_HANDLER_ENABLED)
       AEApi.instance().registries().cell().addCellHandler(FluidCellHandler())
   }
