@@ -1,4 +1,4 @@
-package extracells.feature.craftingstorage
+package extracells.feature.block.craftingstorage
 
 import appeng.block.crafting.BlockCraftingStorage
 import extracells.client.ECBlockTexture

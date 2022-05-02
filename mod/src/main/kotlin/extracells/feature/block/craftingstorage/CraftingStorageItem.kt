@@ -1,4 +1,4 @@
-package extracells.feature.craftingstorage
+package extracells.feature.block.craftingstorage
 
 import appeng.block.AEBaseItemBlock
 import net.minecraft.block.Block

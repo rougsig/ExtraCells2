@@ -1,4 +1,4 @@
-package extracells.feature.certustank
+package extracells.feature.block.certustank
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.RenderBlocks

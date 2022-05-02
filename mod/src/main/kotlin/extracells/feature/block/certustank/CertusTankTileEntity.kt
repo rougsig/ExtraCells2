@@ -1,4 +1,4 @@
-package extracells.feature.certustank
+package extracells.feature.block.certustank
 
 import extracells.core.entity.FluidStack
 import extracells.core.storage.FluidTank

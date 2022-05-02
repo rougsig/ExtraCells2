@@ -1,4 +1,4 @@
-package extracells.feature.certustank
+package extracells.feature.block.certustank
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler
 import cpw.mods.fml.client.registry.RenderingRegistry
@@ -17,8 +17,8 @@ internal object CertusTankRenderHandler : ISimpleBlockRenderingHandler {
   private val model = CertusTankModel()
 
   fun register() {
-    this._renderId = RenderingRegistry.getNextAvailableRenderId()
-    RenderingRegistry.registerBlockHandler(this._renderId, this)
+    _renderId = RenderingRegistry.getNextAvailableRenderId()
+    RenderingRegistry.registerBlockHandler(_renderId, this)
   }
 
   override fun renderInventoryBlock(
@@ -42,11 +42,11 @@ internal object CertusTankRenderHandler : ISimpleBlockRenderingHandler {
       val oldAO = renderer.enableAO
       renderer.enableAO = false
       if (renderPass == 0) {
-        this.model.renderOuterBlock(block, x, y, z, renderer, world)
+        model.renderOuterBlock(block, x, y, z, renderer, world)
       } else {
-        this.model.renderInnerBlock(block, x, y, z, renderer, world)
+        model.renderInnerBlock(block, x, y, z, renderer, world)
         val tileEntity = world.getTileEntity(x, y, z)
-        this.model.renderFluid(tileEntity, x.toDouble(), y.toDouble(), z.toDouble(), renderer)
+        model.renderFluid(tileEntity, x.toDouble(), y.toDouble(), z.toDouble(), renderer)
       }
       renderer.enableAO = oldAO
 
@@ -60,6 +60,6 @@ internal object CertusTankRenderHandler : ISimpleBlockRenderingHandler {
   }
 
   override fun getRenderId(): Int {
-    return this._renderId
+    return _renderId
   }
 }

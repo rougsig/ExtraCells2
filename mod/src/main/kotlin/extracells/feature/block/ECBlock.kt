@@ -1,17 +1,17 @@
-package extracells.feature
+package extracells.feature.block
 
 import extracells.ExtraCells
-import extracells.feature.certustank.CertusTankBlock
-import extracells.feature.certustank.CertusTankItem
-import extracells.feature.craftingstorage.CraftingStorageBlock
-import extracells.feature.craftingstorage.CraftingStorageItem
-import extracells.feature.fluidassembler.FluidAssemblerBlock
-import extracells.feature.fluidfiller.FluidFillerBlock
-import extracells.feature.fluidinterface.FluidInterfaceBlock
-import extracells.feature.fluidvibrantchamber.FluidVibrantChamberBlock
-import extracells.feature.hardmedrive.HardMeDriveBlock
-import extracells.feature.legacy.LegacyECBaseBlock
-import extracells.feature.walrus.WalrusBlock
+import extracells.feature.block.certustank.CertusTankBlock
+import extracells.feature.block.certustank.CertusTankItem
+import extracells.feature.block.craftingstorage.CraftingStorageBlock
+import extracells.feature.block.craftingstorage.CraftingStorageItem
+import extracells.feature.block.fluidassembler.FluidAssemblerBlock
+import extracells.feature.block.fluidfiller.FluidFillerBlock
+import extracells.feature.block.fluidinterface.FluidInterfaceBlock
+import extracells.feature.block.fluidvibrantchamber.FluidVibrantChamberBlock
+import extracells.feature.block.hardmedrive.HardMeDriveBlock
+import extracells.feature.block.legacy.LegacyECBaseBlock
+import extracells.feature.block.walrus.WalrusBlock
 import net.minecraft.block.Block
 import net.minecraft.item.ItemBlock
 
@@ -63,7 +63,7 @@ internal enum class ECBlock(
   ;
 
   init {
-    this.block.setBlockName("extracells.block.$this.internalName")
+    this.block.setBlockName("extracells.block.$internalName")
     this.block.setCreativeTab(ExtraCells.creativeTab)
   }
 }
