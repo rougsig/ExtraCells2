@@ -1,4 +1,4 @@
-package extracells.feature.certustank
+package extracells.feature.block.certustank
 
 import net.minecraft.block.Block
 import net.minecraft.client.model.ModelBase

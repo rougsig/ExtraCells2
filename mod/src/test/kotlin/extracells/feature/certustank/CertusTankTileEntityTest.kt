@@ -3,7 +3,8 @@ package extracells.feature.certustank
 import cpw.mods.fml.common.Loader
 import extracells.core.entity.FluidStack
 import extracells.extension.toMap
-import extracells.feature.ECBlock
+import extracells.feature.block.ECBlock
+import extracells.feature.block.certustank.CERTUS_TANK_CAPACITY
 import io.kotest.core.spec.style.ExpectSpec
 import io.kotest.matchers.maps.shouldContainAll
 import io.kotest.matchers.shouldBe

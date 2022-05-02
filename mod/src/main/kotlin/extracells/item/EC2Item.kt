@@ -3,6 +3,7 @@ package extracells.item
 import extracells.ExtraCells
 import net.minecraft.item.Item
 
+@Deprecated("Use ECItem")
 internal enum class EC2Item(
   val itemName: String,
   val item: Item,

@@ -1,11 +1,11 @@
-package extracells.feature.legacy
+package extracells.feature.block.walrus
 
 import extracells.extension.EMPTY_TILE_ENTITY
-import extracells.feature.ECBaseBlock
+import extracells.feature.block.ECBlockBase
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 
-internal class LegacyECBaseBlock : ECBaseBlock() {
+internal class WalrusBlock : ECBlockBase() {
   override fun createNewTileEntity(world: World, metadata: Int): TileEntity {
     return EMPTY_TILE_ENTITY
   }

@@ -1,7 +1,7 @@
-package extracells.feature.certustank
+package extracells.feature.block.certustank
 
 import codechicken.core.fluid.FluidUtils
-import extracells.feature.ECBaseBlock
+import extracells.feature.block.ECBlockBase
 import extracells.helper.isPlayerHoldingFluidContainer
 import net.minecraft.block.material.Material
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -13,7 +13,7 @@ import net.minecraft.util.IIcon
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
 
-internal class CertusTankBlock : ECBaseBlock(
+internal class CertusTankBlock : ECBlockBase(
   material = Material.glass,
 ) {
   init {

@@ -1,7 +1,6 @@
-package extracells.feature.certustank
+package extracells.feature.block.certustank
 
 import extracells.core.storage.FluidTank
-import extracells.tileentity.TileEntityCertusTank
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemBlock

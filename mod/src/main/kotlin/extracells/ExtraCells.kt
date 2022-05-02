@@ -14,9 +14,10 @@ import cpw.mods.fml.common.registry.GameRegistry
 import extracells.client.ECTextureRegister
 import extracells.core.storage.FluidCellHandler
 import extracells.debug.ShowNBTCommand
-import extracells.feature.ECBlock
-import extracells.feature.certustank.CertusTankRenderHandler
-import extracells.feature.certustank.CertusTankTileEntity
+import extracells.feature.block.ECBlock
+import extracells.feature.block.certustank.CertusTankRenderHandler
+import extracells.feature.block.certustank.CertusTankTileEntity
+import extracells.feature.item.ECItem
 import extracells.integration.Integration
 import extracells.item.EC2Item
 import extracells.network.ChannelHandler
@@ -32,7 +33,6 @@ import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Configuration
 import java.io.File
-import extracells.util.FluidCellHandler as LegacyFluidCellHandler
 
 @Mod(
   modid = "extracells",
@@ -43,8 +43,6 @@ import extracells.util.FluidCellHandler as LegacyFluidCellHandler
   modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter",
 )
 object ExtraCells {
-  private const val IS_LEGACY_FLUID_CELL_HANDLER_ENABLED = false
-  private const val IS_LEGACY_BLOCKS_ENABLED = false
 
   @JvmStatic
   @SidedProxy(
@@ -83,8 +81,6 @@ object ExtraCells {
   fun init(event: FMLInitializationEvent) {
     AEApi.instance().registries().recipes().addNewSubItemResolver(NameHandler())
     AEApi.instance().registries().wireless().registerWirelessHandler(AEWirelessTermHandler())
-    if (IS_LEGACY_FLUID_CELL_HANDLER_ENABLED)
-      AEApi.instance().registries().cell().addCellHandler(LegacyFluidCellHandler())
     val handler = ExtraCellsEventHandler()
     FMLCommonHandler.instance().bus().register(handler)
     MinecraftForge.EVENT_BUS.register(handler)
@@ -100,8 +96,7 @@ object ExtraCells {
     ClientCommandHandler.instance.registerCommand(ShowNBTCommand())
     GameRegistry.registerTileEntity(CertusTankTileEntity::class.java, "tileEntityCertusTank")
     CertusTankRenderHandler.register()
-    if (!IS_LEGACY_FLUID_CELL_HANDLER_ENABLED)
-      AEApi.instance().registries().cell().addCellHandler(FluidCellHandler())
+    AEApi.instance().registries().cell().addCellHandler(FluidCellHandler())
   }
 
   @EventHandler
@@ -143,12 +138,9 @@ object ExtraCells {
 
     EC2Item.values()
       .forEach { GameRegistry.registerItem(it.item, it.itemName) }
-
-    if (IS_LEGACY_BLOCKS_ENABLED) {
-      proxy.registerBlocks()
-    } else {
-      ECBlock.values()
-        .forEach { GameRegistry.registerBlock(it.block, it.itemClass, it.internalName) }
-    }
+    ECItem.values()
+      .forEach { GameRegistry.registerItem(it.item, it.internalName) }
+    ECBlock.values()
+      .forEach { GameRegistry.registerBlock(it.block, it.itemClass, it.internalName) }
   }
 }
