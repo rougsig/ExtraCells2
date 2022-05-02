@@ -1,7 +1,6 @@
 package extracells.feature.certustank
 
 import codechicken.core.fluid.FluidUtils
-import extracells.ExtraCells
 import extracells.feature.ECBaseBlock
 import extracells.helper.isPlayerHoldingFluidContainer
 import net.minecraft.block.material.Material
@@ -15,8 +14,6 @@ import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
 
 internal class CertusTankBlock : ECBaseBlock(
-  modTab = ExtraCells.creativeTab,
-  internalName = "certustank",
   material = Material.glass,
 ) {
   init {
