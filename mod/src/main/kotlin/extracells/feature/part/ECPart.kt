@@ -1,11 +1,12 @@
 package extracells.feature.part
 
-import extracells.feature.part.fluidexportbus.FluidExportBusPart
+import appeng.parts.AEBasePart
+import extracells.feature.part.fluidbus.FluidExportBusPart
 
 internal enum class ECPart(
   val id: Int,
   val internalName: String,
-  val partClass: Class<out ECPartBase>,
+  val partClass: Class<out AEBasePart>,
 ) {
   FluidExportBus(
     id = 1,
