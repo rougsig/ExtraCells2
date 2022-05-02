@@ -5,7 +5,7 @@ import extracells.feature.certustank.CertusTankBlock
 import extracells.feature.certustank.CertusTankItem
 import extracells.feature.craftingstorage.CraftingStorageBlock
 import extracells.feature.craftingstorage.CraftingStorageItem
-import extracells.feature.fluidcrafter.FluidCrafterBlock
+import extracells.feature.fluidassembler.FluidAssemblerBlock
 import extracells.feature.fluidfiller.FluidFillerBlock
 import extracells.feature.fluidinterface.FluidInterfaceBlock
 import extracells.feature.fluidvibrantchamber.FluidVibrantChamberBlock
@@ -25,9 +25,9 @@ internal enum class ECBlock(
     CertusTankBlock(),
     CertusTankItem::class.java,
   ),
-  FluidCrafter(
+  FluidAssembler(
     "fluidcrafter",
-    FluidCrafterBlock(),
+    FluidAssemblerBlock(),
   ),
   FluidInterface(
     "fluidinterface",
