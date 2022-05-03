@@ -24,7 +24,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.Vec3
 import net.minecraftforge.fluids.FluidContainerRegistry
 
-internal class FluidExportBusPart : PartSharedFluidBus(ECPart.FluidExportBus.id) {
+internal class FluidImportBusPart : PartSharedFluidBus(ECPart.FluidImportBus.id) {
   private val mySrc = MachineSource(this)
 
   init {
@@ -50,17 +50,19 @@ internal class FluidExportBusPart : PartSharedFluidBus(ECPart.FluidExportBus.id)
 
       var fluidToSend = calculateFluidToSend
       for (fluid in config) {
-        if (!FluidContainerRegistry.isFilledContainer(fluid)) continue
         val fluidStack = FluidContainerRegistry.getFluidForFilledItem(fluid)
-        fluidStack.amount = fluidToSend
+          ?.apply { amount = fluidToSend }
 
-        val maxAmountToSend = dest.fill(side.opposite, fluidStack, false)
-        if (maxAmountToSend > 0) {
-          val aeFluidStack = AEApi.instance().storage().createFluidStack(fluidStack)
-          val realAmountToSend = inv.extractItems(aeFluidStack, Actionable.MODULATE, mySrc)
-          if (realAmountToSend != null) {
-            dest.fill(side.opposite, realAmountToSend.fluidStack, true)
-            fluidToSend -= realAmountToSend.fluidStack.amount
+        val maxAmountToSend = if (fluidStack != null) dest.drain(side.opposite, fluidStack, false)
+        else dest.drain(side.opposite, fluidToSend, false)
+
+        if (maxAmountToSend != null) {
+          val aeFluidStack = AEApi.instance().storage().createFluidStack(maxAmountToSend)
+          val notInjectedAmount = inv.injectItems(aeFluidStack, Actionable.MODULATE, mySrc)
+          if (notInjectedAmount != null) {
+            val realAmountToSend = maxAmountToSend.amount - notInjectedAmount.fluidStack.amount
+            dest.drain(side.opposite, realAmountToSend, true)
+            fluidToSend -= realAmountToSend
             worked = true
           }
         }
@@ -83,27 +85,26 @@ internal class FluidExportBusPart : PartSharedFluidBus(ECPart.FluidExportBus.id)
   }
 
   override fun getBoxes(bch: IPartCollisionHelper) {
-    bch.addBox(4.0, 4.0, 12.0, 12.0, 12.0, 14.0)
-    bch.addBox(5.0, 5.0, 14.0, 11.0, 11.0, 15.0)
-    bch.addBox(6.0, 6.0, 15.0, 10.0, 10.0, 16.0)
-    bch.addBox(6.0, 6.0, 11.0, 10.0, 10.0, 12.0)
+    bch.addBox(6.0, 6.0, 11.0, 10.0, 10.0, 13.0)
+    bch.addBox(5.0, 5.0, 13.0, 11.0, 11.0, 14.0)
+    bch.addBox(4.0, 4.0, 14.0, 12.0, 12.0, 16.0)
   }
 
   @SideOnly(Side.CLIENT)
   override fun renderInventory(rh: IPartRenderHelper, renderer: RenderBlocks?) {
     rh.setTexture(
-      CableBusTextures.PartExportSides.icon,
-      CableBusTextures.PartExportSides.icon,
+      CableBusTextures.PartImportSides.icon,
+      CableBusTextures.PartImportSides.icon,
       CableBusTextures.PartMonitorBack.icon,
       this.itemStack.iconIndex,
-      CableBusTextures.PartExportSides.icon,
-      CableBusTextures.PartExportSides.icon
+      CableBusTextures.PartImportSides.icon,
+      CableBusTextures.PartImportSides.icon
     )
-    rh.setBounds(4f, 4f, 12f, 12f, 12f, 14f)
+    rh.setBounds(3f, 3f, 15f, 13f, 13f, 16f)
     rh.renderInventoryBox(renderer)
-    rh.setBounds(5f, 5f, 14f, 11f, 11f, 15f)
+    rh.setBounds(4f, 4f, 14f, 12f, 12f, 15f)
     rh.renderInventoryBox(renderer)
-    rh.setBounds(6f, 6f, 15f, 10f, 10f, 16f)
+    rh.setBounds(5f, 5f, 13f, 11f, 11f, 14f)
     rh.renderInventoryBox(renderer)
   }
 
@@ -111,18 +112,18 @@ internal class FluidExportBusPart : PartSharedFluidBus(ECPart.FluidExportBus.id)
   override fun renderStatic(x: Int, y: Int, z: Int, rh: IPartRenderHelper, renderer: RenderBlocks?) {
     renderCache = rh.useSimplifiedRendering(x, y, z, this, renderCache)
     rh.setTexture(
-      CableBusTextures.PartExportSides.icon,
-      CableBusTextures.PartExportSides.icon,
+      CableBusTextures.PartImportSides.icon,
+      CableBusTextures.PartImportSides.icon,
       CableBusTextures.PartMonitorBack.icon,
       this.itemStack.iconIndex,
-      CableBusTextures.PartExportSides.icon,
-      CableBusTextures.PartExportSides.icon
+      CableBusTextures.PartImportSides.icon,
+      CableBusTextures.PartImportSides.icon
     )
-    rh.setBounds(4f, 4f, 12f, 12f, 12f, 14f)
+    rh.setBounds(4f, 4f, 14f, 12f, 12f, 16f)
     rh.renderBlock(x, y, z, renderer)
-    rh.setBounds(5f, 5f, 14f, 11f, 11f, 15f)
+    rh.setBounds(5f, 5f, 13f, 11f, 11f, 14f)
     rh.renderBlock(x, y, z, renderer)
-    rh.setBounds(6f, 6f, 15f, 10f, 10f, 16f)
+    rh.setBounds(6f, 6f, 12f, 10f, 10f, 13f)
     rh.renderBlock(x, y, z, renderer)
     rh.setTexture(
       CableBusTextures.PartMonitorSidesStatus.icon,
@@ -136,6 +137,7 @@ internal class FluidExportBusPart : PartSharedFluidBus(ECPart.FluidExportBus.id)
     rh.renderBlock(x, y, z, renderer)
     renderLights(x, y, z, rh, renderer)
   }
+
 
   override fun cableConnectionRenderTo(): Int {
     return 5

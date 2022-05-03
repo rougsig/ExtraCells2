@@ -2,6 +2,7 @@ package extracells.feature.part
 
 import appeng.parts.AEBasePart
 import extracells.feature.part.fluidbus.FluidExportBusPart
+import extracells.feature.part.fluidbus.FluidImportBusPart
 
 internal enum class ECPart(
   val id: Int,
@@ -16,14 +17,14 @@ internal enum class ECPart(
     // generatePair(Upgrades.REDSTONE, 1),
     // generatePair(Upgrades.SPEED, 2)
   ),
-  // FluidImportBus(
-  //   id = 2,
-  //   "fluid.import",
-  //   FluidImportBusPart::class.java,
-  //   // generatePair(Upgrades.CAPACITY, 2),
-  //   // generatePair(Upgrades.REDSTONE, 1),
-  //   // generatePair(Upgrades.SPEED, 2)
-  // ),
+   FluidImportBus(
+     id = 2,
+     "fluid.import",
+     FluidImportBusPart::class.java,
+     // generatePair(Upgrades.CAPACITY, 2),
+     // generatePair(Upgrades.REDSTONE, 1),
+     // generatePair(Upgrades.SPEED, 2)
+   ),
   ;
 
 
