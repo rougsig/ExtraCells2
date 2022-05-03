@@ -5,12 +5,12 @@ import extracells.feature.part.fluidbus.FluidExportBusPart
 import extracells.feature.part.fluidbus.FluidImportBusPart
 
 internal enum class ECPart(
-  val id: Int,
+  val meta: Int,
   val internalName: String,
   val partClass: Class<out AEBasePart>,
 ) {
   FluidExportBus(
-    id = 1,
+    meta = 1,
     "fluid.export",
     FluidExportBusPart::class.java,
     // generatePair(Upgrades.CAPACITY, 2),
@@ -18,7 +18,7 @@ internal enum class ECPart(
     // generatePair(Upgrades.SPEED, 2)
   ),
    FluidImportBus(
-     id = 2,
+     meta = 2,
      "fluid.import",
      FluidImportBusPart::class.java,
      // generatePair(Upgrades.CAPACITY, 2),
@@ -29,8 +29,8 @@ internal enum class ECPart(
 
 
   companion object {
-    fun findPartById(id: Int): ECPart {
-      return values().first { it.id == id }
+    fun findPartByMeta(meta: Int): ECPart {
+      return values().first { it.meta == meta }
     }
   }
 }

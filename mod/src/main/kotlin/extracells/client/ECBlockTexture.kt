@@ -6,6 +6,8 @@ import net.minecraft.util.IIcon
 internal enum class ECBlockTexture(
   private val textureName: String,
 ) {
+  Missing("missingno"),
+
   BlockCraftingStorage256k("crafting.storage.256k"),
   BlockCraftingStorage1024k("crafting.storage.1024k"),
   BlockCraftingStorage4096k("crafting.storage.4096k"),
@@ -21,6 +23,7 @@ internal enum class ECBlockTexture(
     private set
 
   fun registerIcon(map: TextureMap) {
-    this.icon = map.registerIcon("extracells:$textureName")
+    this.icon = if (this == Missing) map.getAtlasSprite("missingno")
+    else map.registerIcon("extracells:$textureName")
   }
 }

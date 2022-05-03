@@ -19,7 +19,6 @@ import extracells.feature.block.certustank.CertusTankRenderHandler
 import extracells.feature.block.certustank.CertusTankTileEntity
 import extracells.feature.item.ECItem
 import extracells.integration.Integration
-import extracells.item.EC2Item
 import extracells.network.ChannelHandler
 import extracells.network.GuiHandler
 import extracells.proxy.CommonProxy
@@ -69,11 +68,11 @@ object ExtraCells {
 
   val creativeTab = object : CreativeTabs("ExtraCells") {
     override fun getIconItemStack(): ItemStack {
-      return ItemStack(EC2Item.FluidCell.item)
+      return ItemStack(ECItem.FluidCell.item)
     }
 
     override fun getTabIconItem(): Item {
-      return EC2Item.FluidCell.item
+      return ECItem.FluidCell.item
     }
   }
 
@@ -136,8 +135,6 @@ object ExtraCells {
     //  Move to CommonProxy
     MinecraftForge.EVENT_BUS.register(ECTextureRegister())
 
-    EC2Item.values()
-      .forEach { GameRegistry.registerItem(it.item, it.itemName) }
     ECItem.values()
       .forEach { GameRegistry.registerItem(it.item, it.internalName) }
     ECBlock.values()
