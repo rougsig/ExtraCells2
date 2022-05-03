@@ -21,7 +21,7 @@ internal class PartItem : Item(), IPartItem {
   }
 
   override fun createPartFromItemStack(itemStack: ItemStack): IPart? {
-    val clazz = ECPart.findPartById(itemStack.itemDamage).partClass
+    val clazz = ECPart.findPartByMeta(itemStack.itemDamage).partClass
     val instance = clazz.newInstance()
     // TODO: instance.initialize(itemStack)
     return instance
@@ -29,7 +29,7 @@ internal class PartItem : Item(), IPartItem {
 
   override fun getSubItems(item: Item, creativeTab: CreativeTabs?, itemList: MutableList<Any?>) {
     ECPart.values()
-      .forEach { part -> itemList.add(ItemStack(item, 1, part.id)) }
+      .forEach { part -> itemList.add(ItemStack(item, 1, part.meta)) }
   }
 
   @SideOnly(Side.CLIENT)

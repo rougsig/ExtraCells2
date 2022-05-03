@@ -24,7 +24,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.Vec3
 import net.minecraftforge.fluids.FluidContainerRegistry
 
-internal class FluidExportBusPart : PartSharedFluidBus(ECPart.FluidExportBus.id) {
+internal class FluidExportBusPart : PartSharedFluidBus(ECPart.FluidExportBus.meta) {
   private val mySrc = MachineSource(this)
 
   init {

@@ -6,14 +6,16 @@ import net.minecraftforge.client.event.TextureStitchEvent
 internal class ECTextureRegister {
   @SubscribeEvent
   fun handlePreTextureStitchEvent(ev: TextureStitchEvent.Pre) {
-    // if (ev.map.textureType == 1) {
-    //   for (et in ExtraCellsItemTexture.values()) {
-    //     et.registerIcon(ev.map)
-    //   }
-    // }
-    if (ev.map.textureType == 0) {
-      for (et in ECBlockTexture.values()) {
-        et.registerIcon(ev.map)
+    when (ev.map.textureType) {
+      0 -> {
+        for (et in ECBlockTexture.values()) {
+          et.registerIcon(ev.map)
+        }
+      }
+      1 -> {
+        for (et in ECItemTexture.values()) {
+          et.registerIcon(ev.map)
+        }
       }
     }
   }
