@@ -1,7 +1,6 @@
 package extracells;
 
 import extracells.proxy.CommonProxy;
-import extracells.registries.ItemEnum;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,12 +20,12 @@ public class ExtracellsLegacy {
     public static CreativeTabs ModTab = new CreativeTabs("Extra_Cells") {
         @Override
         public ItemStack getIconItemStack() {
-            return new ItemStack(ItemEnum.FLUIDSTORAGE.getItem());
+            return new ItemStack(Item.getItemById(1));
         }
 
         @Override
         public Item getTabIconItem() {
-            return ItemEnum.FLUIDSTORAGE.getItem();
+            return Item.getItemById(1);
         }
     };
 
