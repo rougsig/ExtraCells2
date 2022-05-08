@@ -7,25 +7,29 @@ import appeng.api.networking.storage.IStorageGrid
 import appeng.api.parts.PartItemStack
 import appeng.api.util.AEColor
 import appeng.api.util.DimensionalCoord
+import extracells.core.Provider
 import net.minecraft.item.ItemStack
 import net.minecraftforge.common.util.ForgeDirection
 import java.util.*
 
 internal class ECGridBlock(
-  private val part: ECPartBase,
+  private val partProvider: Provider<ECPartBase>,
 ) : IGridBlock {
   override fun getConnectableSides(): EnumSet<ForgeDirection> {
     return EnumSet.noneOf(ForgeDirection::class.java)
   }
+
+  private val part: ECPartBase
+    get() = this.partProvider.get()
+
+  val grid: IGrid?
+    get() = this.part.gridNode.grid
 
   val energyGrid: IEnergyGrid?
     get() = this.grid?.getCache(IEnergyGrid::class.java)
 
   val fluidMonitor: IMEFluidMonitor?
     get() = this.grid?.getCache(IFluidGrid::class.java)
-
-  val grid: IGrid?
-    get() = this.part.gridNode?.grid
 
   val securityGrid: ISecurityGrid?
     get() = this.grid?.getCache(ISecurityGrid::class.java)
