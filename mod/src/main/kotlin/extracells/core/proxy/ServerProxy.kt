@@ -1,11 +1,14 @@
 package extracells.core.proxy
 
 import appeng.api.AEApi
+import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.registry.GameRegistry
+import extracells.ExtraCells
 import extracells.core.storage.FluidCellHandler
 import extracells.debug.ShowNBTCommand
 import extracells.feature.block.ECBlock
 import extracells.feature.block.certustank.CertusTankTileEntity
+import extracells.feature.gui.ECGuiHandler
 import extracells.feature.item.ECItem
 import extracells.tileentity.TileEntityCraftingStorage
 import net.minecraftforge.client.ClientCommandHandler
@@ -44,5 +47,6 @@ class ServerProxy : CommonProxy {
   }
 
   override fun registerGuiHandler() {
+    NetworkRegistry.INSTANCE.registerGuiHandler(ExtraCells.instance(), ECGuiHandler())
   }
 }
