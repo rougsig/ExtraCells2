@@ -1,11 +1,11 @@
 package extracells.core.storage
 
-import extracells.core.entity.FluidStack
+import extracells.core.entity.ECFluidStack
 import extracells.extension.keys
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.fluids.FluidRegistry
-import net.minecraftforge.fluids.FluidStack as ForgeFluidStack
 import kotlin.math.min
+import net.minecraftforge.fluids.FluidStack as ForgeFluidStack
 
 internal class FluidTank(val capacity: Int) {
   var fluidName: String? = null
@@ -38,14 +38,14 @@ internal class FluidTank(val capacity: Int) {
       && (this.fluidName == null || this.fluidName == fluidName)
   }
 
-  fun drain(fluidName: String?, amount: Int, doDrain: Boolean): FluidStack {
-    if (!canDrain(fluidName)) return FluidStack.Empty
+  fun drain(fluidName: String?, amount: Int, doDrain: Boolean): ECFluidStack {
+    if (!canDrain(fluidName)) return ECFluidStack.Empty
 
     val maxFluidAmount = min(this.fluidAmount, amount)
     if (doDrain) {
       this.fluidAmount -= maxFluidAmount
     }
-    val result = FluidStack(
+    val result = ECFluidStack(
       this.fluidName!!,
       maxFluidAmount,
     )

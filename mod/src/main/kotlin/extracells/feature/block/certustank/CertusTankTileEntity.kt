@@ -1,6 +1,6 @@
 package extracells.feature.block.certustank
 
-import extracells.core.entity.FluidStack
+import extracells.core.entity.ECFluidStack
 import extracells.core.storage.FluidTank
 import extracells.helper.isServerWorld
 import extracells.network.ChannelHandler
@@ -37,9 +37,9 @@ internal class CertusTankTileEntity : TileEntity(), IFluidHandler {
     return amount - needToFillAmount
   }
 
-  private fun drainTower(fluidName: String?, amount: Int, doDrain: Boolean): FluidStack {
+  private fun drainTower(fluidName: String?, amount: Int, doDrain: Boolean): ECFluidStack {
     val tower = this.getTankTower()
-    if (!tower.first().storage.canDrain(fluidName)) return FluidStack.Empty
+    if (!tower.first().storage.canDrain(fluidName)) return ECFluidStack.Empty
 
     val drainedFluidName = tower.first().storage.fluidName
     var needToDrainAmount = amount
@@ -51,7 +51,7 @@ internal class CertusTankTileEntity : TileEntity(), IFluidHandler {
       needToDrainAmount -= drained
     }
 
-    return FluidStack(
+    return ECFluidStack(
       drainedFluidName!!,
       amount - needToDrainAmount
     )

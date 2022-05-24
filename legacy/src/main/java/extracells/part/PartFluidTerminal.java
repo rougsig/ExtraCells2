@@ -7,7 +7,10 @@ import appeng.api.networking.security.MachineSource;
 import appeng.api.networking.ticking.IGridTickable;
 import appeng.api.networking.ticking.TickRateModulation;
 import appeng.api.networking.ticking.TickingRequest;
-import appeng.api.parts.*;
+import appeng.api.parts.IPart;
+import appeng.api.parts.IPartCollisionHelper;
+import appeng.api.parts.IPartHost;
+import appeng.api.parts.IPartRenderHelper;
 import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEFluidStack;
 import appeng.api.util.AEColor;
@@ -156,11 +159,6 @@ public class PartFluidTerminal extends PartECBase implements IGridTickable,
 		bch.addBox(5, 5, 12, 11, 11, 13);
 	}
 
-	@Override
-	public Object getClientGuiElement(EntityPlayer player) {
-		return new GuiFluidTerminal(this, player);
-	}
-
 	public IInventory getInventory() {
 		return this.inventory;
 	}
@@ -173,6 +171,11 @@ public class PartFluidTerminal extends PartECBase implements IGridTickable,
 	@Override
 	public Object getServerGuiElement(EntityPlayer player) {
 		return new ContainerFluidTerminal(this, player);
+	}
+
+	@Override
+	public Object getClientGuiElement(EntityPlayer player) {
+		return new GuiFluidTerminal(this, player);
 	}
 
 	@Override
