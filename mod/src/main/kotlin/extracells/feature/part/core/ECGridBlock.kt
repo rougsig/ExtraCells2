@@ -23,13 +23,13 @@ internal class ECGridBlock(
     get() = this.partProvider.get()
 
   val grid: IGrid?
-    get() = this.part.gridNode.grid
+    get() = this.part.gridNode?.grid
 
   val energyGrid: IEnergyGrid?
     get() = this.grid?.getCache(IEnergyGrid::class.java)
 
-  val fluidMonitor: IMEFluidMonitor?
-    get() = this.grid?.getCache(IFluidGrid::class.java)
+  val fluidMonitor: ECFluidMonitor?
+    get() = this.grid?.getCache(ECFluidGrid::class.java)
 
   val securityGrid: ISecurityGrid?
     get() = this.grid?.getCache(ISecurityGrid::class.java)

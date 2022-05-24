@@ -1,6 +1,6 @@
 package extracells.feature.certustank
 
-import extracells.core.entity.FluidStack
+import extracells.core.entity.ECFluidStack
 import net.minecraftforge.common.util.ForgeDirection
 import net.minecraftforge.fluids.FluidRegistry
 import net.minecraftforge.fluids.FluidStack as ForgeFluidStack
@@ -13,7 +13,7 @@ internal fun CertusTankTileEntity.fill(fluidName: String, amount: Int, doFill: B
   )
 }
 
-internal fun CertusTankTileEntity.drain(fluidName: String?, amount: Int, doDrain: Boolean): FluidStack {
+internal fun CertusTankTileEntity.drain(fluidName: String?, amount: Int, doDrain: Boolean): ECFluidStack {
   return if (fluidName == null) {
     FluidStack.fromForgeFluidStack(
       this.drain(

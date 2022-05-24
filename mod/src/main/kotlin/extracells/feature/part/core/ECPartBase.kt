@@ -6,11 +6,15 @@ import appeng.api.implementations.IUpgradeableHost
 import appeng.api.networking.IGridHost
 import appeng.api.networking.IGridNode
 import appeng.api.networking.security.IActionHost
+import appeng.api.networking.security.MachineSource
 import appeng.api.parts.*
 import appeng.api.util.AECableType
+import appeng.api.util.DimensionalCoord
 import appeng.api.util.IConfigManager
 import appeng.me.GridAccessException
 import appeng.util.Platform
+import extracells.client.ECBlockTexture
+import extracells.core.provider
 import extracells.feature.item.ECItem
 import extracells.feature.part.ECPart
 import extracells.helper.EffectiveSide
@@ -40,34 +44,57 @@ internal abstract class ECPartBase(
 
   private var _tile: TileEntity? = null
 
-  private var _side = ForgeDirection.UNKNOWN
+  private var _side: ForgeDirection? = null
 
   private var _isPowered = false
   private var _isActive = false
 
+  protected val src = MachineSource(this)
+
+  protected val side: ForgeDirection?
+    get() = this._side
+
+  open val idlePowerUsage: Double = 0.0
+
+  val location: DimensionalCoord
+    get() = DimensionalCoord(this._tile)
+
+  init {
+    if (EffectiveSide.isServerSide) {
+      this._grid = ECGridBlock(provider { this@ECPartBase })
+    }
+  }
+
   // region IPart
   // region IPart render
+  override fun cableConnectionRenderTo(): Int {
+    return 0
+  }
+
   override fun getBoxes(boxes: IPartCollisionHelper) {
-    // no-op
+    boxes.addBox(2.0, 2.0, 14.0, 14.0, 14.0, 16.0)
+    boxes.addBox(4.0, 4.0, 13.0, 12.0, 12.0, 14.0)
   }
 
   override fun renderInventory(rh: IPartRenderHelper, renderer: RenderBlocks) {
-    // no-op
+    rh.setTexture(ECBlockTexture.Missing.icon)
+    rh.setBounds(2f, 2f, 14f, 14f, 14f, 16f)
   }
 
   override fun renderStatic(x: Int, y: Int, z: Int, rh: IPartRenderHelper, renderer: RenderBlocks) {
-    // no-op
+    rh.setTexture(ECBlockTexture.Missing.icon)
+    rh.setBounds(2f, 2f, 14f, 14f, 14f, 16f)
   }
 
-  override fun getBreakingTexture(): IIcon {
-    TODO("Not yet implemented")
+  override fun getBreakingTexture(): IIcon? {
+    return null
   }
 
-  override fun requireDynamicRender(): Boolean {
+  final override fun requireDynamicRender(): Boolean {
     return false
   }
 
-  override fun renderDynamic(x: Double, y: Double, z: Double, rh: IPartRenderHelper, renderer: RenderBlocks) {
+  final override fun renderDynamic(x: Double, y: Double, z: Double, rh: IPartRenderHelper, renderer: RenderBlocks) {
     error("renderDynamic should be never invoked")
   }
 
@@ -105,7 +132,7 @@ internal abstract class ECPartBase(
   // endregion IPart config
 
   // region IPart network
-  override fun writeToNBT(data: NBTTagCompound?) {
+  final override fun writeToNBT(data: NBTTagCompound?) {
     return this.writeToNBT(data, PartItemStack.World)
   }
 
@@ -117,12 +144,19 @@ internal abstract class ECPartBase(
     // no-op
   }
 
-  override fun writeToStream(data: ByteBuf?) {
-    // no-op
+  override fun writeToStream(stream: ByteBuf) {
+    stream.writeBoolean(this.isActive)
+    stream.writeBoolean(this.isPowered)
   }
 
-  override fun readFromStream(data: ByteBuf?): Boolean {
-    TODO("Not yet implemented")
+  override fun readFromStream(stream: ByteBuf): Boolean {
+    val oldIsActive = this.isActive
+    val oldIsPowered = this.isPowered
+
+    this._isActive = stream.readBoolean()
+    this._isPowered = stream.readBoolean()
+
+    return oldIsActive != this._isActive || oldIsPowered != this._isPowered
   }
   // endregion IPart network
 
@@ -154,6 +188,10 @@ internal abstract class ECPartBase(
   }
   // endregion IPart getters
 
+  override fun onPlacement(player: EntityPlayer?, held: ItemStack?, side: ForgeDirection?) {
+    // no-op
+  }
+
   override fun onActivate(player: EntityPlayer?, pos: Vec3?): Boolean {
     return false
   }
@@ -179,7 +217,9 @@ internal abstract class ECPartBase(
   }
 
   override fun setPartHostInfo(side: ForgeDirection?, host: IPartHost?, tile: TileEntity?) {
-    // no-op
+    this._side = side
+    this._host = host
+    this._tile = tile
   }
 
   override fun randomDisplayTick(world: World?, x: Int, y: Int, z: Int, r: Random?) {
