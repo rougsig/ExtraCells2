@@ -7,6 +7,7 @@ import cpw.mods.fml.common.SidedProxy
 import cpw.mods.fml.common.event.FMLInitializationEvent
 import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
+import extracells.ExtraCells.MOD_ID
 import extracells.core.proxy.CommonProxy
 import extracells.feature.item.ECItem
 import net.minecraft.creativetab.CreativeTabs
@@ -14,7 +15,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 @Mod(
-  modid = "extracells",
+  modid = MOD_ID,
   name = "Extra Cells",
   version = "GRADLETOKEN_VERSION",
   modLanguage = "kotlin",
@@ -22,6 +23,8 @@ import net.minecraft.item.ItemStack
   modLanguageAdapter = "net.shadowfacts.forgelin.KotlinAdapter",
 )
 object ExtraCells {
+  const val MOD_ID = "extracells"
+
   @JvmStatic
   @SidedProxy(
     clientSide = "extracells.core.proxy.ClientProxy",
@@ -67,5 +70,6 @@ object ExtraCells {
 
   @EventHandler
   fun postInit(event: FMLPostInitializationEvent) {
+    proxy.registerNetworkHandler()
   }
 }

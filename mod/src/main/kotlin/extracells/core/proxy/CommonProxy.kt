@@ -14,4 +14,6 @@ interface CommonProxy {
   fun registerGuiHandler()
 
   fun registerDebugTools()
+
+  fun registerNetworkHandler()
 }

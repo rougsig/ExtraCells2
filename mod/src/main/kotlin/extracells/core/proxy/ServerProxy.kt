@@ -10,6 +10,9 @@ import extracells.feature.block.ECBlock
 import extracells.feature.block.certustank.CertusTankTileEntity
 import extracells.feature.gui.ECGuiHandler
 import extracells.feature.item.ECItem
+import extracells.feature.part.core.ECFluidGrid
+import extracells.feature.part.core.ECFluidGridCache
+import extracells.network.ECNetworkHandler
 import extracells.tileentity.TileEntityCraftingStorage
 import net.minecraftforge.client.ClientCommandHandler
 
@@ -33,7 +36,9 @@ class ServerProxy : CommonProxy {
   }
 
   override fun registerAppengIntegration() {
-    AEApi.instance().registries().cell().addCellHandler(FluidCellHandler())
+    val registries = AEApi.instance().registries()
+    registries.cell().addCellHandler(FluidCellHandler())
+    registries.gridCache().registerGridCache(ECFluidGrid::class.java, ECFluidGridCache::class.java)
   }
 
   override fun registerDebugTools() {
@@ -48,5 +53,9 @@ class ServerProxy : CommonProxy {
 
   override fun registerGuiHandler() {
     NetworkRegistry.INSTANCE.registerGuiHandler(ExtraCells.instance(), ECGuiHandler())
+  }
+
+  override fun registerNetworkHandler() {
+    ECNetworkHandler.register()
   }
 }
