@@ -1,7 +1,7 @@
 package extracells.feature.certustank
 
 import cpw.mods.fml.common.Loader
-import extracells.core.entity.FluidStack
+import extracells.core.entity.ECFluidStack
 import extracells.extension.toMap
 import extracells.feature.block.ECBlock
 import extracells.feature.block.certustank.CERTUS_TANK_CAPACITY
@@ -90,7 +90,7 @@ internal class CertusTankTileEntityTest : ExpectSpec({
         )
 
         // Assert
-        drained shouldBe extracells.core.entity.FluidStack.Empty
+        drained shouldBe extracells.core.entity.ECFluidStack.Empty
         entity.nbt shouldContainAll mapOf(
           "Empty" to NBTTagString("")
         )
@@ -202,7 +202,7 @@ internal class CertusTankTileEntityTest : ExpectSpec({
         )
 
         // Assert
-        drained shouldBe FluidStack("lava", 1000)
+        drained shouldBe ECFluidStack("lava", 1000)
         entity.nbt shouldContainAll mapOf(
           "Empty" to NBTTagString(""),
         )
@@ -224,7 +224,7 @@ internal class CertusTankTileEntityTest : ExpectSpec({
         )
 
         // Assert
-        drained shouldBe FluidStack.Empty
+        drained shouldBe ECFluidStack.Empty
         entity.nbt shouldContainAll mapOf(
           "FluidName" to NBTTagString("lava"),
           "Amount" to NBTTagInt(1000),
@@ -247,7 +247,7 @@ internal class CertusTankTileEntityTest : ExpectSpec({
         )
 
         // Assert
-        drained shouldBe extracells.core.entity.FluidStack("lava", 1000)
+        drained shouldBe extracells.core.entity.ECFluidStack("lava", 1000)
         entity.nbt shouldContainAll mapOf(
           "Empty" to NBTTagString(""),
         )
@@ -481,7 +481,7 @@ internal class CertusTankTileEntityTest : ExpectSpec({
         )
 
         // Assert
-        drained shouldBe FluidStack("lava", CERTUS_TANK_CAPACITY * 3)
+        drained shouldBe ECFluidStack("lava", CERTUS_TANK_CAPACITY * 3)
         entity1.nbt shouldContainAll mapOf(
           "Empty" to NBTTagString(""),
         )
