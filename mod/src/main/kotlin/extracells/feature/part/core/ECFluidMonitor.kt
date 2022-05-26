@@ -5,6 +5,10 @@ import extracells.core.entity.ECFluidStack
 
 // TODO: move to extracells.core.storage
 interface ECFluidMonitor {
+  interface Listener {
+    fun onFluidsChange(fluids: List<ECFluidStack>)
+  }
+
   /**
    * @return not injected amount
    * Example: [amount] = 1000, in storage 600, returns will be 400
@@ -28,6 +32,9 @@ interface ECFluidMonitor {
    * without extraction from storage
    */
   fun simulateExtract(src: BaseActionSource, fluidName: String, amount: Int): Int
+
+  fun addListener(listener: Listener)
+  fun removeListener(listener: Listener)
 
   val storedFluids: List<ECFluidStack>
 }

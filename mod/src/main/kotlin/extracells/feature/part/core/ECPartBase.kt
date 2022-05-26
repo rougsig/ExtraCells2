@@ -1,5 +1,6 @@
 package extracells.feature.part.core
 
+import appeng.api.AEApi
 import appeng.api.config.Upgrades
 import appeng.api.implementations.IPowerChannelState
 import appeng.api.implementations.IUpgradeableHost
@@ -46,8 +47,10 @@ internal abstract class ECPartBase(
 
   private var _side: ForgeDirection? = null
 
-  private var _isPowered = false
-  private var _isActive = false
+  private var _isPowered: Boolean = false
+  private var _isActive: Boolean = false
+
+  private var ownerID: Int = 0
 
   protected val src = MachineSource(this)
 
@@ -58,6 +61,12 @@ internal abstract class ECPartBase(
 
   val location: DimensionalCoord
     get() = DimensionalCoord(this._tile)
+
+  val grid: ECGridBlock?
+    get() = this._grid
+
+  val requireFluidMonitor: ECFluidMonitor
+    get() = this._grid?.fluidMonitor ?: error("fluid monitor is null")
 
   init {
     if (EffectiveSide.isServerSide) {
@@ -188,8 +197,8 @@ internal abstract class ECPartBase(
   }
   // endregion IPart getters
 
-  override fun onPlacement(player: EntityPlayer?, held: ItemStack?, side: ForgeDirection?) {
-    // no-op
+  override fun onPlacement(player: EntityPlayer, held: ItemStack?, side: ForgeDirection?) {
+    this.ownerID = AEApi.instance().registries().players().getID(player.gameProfile)
   }
 
   override fun onActivate(player: EntityPlayer?, pos: Vec3?): Boolean {
@@ -213,7 +222,10 @@ internal abstract class ECPartBase(
   }
 
   override fun addToWorld() {
-    // no-op
+    if (EffectiveSide.isClientSide) return
+    val node = AEApi.instance().createGridNode(this._grid)
+    node.playerID = this.ownerID
+    this._node = node
   }
 
   override fun setPartHostInfo(side: ForgeDirection?, host: IPartHost?, tile: TileEntity?) {

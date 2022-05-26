@@ -8,25 +8,25 @@ internal data class ECGuiMeta(
   val isTile: Boolean,
 ) {
   fun encode(): Int {
-    var source = 0
+    var encoded = 0
 
-    source += gui.id shl 5
-    source += side.ordinal shl 1
-    source += if (isTile) 1 else 0
+    encoded += if (isTile) 1 else 0
+    encoded += side.ordinal shl 1
+    encoded += gui.ordinal shl 4
 
-    return source
+    return encoded
   }
 
   companion object {
-    fun decode(source: Int): ECGuiMeta {
-      val meta = source shr 5
-      val side = source shr 1 and 1
-      val isTile = (source and 1) == 1
+    fun decode(encoded: Int): ECGuiMeta {
+      val gui = encoded shr 4 and 127
+      val side = encoded shr 1 and 7
+      val isTile = encoded and 1
 
       return ECGuiMeta(
-        gui = ECGui.values()[meta],
+        gui = ECGui.values()[gui],
         side = ForgeDirection.values()[side],
-        isTile = isTile,
+        isTile = isTile == 1,
       )
     }
   }

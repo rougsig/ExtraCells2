@@ -6,12 +6,8 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-enum class ECGui(
-  val id: Int,
-) {
-  FluidTerminal(
-    id = 1,
-  ),
+enum class ECGui {
+  FluidTerminal(),
   ;
 
   fun launch(
