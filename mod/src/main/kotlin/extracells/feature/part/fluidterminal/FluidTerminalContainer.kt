@@ -4,6 +4,7 @@ import extracells.core.entity.ECFluidStack
 import extracells.feature.gui.container.ECContainerWithPlayerInventory
 import extracells.feature.part.core.ECFluidMonitor
 import extracells.helper.EffectiveSide
+import extracells.network.ECNetworkHandler
 import net.minecraft.entity.player.EntityPlayer
 
 internal class FluidTerminalContainer(
@@ -25,7 +26,8 @@ internal class FluidTerminalContainer(
   }
 
   override fun onFluidsChange(fluids: List<ECFluidStack>) {
-
+    if (EffectiveSide.isClientSide) return
+    ECNetworkHandler.instance.sendTo()
   }
 
   private fun subscribeOnFluidListChanges() {
