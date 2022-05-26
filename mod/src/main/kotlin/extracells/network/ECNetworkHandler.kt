@@ -1,6 +1,5 @@
 package extracells.network
 
-import appeng.core.sync.AppEngPacket
 import cpw.mods.fml.common.FMLCommonHandler
 import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import cpw.mods.fml.common.network.FMLEventChannel
@@ -8,13 +7,14 @@ import cpw.mods.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent
 import cpw.mods.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint
-import cpw.mods.fml.common.network.internal.FMLProxyPacket
-import net.minecraft.entity.player.EntityPlayer
+import extracells.network.packet.ECPacket
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.network.NetHandlerPlayServer
 
 internal class ECNetworkHandler private constructor() {
   companion object {
+    const val CHANNEL_NAME = "EC2"
+
     lateinit var instance: ECNetworkHandler
       private set
 
@@ -23,66 +23,48 @@ internal class ECNetworkHandler private constructor() {
     }
   }
 
-  val channelName = "EC2"
-
   private val channel: FMLEventChannel
-
-  private val clientHandler: ECClientPacketHandler
-  private val serverHandler: ECClientPacketHandler
 
   init {
     FMLCommonHandler.instance().bus().register(this)
-    this.channel = NetworkRegistry.INSTANCE.newEventDrivenChannel(channelName)
+    this.channel = NetworkRegistry.INSTANCE.newEventDrivenChannel(CHANNEL_NAME)
     this.channel.register(this)
-
-    this.clientHandler = this.createClientSidePacketHandler()
-    this.serverHandler = this.createServerSidePacketHandler()
   }
 
-  private fun createClientSidePacketHandler(): ECClientPacketHandler {
-    return object : ECClientPacketHandler {
-      override fun onPacketData(packet: FMLProxyPacket, player: EntityPlayer?) {
-        TODO("createClientSidePacketHandler::onPacketData")
-      }
-    }
+  // region send funs
+  fun sendToAll(message: ECPacket) {
+    this.channel.sendToAll(message.createProxy())
   }
 
-  private fun createServerSidePacketHandler(): ECClientPacketHandler {
-    return object : ECClientPacketHandler {
-      override fun onPacketData(packet: FMLProxyPacket, player: EntityPlayer?) {
-        TODO("createServerSidePacketHandler::onPacketData")
-      }
-    }
+  fun sendTo(message: ECPacket, player: EntityPlayerMP) {
+    this.channel.sendTo(message.createProxy(), player)
   }
 
+  fun sendToAllAround(message: ECPacket, point: TargetPoint) {
+    this.channel.sendToAllAround(message.createProxy(), point)
+  }
+
+  fun sendToDimension(message: ECPacket, dimensionId: Int) {
+    this.channel.sendToDimension(message.createProxy(), dimensionId)
+  }
+
+  fun sendToServer(message: ECPacket) {
+    this.channel.sendToServer(message.createProxy())
+  }
+  // endregion send funs
+
+  // region handler login
   @SubscribeEvent
   fun serverPacket(ev: ServerCustomPacketEvent) {
-    val srv = ev.packet.handler() as NetHandlerPlayServer
-    this.serverHandler.onPacketData(ev.packet, srv.playerEntity)
+    val server = ev.packet.handler() as NetHandlerPlayServer
+
+    val packet = ev.packet
+    val player = server.playerEntity
   }
 
   @SubscribeEvent
   fun clientPacket(ev: ClientCustomPacketEvent) {
-    clientHandler.onPacketData(ev.packet, null)
+    val packet = ev.packet
   }
-
-  fun sendToAll(message: AppEngPacket) {
-    this.channel.sendToAll(message.proxy)
-  }
-
-  fun sendTo(message: AppEngPacket, player: EntityPlayerMP) {
-    this.channel.sendTo(message.proxy, player)
-  }
-
-  fun sendToAllAround(message: AppEngPacket, point: TargetPoint) {
-    this.channel.sendToAllAround(message.proxy, point)
-  }
-
-  fun sendToDimension(message: AppEngPacket, dimensionId: Int) {
-    this.channel.sendToDimension(message.proxy, dimensionId)
-  }
-
-  fun sendToServer(message: AppEngPacket) {
-    this.channel.sendToServer(message.proxy)
-  }
+  // endregion handler logic
 }
