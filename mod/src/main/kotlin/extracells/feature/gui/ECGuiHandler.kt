@@ -2,9 +2,9 @@ package extracells.feature.gui
 
 import appeng.api.parts.IPartHost
 import cpw.mods.fml.common.network.IGuiHandler
-import extracells.feature.part.fluidterminal.FluidTerminalContainer
-import extracells.feature.part.fluidterminal.FluidTerminalGui
 import extracells.feature.part.fluidterminal.FluidTerminalPart
+import extracells.feature.part.fluidterminal.gui.FluidTerminalContainer
+import extracells.feature.part.fluidterminal.gui.FluidTerminalGui
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 

@@ -7,7 +7,11 @@ import cpw.mods.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent
 import cpw.mods.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint
-import extracells.network.packet.ECPacket
+import extracells.feature.part.fluidterminal.gui.FluidTerminalContainer
+import extracells.feature.part.fluidterminal.gui.FluidTerminalGui
+import extracells.feature.part.fluidterminal.netwotk.FluidTerminalClientPacket
+import extracells.feature.part.fluidterminal.netwotk.FluidTerminalServerPacket
+import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.network.NetHandlerPlayServer
 
@@ -36,7 +40,7 @@ internal class ECNetworkHandler private constructor() {
     this.channel.sendToAll(message.createProxy())
   }
 
-  fun sendTo(message: ECPacket, player: EntityPlayerMP) {
+  fun sendToPlayer(message: ECPacket, player: EntityPlayerMP) {
     this.channel.sendTo(message.createProxy(), player)
   }
 
@@ -55,16 +59,37 @@ internal class ECNetworkHandler private constructor() {
 
   // region handler login
   @SubscribeEvent
-  fun serverPacket(ev: ServerCustomPacketEvent) {
+  fun handleServerPacket(ev: ServerCustomPacketEvent) {
     val server = ev.packet.handler() as NetHandlerPlayServer
 
-    val packet = ev.packet
+    val packet = ECPacket.createFrom(ev.packet.payload())
     val player = server.playerEntity
+
+    when (packet.type) {
+      ECPacketType.FluidTerminalServer -> {
+        val fluidTerminal = player.openContainer as? FluidTerminalContainer
+        fluidTerminal?.handleServerPacket(packet as FluidTerminalServerPacket)
+      }
+      ECPacketType.FluidTerminalClient -> {
+        null // no-op client side packet
+      }
+    }?.javaClass // used to make when exhaustive
   }
 
   @SubscribeEvent
-  fun clientPacket(ev: ClientCustomPacketEvent) {
-    val packet = ev.packet
+  fun handleClientPacket(ev: ClientCustomPacketEvent) {
+    val packet = ECPacket.createFrom(ev.packet.payload())
+    when (packet.type) {
+      ECPacketType.FluidTerminalClient -> {
+        val mc = Minecraft.getMinecraft()
+        println(mc)
+        val fluidTerminalGui = Minecraft.getMinecraft().currentScreen as FluidTerminalGui
+        fluidTerminalGui?.handleClientPacket(packet as FluidTerminalClientPacket)
+      }
+      ECPacketType.FluidTerminalServer -> {
+        null // no-op server side packet
+      }
+    }?.javaClass // used to make when exhaustive
   }
   // endregion handler logic
 }

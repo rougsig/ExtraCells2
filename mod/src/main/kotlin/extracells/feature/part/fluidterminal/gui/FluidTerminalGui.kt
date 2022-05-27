@@ -1,8 +1,10 @@
-package extracells.feature.part.fluidterminal
+package extracells.feature.part.fluidterminal.gui
 
 import extracells.core.entity.ECFluidStack
 import extracells.feature.gui.container.ECGuiContainer
 import extracells.feature.gui.widget.FluidWidget
+import extracells.feature.part.fluidterminal.FluidTerminalPart
+import extracells.feature.part.fluidterminal.netwotk.FluidTerminalClientPacket
 import net.minecraft.entity.player.EntityPlayer
 import org.lwjgl.opengl.GL11
 
@@ -10,7 +12,6 @@ internal class FluidTerminalGui(
   private val terminal: FluidTerminalPart,
   private val player: EntityPlayer,
 ) : ECGuiContainer(FluidTerminalContainer(terminal, player)) {
-
   private val fluidWidgets = arrayListOf<FluidWidget>()
 
   init {
@@ -33,5 +34,11 @@ internal class FluidTerminalGui(
     GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f)
     this.bindTexture("terminalfluid.png")
     drawTexturedModalRect(guiLeft, guiTop, 0, 0, 176, 204)
+  }
+
+  fun handleClientPacket(packet: FluidTerminalClientPacket) {
+    fluidWidgets.forEachIndexed { index, fluidWidget ->
+      fluidWidget.fluidStack = packet.fluids.getOrNull(index)
+    }
   }
 }

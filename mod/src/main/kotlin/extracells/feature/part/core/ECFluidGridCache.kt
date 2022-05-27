@@ -39,7 +39,10 @@ internal class ECFluidGridCache(
   }
 
   override val storedFluids: List<ECFluidStack>
-    get() = TODO("Not yet implemented")
+    get() = listOf(
+      ECFluidStack("water", 4000),
+      ECFluidStack("lava", 8000),
+    )
   // endregion fluid
 
   // region appeng
