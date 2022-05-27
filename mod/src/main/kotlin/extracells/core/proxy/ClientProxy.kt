@@ -15,7 +15,4 @@ class ClientProxy : CommonProxy by ServerProxy() {
   override fun registerTextures() {
     MinecraftForge.EVENT_BUS.register(ECTextureRegister())
   }
-
-  override fun registerGuiHandler() {
-  }
 }
