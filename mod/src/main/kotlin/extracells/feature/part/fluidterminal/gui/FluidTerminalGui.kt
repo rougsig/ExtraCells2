@@ -1,5 +1,7 @@
 package extracells.feature.part.fluidterminal.gui
 
+import cpw.mods.fml.relauncher.Side
+import cpw.mods.fml.relauncher.SideOnly
 import extracells.core.entity.ECFluidStack
 import extracells.feature.gui.container.ECGuiContainer
 import extracells.feature.gui.widget.FluidWidget
@@ -8,6 +10,7 @@ import extracells.feature.part.fluidterminal.netwotk.FluidTerminalClientPacket
 import net.minecraft.entity.player.EntityPlayer
 import org.lwjgl.opengl.GL11
 
+@SideOnly(Side.CLIENT)
 internal class FluidTerminalGui(
   private val terminal: FluidTerminalPart,
   private val player: EntityPlayer,

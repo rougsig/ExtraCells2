@@ -81,9 +81,7 @@ internal class ECNetworkHandler private constructor() {
     val packet = ECPacket.createFrom(ev.packet.payload())
     when (packet.type) {
       ECPacketType.FluidTerminalClient -> {
-        val mc = Minecraft.getMinecraft()
-        println(mc)
-        val fluidTerminalGui = Minecraft.getMinecraft().currentScreen as FluidTerminalGui
+        val fluidTerminalGui = Minecraft.getMinecraft().currentScreen as? FluidTerminalGui
         fluidTerminalGui?.handleClientPacket(packet as FluidTerminalClientPacket)
       }
       ECPacketType.FluidTerminalServer -> {
