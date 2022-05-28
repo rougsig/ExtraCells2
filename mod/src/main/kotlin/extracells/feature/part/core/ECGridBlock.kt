@@ -4,6 +4,7 @@ import appeng.api.networking.*
 import appeng.api.networking.energy.IEnergyGrid
 import appeng.api.networking.security.ISecurityGrid
 import appeng.api.networking.storage.IStorageGrid
+import appeng.api.networking.ticking.ITickManager
 import appeng.api.parts.PartItemStack
 import appeng.api.util.AEColor
 import appeng.api.util.DimensionalCoord
@@ -36,6 +37,9 @@ internal class ECGridBlock(
 
   val storageGrid: IStorageGrid?
     get() = this.grid?.getCache(IStorageGrid::class.java)
+
+  val tickManager: ITickManager?
+    get() = this.grid?.getCache(ITickManager::class.java)
 
   override fun getFlags(): EnumSet<GridFlags> {
     return EnumSet.of(GridFlags.REQUIRE_CHANNEL)

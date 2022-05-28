@@ -10,11 +10,13 @@ import extracells.helper.EffectiveSide
 import extracells.network.ECNetworkHandler
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.inventory.Slot
 
 internal class FluidTerminalContainer(
   private val terminal: FluidTerminalPart,
   player: EntityPlayer,
 ) : ECContainerWithPlayerInventory(player), ECFluidMonitor.Listener {
+
   init {
     this.bindSlots()
     this.subscribeOnFluidListChanges()
@@ -23,6 +25,9 @@ internal class FluidTerminalContainer(
 
   private fun bindSlots() {
     this.bindPlayerInventory(player.inventory, hotbarPositionY = 204 - 24, inventoryOffsetY = 204 - 82)
+    val internalInventory = terminal.getInventoryByName("internal")
+    this.addSlotToContainer(Slot(internalInventory, 0, 8, 92))
+    this.addSlotToContainer(Slot(internalInventory, 1, 26, 92))
   }
 
   override fun onContainerClosed(p_75134_1_: EntityPlayer?) {
