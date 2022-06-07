@@ -5,6 +5,7 @@ import appeng.api.networking.ticking.TickingRequest
 import appeng.tile.inventory.AppEngInternalInventory
 import appeng.tile.inventory.IAEAppEngInventory
 import appeng.tile.inventory.InvOperation
+import extracells.extension.incrStackSize
 import extracells.feature.gui.ECGui
 import extracells.feature.part.ECPart
 import extracells.feature.part.core.ECTickablePart
@@ -12,46 +13,133 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Vec3
+import net.minecraftforge.fluids.Fluid
 import net.minecraftforge.fluids.FluidContainerRegistry
-import kotlin.math.max
-import kotlin.math.min
+import net.minecraftforge.fluids.FluidRegistry
+import net.minecraftforge.fluids.FluidStack
 
 internal class FluidTerminalPart : ECTickablePart(ECPart.FluidTerminal), IAEAppEngInventory {
-  private val inventory = AppEngInternalInventory(this, 2)
+  companion object {
+    const val INPUT_SLOT_INDEX = 0
+    const val OUTPUT_SLOT_INDEX = 1
+  }
+
+  val internalInventory = AppEngInternalInventory(this, 2)
+
+  private var selectedFluid: Fluid? = null
+
+  private var inputSlot: ItemStack?
+    set(value) = internalInventory.setInventorySlotContents(INPUT_SLOT_INDEX, value)
+    get() = internalInventory.getStackInSlot(INPUT_SLOT_INDEX)
+
+  private var outputSlot: ItemStack?
+    set(value) = internalInventory.setInventorySlotContents(OUTPUT_SLOT_INDEX, value)
+    get() = internalInventory.getStackInSlot(OUTPUT_SLOT_INDEX)
 
   // region Tickable
   override fun createTickingRequest(): TickingRequest {
     return TickingRequest(5, 20, this.canDoWork(), false)
   }
 
-  // TODO: do not uses magic numbers for slot index
-  // TODO: check if fluid containers the same
-  override fun canDoWork(): Boolean {
-    val hasFilledContainers = (inventory.getStackInSlot(0)?.stackSize ?: 0) > 0
-    val hasSpaceForEmptyContainers = (inventory.getStackInSlot(1)?.stackSize ?: 0) < 64
-    return hasFilledContainers && hasSpaceForEmptyContainers
+  private fun isInputFluidContainer(): Boolean {
+    return FluidContainerRegistry.isContainer(this.inputSlot)
   }
 
-  override fun doWork(ticks: Int): TickRateModulation {
+  private fun hasInput(): Boolean {
+    return (this.inputSlot?.stackSize ?: 0) > 0
+  }
+
+  // TODO: add checks for max stack size
+  private fun hasOutputSpace(): Boolean {
+    return (this.outputSlot?.stackSize ?: 0) < 64
+  }
+
+  private fun isInjectMode(): Boolean {
+    return FluidContainerRegistry.isFilledContainer(this.inputSlot)
+  }
+
+  private fun isSameContainers(): Boolean {
+    val isInjectMode = isInjectMode()
+
+    val filledContainers = if (isInjectMode) this.inputSlot else this.outputSlot
+    val emptyContainers = if (isInjectMode) this.outputSlot else this.inputSlot
+
+    val filledContainerType = FluidContainerRegistry.drainFluidContainer(filledContainers)
+    return filledContainers == null || emptyContainers == null || filledContainerType.isItemEqual(emptyContainers)
+  }
+
+  private fun isExtractFluidSelected(): Boolean {
+    return this.selectedFluid != null
+  }
+
+  override fun canDoWork(): Boolean {
+    return if(isInjectMode()) {
+      isInputFluidContainer() && hasInput() && hasOutputSpace() && isSameContainers()
+    } else {
+      isExtractFluidSelected() && isInputFluidContainer() && hasInput() && hasOutputSpace() && isSameContainers()
+    }
+  }
+
+  private fun doInjectWork(ticks: Int): TickRateModulation {
     val fluidMonitor = requireFluidMonitor
 
-    val filledContainers = inventory.getStackInSlot(0)
-    val emptyContainers = inventory.getStackInSlot(1)
+    val filledContainers = this.inputSlot
+    val emptyContainers = this.outputSlot
 
     val fluidStack = FluidContainerRegistry.getFluidForFilledItem(filledContainers)
-    val injectedAmount = fluidMonitor.simulateInject(src, fluidStack.getFluid().name, fluidStack.amount)
-    if (injectedAmount == fluidStack.amount) {
-      fluidMonitor.inject(src, fluidStack.getFluid().name, fluidStack.amount)
-      val newFilledContainers = filledContainers.copy()
-      newFilledContainers.stackSize = max(0, newFilledContainers.stackSize - 1)
-      inventory.setInventorySlotContents(0, newFilledContainers)
+    val fluidName = fluidStack.getFluid().name
 
-      val newEmptyContainers = emptyContainers?.copy() ?: FluidContainerRegistry.drainFluidContainer(filledContainers)
-      newEmptyContainers.stackSize = min(64, newEmptyContainers.stackSize + 1)
-      inventory.setInventorySlotContents(1, newEmptyContainers)
+    val injectedAmount = fluidMonitor.simulateInject(src, fluidName, fluidStack.amount)
+    if (injectedAmount == fluidStack.amount) {
+      fluidMonitor.inject(src, fluidName, fluidStack.amount)
+      internalInventory.decrStackSize(INPUT_SLOT_INDEX, 1)
+
+      if (emptyContainers == null) {
+        this.outputSlot = FluidContainerRegistry.drainFluidContainer(filledContainers)
+      } else {
+        internalInventory.incrStackSize(OUTPUT_SLOT_INDEX, 1)
+      }
     }
 
     return TickRateModulation.FASTER
+  }
+
+  private fun doExtractWork(ticks: Int): TickRateModulation {
+    val fluidMonitor = requireFluidMonitor
+
+    val filledContainers = this.outputSlot
+    val emptyContainers = this.inputSlot
+
+    val fluidStack = FluidStack(
+      this.selectedFluid!!,
+      FluidContainerRegistry.BUCKET_VOLUME,
+    )
+    val fluidName = this.selectedFluid!!.name
+
+    val amountToExtract = FluidContainerRegistry.getContainerCapacity(fluidStack, emptyContainers)
+    // 0 means unsupported fluid type for container
+    if (amountToExtract == 0) return TickRateModulation.SLEEP
+
+    val extractedAmount = fluidMonitor.simulateExtract(src, fluidName, amountToExtract)
+    if (extractedAmount == amountToExtract) {
+      fluidMonitor.extract(src, fluidName, extractedAmount)
+      internalInventory.decrStackSize(INPUT_SLOT_INDEX, 1)
+
+      if (filledContainers == null) {
+        this.outputSlot = FluidContainerRegistry.fillFluidContainer(
+          FluidStack(FluidRegistry.getFluid(fluidName), extractedAmount),
+          emptyContainers,
+        )
+      } else {
+        internalInventory.incrStackSize(OUTPUT_SLOT_INDEX, 1)
+      }
+    }
+
+    return TickRateModulation.IDLE
+  }
+
+  override fun doWork(ticks: Int): TickRateModulation {
+    return if (isInjectMode()) doInjectWork(ticks) else doExtractWork(ticks)
   }
   // endregion Tickable
 
@@ -60,13 +148,6 @@ internal class FluidTerminalPart : ECTickablePart(ECPart.FluidTerminal), IAEAppE
     return ECGui.FluidTerminal.launch(player, tile, side)
   }
   // endregion PlayerIntersections
-
-  override fun getInventoryByName(name: String): IInventory? {
-    return when (name) {
-      "internal" -> this.inventory
-      else -> super.getInventoryByName(name)
-    }
-  }
 
   // region IAEAppEngInventory
   override fun saveChanges() {
@@ -80,7 +161,7 @@ internal class FluidTerminalPart : ECTickablePart(ECPart.FluidTerminal), IAEAppE
     removedStack: ItemStack?,
     newStack: ItemStack?
   ) {
-    if (inv == inventory && this.canDoWork()) this.wakeDevice()
+    if (inv == internalInventory && this.canDoWork()) this.wakeDevice()
   }
   // endregion
 }

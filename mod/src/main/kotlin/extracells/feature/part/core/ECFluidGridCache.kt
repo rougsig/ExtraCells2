@@ -41,14 +41,16 @@ internal class ECFluidGridCache(
   override fun extract(src: BaseActionSource, fluidName: String, amount: Int): Int {
     val stack = AEApi.instance().createFluidStack(fluidName, amount)
     val extracted = fluidInventory.extractItems(stack, Actionable.MODULATE, src)
-    this.notifyListeners = this.notifyListeners || extracted.fluidStack.amount > 0
-    return extracted.fluidStack.amount
+    val extractedAmount = extracted?.fluidStack?.amount ?: 0
+    this.notifyListeners = this.notifyListeners || extractedAmount > 0
+    return extractedAmount
   }
 
   override fun simulateExtract(src: BaseActionSource, fluidName: String, amount: Int): Int {
     val stack = AEApi.instance().createFluidStack(fluidName, amount)
     val extracted = fluidInventory.extractItems(stack, Actionable.SIMULATE, src)
-    return extracted.fluidStack.amount
+    val extractedAmount = extracted?.fluidStack?.amount ?: 0
+    return extractedAmount
   }
 
   override fun addListener(listener: ECFluidMonitor.Listener) {

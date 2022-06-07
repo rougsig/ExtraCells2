@@ -25,9 +25,9 @@ internal class FluidTerminalContainer(
 
   private fun bindSlots() {
     this.bindPlayerInventory(player.inventory, hotbarPositionY = 204 - 24, inventoryOffsetY = 204 - 82)
-    val internalInventory = terminal.getInventoryByName("internal")
-    this.addSlotToContainer(Slot(internalInventory, 0, 8, 92))
-    this.addSlotToContainer(Slot(internalInventory, 1, 26, 92))
+    val internalInventory = terminal.internalInventory
+    this.addSlotToContainer(Slot(internalInventory, FluidTerminalPart.INPUT_SLOT_INDEX, 8, 92))
+    this.addSlotToContainer(Slot(internalInventory, FluidTerminalPart.OUTPUT_SLOT_INDEX, 26, 92))
   }
 
   override fun onContainerClosed(p_75134_1_: EntityPlayer?) {
