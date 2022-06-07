@@ -26,7 +26,11 @@ internal class FluidTerminalPart : ECTickablePart(ECPart.FluidTerminal), IAEAppE
 
   val internalInventory = AppEngInternalInventory(this, 2)
 
-  private var selectedFluid: Fluid? = null
+  var selectedFluid: Fluid? = null
+    set(value) {
+      field = value
+      if (this.canDoWork()) this.wakeDevice()
+    }
 
   private var inputSlot: ItemStack?
     set(value) = internalInventory.setInventorySlotContents(INPUT_SLOT_INDEX, value)
@@ -72,11 +76,17 @@ internal class FluidTerminalPart : ECTickablePart(ECPart.FluidTerminal), IAEAppE
     return this.selectedFluid != null
   }
 
+  private fun isSameFluid(): Boolean {
+    val selectedFluid = this.selectedFluid
+    val filledFluid = FluidContainerRegistry.getFluidForFilledItem(this.outputSlot)
+    return filledFluid == null || (selectedFluid != null && selectedFluid.name == filledFluid?.getFluid()?.name)
+  }
+
   override fun canDoWork(): Boolean {
-    return if(isInjectMode()) {
+    return if (isInjectMode()) {
       isInputFluidContainer() && hasInput() && hasOutputSpace() && isSameContainers()
     } else {
-      isExtractFluidSelected() && isInputFluidContainer() && hasInput() && hasOutputSpace() && isSameContainers()
+      isExtractFluidSelected() && isInputFluidContainer() && hasInput() && hasOutputSpace() && isSameContainers() && isSameFluid()
     }
   }
 

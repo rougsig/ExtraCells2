@@ -1,6 +1,7 @@
 package extracells.feature.part.fluidterminal.gui
 
 import extracells.core.entity.ECFluidStack
+import extracells.extension.exhaustive
 import extracells.feature.gui.container.ECContainerWithPlayerInventory
 import extracells.feature.part.core.ECFluidMonitor
 import extracells.feature.part.fluidterminal.FluidTerminalPart
@@ -11,6 +12,7 @@ import extracells.network.ECNetworkHandler
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.inventory.Slot
+import net.minecraftforge.fluids.FluidRegistry
 
 internal class FluidTerminalContainer(
   private val terminal: FluidTerminalPart,
@@ -52,19 +54,47 @@ internal class FluidTerminalContainer(
   // region network
   private fun requestStoredFluids() {
     if (EffectiveSide.isServerSide) return
-    ECNetworkHandler.instance.sendToServer(FluidTerminalServerPacket.create())
+    ECNetworkHandler.instance.sendToServer(
+      FluidTerminalServerPacket.create(FluidTerminalServerPacket.Variant.RequestStoredFluids),
+    )
   }
 
   private fun sendStoredFluids(fluids: List<ECFluidStack>) {
-    if (EffectiveSide.isClientSide) return
     ECNetworkHandler.instance.sendToPlayer(
-      FluidTerminalClientPacket.create(fluids),
+      FluidTerminalClientPacket.create(FluidTerminalClientPacket.Variant.UpdateStoredFluids(
+        fluids = fluids.map { fluid ->
+          FluidTerminalClientPacket.Variant.UpdateStoredFluids.Fluid(
+            name = fluid.name,
+            amount = fluid.amount,
+          )
+        }
+      )),
+      player as EntityPlayerMP,
+    )
+  }
+
+  private fun updateSelectedFluid(packet: FluidTerminalServerPacket.Variant.UpdateSelectedFluid) {
+    this.terminal.selectedFluid = FluidRegistry.getFluid(packet.fluidName)
+    ECNetworkHandler.instance.sendToPlayer(
+      FluidTerminalClientPacket.create(
+        FluidTerminalClientPacket.Variant.UpdateSelectedFluid(
+          fluidName = packet.fluidName,
+        )
+      ),
       player as EntityPlayerMP,
     )
   }
 
   fun handleServerPacket(packet: FluidTerminalServerPacket) {
-    this.sendStoredFluids(terminal.requireFluidMonitor.storedFluids)
+    when (val variant = packet.variant) {
+      is FluidTerminalServerPacket.Variant.Empty -> Unit
+      is FluidTerminalServerPacket.Variant.RequestStoredFluids -> {
+        this.sendStoredFluids(terminal.requireFluidMonitor.storedFluids)
+      }
+      is FluidTerminalServerPacket.Variant.UpdateSelectedFluid -> {
+        this.updateSelectedFluid(variant)
+      }
+    }.exhaustive
   }
   // endregion network
 }
