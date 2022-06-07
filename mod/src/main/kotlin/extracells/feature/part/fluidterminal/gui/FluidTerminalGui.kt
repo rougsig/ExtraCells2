@@ -25,6 +25,7 @@ internal class FluidTerminalGui(
     for (i in 0..3) {
       for (j in 0..8) {
         val fluidWidget = FluidWidget(
+          screen = this,
           x = j * 18 + 7,
           y = i * 18 + 17,
           width = 18,
@@ -43,6 +44,7 @@ internal class FluidTerminalGui(
     drawTexturedModalRect(guiLeft, guiTop, 0, 0, 176, 204)
   }
 
+  // TODO: do in better way
   override fun drawForeground(mouseX: Int, mouseY: Int) {
     for (widget in fluidWidgets) {
       if (widget.fluidStack?.name != null && terminal.selectedFluid?.name != null && widget.fluidStack?.name == terminal.selectedFluid?.name) {
@@ -53,7 +55,21 @@ internal class FluidTerminalGui(
           widget.y + widget.height,
           0x7FFFFFFF,
         )
-        break
+      }
+      val mouseX = mouseX - guiLeft
+      val mouseY = mouseY - guiTop
+      if ((mouseX > widget.x && mouseX < widget.x + width) && (mouseY > widget.y && mouseY < widget.y + height)) {
+        if (widget.fluidStack != null) {
+          drawHoveringText(
+            listOf(
+              widget.fluidStack!!.name.toString(),
+              widget.fluidStack!!.amount.toString(),
+            ),
+            mouseX,
+            mouseY,
+            fontRendererObj,
+          )
+        }
       }
     }
   }

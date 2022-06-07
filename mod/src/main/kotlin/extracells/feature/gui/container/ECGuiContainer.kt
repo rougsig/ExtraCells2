@@ -30,7 +30,7 @@ internal abstract class ECGuiContainer(container: ECContainer) : GuiContainer(co
 
   final override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
     drawForeground(mouseX, mouseY)
-    widgets.forEach { it.drawForeground(mouseX = mouseX, mouseY = mouseY, offsetX = guiLeft, offsetY = guiTop) }
+    widgets.forEach { it.drawForeground(mouseX - guiLeft, mouseY - guiTop) }
   }
 
   override fun mouseClicked(mouseX: Int, mouseY: Int, mouseBtn: Int) {

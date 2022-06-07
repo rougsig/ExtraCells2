@@ -2,12 +2,14 @@ package extracells.feature.gui.widget
 
 import extracells.core.entity.ECFluidStack
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraftforge.fluids.Fluid
 import net.minecraftforge.fluids.FluidRegistry
 import org.lwjgl.opengl.GL11
 
 class FluidWidget(
+  val screen: GuiScreen,
   val x: Int,
   val y: Int,
   val width: Int,
@@ -49,8 +51,6 @@ class FluidWidget(
   }
 
   override fun drawForeground(mouseX: Int, mouseY: Int, offsetX: Int, offsetY: Int) {
-    val x = this.x + offsetX
-    val y = this.y + offsetY
   }
 
   override fun mouseClicked(mouseX: Int, mouseY: Int, mouseBtn: Int) {
