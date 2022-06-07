@@ -7,6 +7,7 @@ import cpw.mods.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent
 import cpw.mods.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint
+import extracells.extension.exhaustive
 import extracells.feature.part.fluidterminal.gui.FluidTerminalContainer
 import extracells.feature.part.fluidterminal.gui.FluidTerminalGui
 import extracells.feature.part.fluidterminal.netwotk.FluidTerminalClientPacket
@@ -81,15 +82,13 @@ internal class ECNetworkHandler private constructor() {
     val packet = ECPacket.createFrom(ev.packet.payload())
     when (packet.type) {
       ECPacketType.FluidTerminalClient -> {
-        val mc = Minecraft.getMinecraft()
-        println(mc)
-        val fluidTerminalGui = Minecraft.getMinecraft().currentScreen as FluidTerminalGui
+        val fluidTerminalGui = Minecraft.getMinecraft().currentScreen as? FluidTerminalGui
         fluidTerminalGui?.handleClientPacket(packet as FluidTerminalClientPacket)
       }
       ECPacketType.FluidTerminalServer -> {
         null // no-op server side packet
       }
-    }?.javaClass // used to make when exhaustive
+    }.exhaustive
   }
   // endregion handler logic
 }

@@ -74,6 +74,10 @@ internal abstract class ECPartBase(
     }
   }
 
+  protected fun markForSave() {
+    this._host?.markForSave()
+  }
+
   // region IPart
   // region IPart render
   override fun cableConnectionRenderTo(): Int {

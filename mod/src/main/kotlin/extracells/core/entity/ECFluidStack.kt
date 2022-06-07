@@ -4,16 +4,16 @@ import net.minecraftforge.fluids.FluidRegistry
 import net.minecraftforge.fluids.FluidStack as ForgeFluidStack
 
 data class ECFluidStack(
-  val fluidName: String,
+  val name: String,
   val amount: Int,
 ) {
   companion object {
     val Empty = ECFluidStack(
-      fluidName = "none",
+      name = "none",
       amount = 0,
     )
 
-    fun fromForgeFluidStack(fluidStack: ForgeFluidStack?): ECFluidStack {
+    fun createFrom(fluidStack: ForgeFluidStack?): ECFluidStack {
       return if (fluidStack == null) ECFluidStack.Empty
       else ECFluidStack(FluidRegistry.getFluidName(fluidStack.getFluid()), fluidStack.amount)
     }
@@ -21,6 +21,6 @@ data class ECFluidStack(
 
   fun toForgeFluidStack(): ForgeFluidStack? {
     return if (this == Empty) null
-    else ForgeFluidStack(FluidRegistry.getFluid(this.fluidName), this.amount)
+    else ForgeFluidStack(FluidRegistry.getFluid(this.name), this.amount)
   }
 }
