@@ -57,6 +57,9 @@ internal abstract class ECPartBase(
   protected val side: ForgeDirection?
     get() = this._side
 
+  val requireSide: ForgeDirection
+    get() = this.side ?: error("fluid monitor is null")
+
   open val idlePowerUsage: Double = 0.0
 
   val location: DimensionalCoord

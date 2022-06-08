@@ -11,7 +11,7 @@ internal abstract class ECTickablePart(part: ECPart) : ECPartBase(part), IGridTi
     return createTickingRequest()
   }
 
-  override fun tickingRequest(node: IGridNode, ticks: Int): TickRateModulation {
+  final override fun tickingRequest(node: IGridNode, ticks: Int): TickRateModulation {
     return if (canDoWork()) doWork(ticks)
     else TickRateModulation.SLEEP
   }

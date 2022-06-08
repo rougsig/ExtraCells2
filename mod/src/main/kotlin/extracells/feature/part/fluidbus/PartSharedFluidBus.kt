@@ -1,30 +1,34 @@
 package extracells.feature.part.fluidbus
 
-import appeng.api.config.Upgrades
-import appeng.parts.automation.PartSharedItemBus
-import appeng.tile.inventory.AppEngInternalAEInventory
-import extracells.feature.item.ECItem
-import net.minecraft.item.ItemStack
+import appeng.api.networking.ticking.TickingRequest
+import extracells.feature.part.ECPart
+import extracells.feature.part.core.ECTickablePart
 import net.minecraftforge.fluids.IFluidHandler
 
-abstract class PartSharedFluidBus(id: Int) : PartSharedItemBus(ItemStack(ECItem.Part.item, 1, id)) {
+internal abstract class PartSharedFluidBus(part: ECPart) : ECTickablePart(part) {
   protected val fluidHandler: IFluidHandler?
-    get() = host.tile.worldObj.getTileEntity(
-      host.tile.xCoord + side.offsetX,
-      host.tile.yCoord + side.offsetY,
-      host.tile.zCoord + side.offsetZ,
-    ) as? IFluidHandler
+    get() {
+      val tile = this.tile ?: return null
+      val side = this.side ?: return null
 
-  protected val calculateFluidToSend: Int
-    get() = when (getInstalledUpgrades(Upgrades.SPEED)) {
-      0 -> 144
-      1 -> 288
-      2 -> 576
-      3 -> 1152
-      4 -> 2304
-      else -> 144
+      return tile.worldObj.getTileEntity(
+        tile.xCoord + side.offsetX,
+        tile.yCoord + side.offsetY,
+        tile.zCoord + side.offsetZ,
+      ) as? IFluidHandler
     }
 
-  protected val config: AppEngInternalAEInventory
-    get() = getInventoryByName("config") as AppEngInternalAEInventory
+  // region Tickable
+  override fun createTickingRequest(): TickingRequest {
+    return TickingRequest(5, 20, this.canDoWork(), false);
+  }
+
+  override fun canDoWork(): Boolean {
+    return fluidHandler != null
+  }
+  // endregion Tickable
+
+  override fun onNeighborChanged() {
+    if (canDoWork()) this.wakeDevice()
+  }
 }
