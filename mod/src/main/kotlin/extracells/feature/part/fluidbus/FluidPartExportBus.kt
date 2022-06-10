@@ -5,7 +5,7 @@ import extracells.feature.part.ECPart
 import net.minecraftforge.fluids.FluidRegistry
 import net.minecraftforge.fluids.FluidStack
 
-internal class FluidExportBusPart : PartSharedFluidBus(ECPart.FluidExportBus) {
+internal class FluidPartExportBus : SharedFluidBusPart(ECPart.FluidExportBus) {
   override fun doWork(ticks: Int): TickRateModulation {
     var worked = false
 

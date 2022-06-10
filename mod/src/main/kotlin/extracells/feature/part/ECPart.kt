@@ -1,8 +1,8 @@
 package extracells.feature.part
 
 import appeng.api.parts.IPart
-import extracells.feature.part.fluidbus.FluidExportBusPart
-import extracells.feature.part.fluidbus.FluidImportBusPart
+import extracells.feature.part.fluidbus.FluidPartExportBus
+import extracells.feature.part.fluidbus.FluidPartImportBus
 import extracells.feature.part.fluidterminal.FluidTerminalPart
 
 internal enum class ECPart(
@@ -13,7 +13,7 @@ internal enum class ECPart(
   FluidExportBus(
     meta = 1,
     "fluid.export",
-    FluidExportBusPart::class.java,
+    FluidPartExportBus::class.java,
     // generatePair(Upgrades.CAPACITY, 2),
     // generatePair(Upgrades.REDSTONE, 1),
     // generatePair(Upgrades.SPEED, 2)
@@ -21,7 +21,7 @@ internal enum class ECPart(
   FluidImportBus(
     meta = 2,
     "fluid.import",
-    FluidImportBusPart::class.java,
+    FluidPartImportBus::class.java,
     // generatePair(Upgrades.CAPACITY, 2),
     // generatePair(Upgrades.REDSTONE, 1),
     // generatePair(Upgrades.SPEED, 2)

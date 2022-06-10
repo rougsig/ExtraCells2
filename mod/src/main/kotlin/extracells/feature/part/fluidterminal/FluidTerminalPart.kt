@@ -26,6 +26,7 @@ internal class FluidTerminalPart : ECTickablePart(ECPart.FluidTerminal), IAEAppE
 
   val internalInventory = AppEngInternalInventory(this, 2)
 
+  // TODO: make private
   var selectedFluid: Fluid? = null
     set(value) {
       field = value

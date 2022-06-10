@@ -3,6 +3,7 @@ package extracells.feature.gui.container
 import extracells.ExtraCells
 import extracells.feature.gui.widget.ECWidget
 import net.minecraft.client.gui.inventory.GuiContainer
+import net.minecraft.inventory.Slot
 import net.minecraft.util.ResourceLocation
 
 internal abstract class ECGuiContainer(container: ECContainer) : GuiContainer(container) {
@@ -38,5 +39,9 @@ internal abstract class ECGuiContainer(container: ECContainer) : GuiContainer(co
     for (widget in widgets) {
       widget.mouseClicked(mouseX - guiLeft, mouseY - guiTop, mouseBtn)
     }
+  }
+
+  override fun handleMouseClick(p_146984_1_: Slot?, p_146984_2_: Int, p_146984_3_: Int, p_146984_4_: Int) {
+    super.handleMouseClick(p_146984_1_, p_146984_2_, p_146984_3_, p_146984_4_)
   }
 }
