@@ -2,15 +2,19 @@ package extracells.feature.part.fluidbus
 
 import appeng.api.networking.ticking.TickingRequest
 import appeng.tile.inventory.AppEngInternalInventory
+import appeng.tile.inventory.IAEAppEngInventory
+import appeng.tile.inventory.InvOperation
 import extracells.feature.gui.ECGui
 import extracells.feature.part.ECPart
 import extracells.feature.part.core.ECTickablePart
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.inventory.IInventory
+import net.minecraft.item.ItemStack
 import net.minecraft.util.Vec3
 import net.minecraftforge.fluids.IFluidHandler
 
-internal abstract class SharedFluidBusPart(part: ECPart) : ECTickablePart(part) {
-  val config = AppEngInternalInventory(null, 9, 1)
+internal abstract class SharedFluidBusPart(part: ECPart) : ECTickablePart(part), IAEAppEngInventory {
+  val config = AppEngInternalInventory(this, 9, 1)
 
   protected val fluidHandler: IFluidHandler?
     get() {
@@ -44,5 +48,21 @@ internal abstract class SharedFluidBusPart(part: ECPart) : ECTickablePart(part) 
   override fun onNeighborChanged() {
     if (canDoWork()) this.wakeDevice()
   }
-  // endregion
+  // endregionIPart
+
+  // region IAEAppEngInventory
+  override fun saveChanges() {
+    this.markForSave()
+  }
+
+  override fun onChangeInventory(
+    inv: IInventory?,
+    slot: Int,
+    mc: InvOperation?,
+    removedStack: ItemStack?,
+    newStack: ItemStack?
+  ) {
+    if (inv == config && this.canDoWork()) this.wakeDevice()
+  }
+  // endregion IAEAppEngInventory
 }

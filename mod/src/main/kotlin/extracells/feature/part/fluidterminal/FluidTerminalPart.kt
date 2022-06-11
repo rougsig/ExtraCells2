@@ -174,5 +174,5 @@ internal class FluidTerminalPart : ECTickablePart(ECPart.FluidTerminal), IAEAppE
   ) {
     if (inv == internalInventory && this.canDoWork()) this.wakeDevice()
   }
-  // endregion
+  // endregion IAEAppEngInventory
 }

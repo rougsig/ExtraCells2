@@ -17,6 +17,12 @@ internal class ProxyFluidItem : Item() {
   }
 
   fun setFluidStack(itemStack: ItemStack, fluidStack: ECFluidStack) {
-    fluidStack.toForgeFluidStack()?.writeToNBT(itemStack.stackTagCompound ?: NBTTagCompound())
+    val tag = itemStack.stackTagCompound ?: NBTTagCompound()
+    itemStack.stackTagCompound = tag
+    fluidStack.toForgeFluidStack()?.writeToNBT(tag)
+  }
+
+  override fun getItemStackDisplayName(itemStack: ItemStack): String {
+    return getFluidStack(itemStack).toForgeFluidStack()?.getFluid()?.localizedName ?: "Unknown Fluid"
   }
 }
