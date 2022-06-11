@@ -26,6 +26,7 @@ internal class FluidTerminalPart : ECTickablePart(ECPart.FluidTerminal), IAEAppE
 
   val internalInventory = AppEngInternalInventory(this, 2)
 
+  // TODO: make private
   var selectedFluid: Fluid? = null
     set(value) {
       field = value
@@ -173,5 +174,5 @@ internal class FluidTerminalPart : ECTickablePart(ECPart.FluidTerminal), IAEAppE
   ) {
     if (inv == internalInventory && this.canDoWork()) this.wakeDevice()
   }
-  // endregion
+  // endregion IAEAppEngInventory
 }

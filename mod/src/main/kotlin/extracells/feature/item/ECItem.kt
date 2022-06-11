@@ -2,6 +2,7 @@ package extracells.feature.item
 
 import extracells.ExtraCells
 import extracells.feature.item.part.PartItem
+import extracells.feature.item.proxyfluid.ProxyFluidItem
 import extracells.feature.item.storage.FluidCellItem
 import extracells.feature.item.storage.ItemCellItem
 import extracells.feature.item.storage.StorageComponentItem
@@ -14,6 +15,10 @@ internal enum class ECItem(
   Part(
     "part.base.v2",
     PartItem(),
+  ),
+  ProxyFluid(
+    "internal.fluid.item",
+    ProxyFluidItem(),
   ),
   FluidCell(
     "storage.fluid.v2",

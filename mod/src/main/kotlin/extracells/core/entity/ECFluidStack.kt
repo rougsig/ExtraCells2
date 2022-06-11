@@ -14,7 +14,7 @@ data class ECFluidStack(
     )
 
     fun createFrom(fluidStack: ForgeFluidStack?): ECFluidStack {
-      return if (fluidStack == null) ECFluidStack.Empty
+      return if (fluidStack == null) Empty
       else ECFluidStack(FluidRegistry.getFluidName(fluidStack.getFluid()), fluidStack.amount)
     }
   }

@@ -7,7 +7,8 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
 enum class ECGui {
-  FluidTerminal(),
+  FluidTerminal,
+  SharedFluidBus,
   ;
 
   fun launch(
