@@ -2,6 +2,7 @@ package extracells.core.proxy
 
 import extracells.client.ECTextureRegister
 import extracells.feature.block.certustank.CertusTankRenderHandler
+import extracells.feature.item.proxyfluid.ProxyFluidItemRenderer
 import net.minecraftforge.common.MinecraftForge
 
 class ClientProxy : CommonProxy by ServerProxy() {
@@ -10,6 +11,7 @@ class ClientProxy : CommonProxy by ServerProxy() {
 
   override fun registerRenderers() {
     CertusTankRenderHandler.register()
+    ProxyFluidItemRenderer.register()
   }
 
   override fun registerTextures() {
